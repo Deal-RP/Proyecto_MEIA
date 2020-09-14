@@ -38,9 +38,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BT_CrearUsuario" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="TF_Password" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="TF_Password" min="-2" pref="179" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="L_Visible" min="-2" pref="21" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -56,6 +60,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="TF_Password" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="L_Visible" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -63,7 +68,7 @@
                   <Component id="BT_CrearUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BT_Salir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,8 +92,6 @@
         <Property name="text" type="java.lang.String" value="Ingresar contrase&#xf1;a:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TF_Password">
-    </Component>
     <Component class="javax.swing.JButton" name="BT_Ingresar">
       <Properties>
         <Property name="text" type="java.lang.String" value="INGRESAR"/>
@@ -111,6 +114,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BT_SalirActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="TF_Password">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ingrese password"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="L_Visible">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="L_VisibleMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>

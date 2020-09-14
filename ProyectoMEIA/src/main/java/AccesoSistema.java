@@ -1,9 +1,12 @@
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,8 +22,12 @@ public class AccesoSistema extends javax.swing.JFrame {
     /**
      * Creates new form AccesoSistema
      */
+    private boolean visible = false;
     public AccesoSistema() {
         initComponents();
+        Image img = new ImageIcon("icon.png").getImage();
+        Image newImg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        L_Visible.setIcon(new ImageIcon(newImg));
     }
 
     /**
@@ -35,10 +42,11 @@ public class AccesoSistema extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         TF_Usuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        TF_Password = new javax.swing.JTextField();
         BT_Ingresar = new javax.swing.JButton();
         BT_CrearUsuario = new javax.swing.JButton();
         BT_Salir = new javax.swing.JButton();
+        TF_Password = new javax.swing.JPasswordField();
+        L_Visible = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +77,14 @@ public class AccesoSistema extends javax.swing.JFrame {
             }
         });
 
+        TF_Password.setText("Ingrese password");
+
+        L_Visible.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                L_VisibleMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,8 +102,11 @@ public class AccesoSistema extends javax.swing.JFrame {
                         .addComponent(BT_Ingresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BT_CrearUsuario))
-                    .addComponent(TF_Password))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(TF_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(L_Visible, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,13 +118,14 @@ public class AccesoSistema extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(TF_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(L_Visible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BT_Ingresar)
                     .addComponent(BT_CrearUsuario)
                     .addComponent(BT_Salir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -117,28 +137,36 @@ public class AccesoSistema extends javax.swing.JFrame {
         ManejoArchivo objManejo = new ManejoArchivo();
         if (objManejo.ExisteCrear(Archivo, strError)){
             if(objManejo.CantidadRegistros(Archivo, strError) > 0){
-                if(!TF_Usuario.getText().equals("") && !TF_Password.getText().equals("")){
+                if(!TF_Usuario.getText().equals("") && !String.valueOf(TF_Password.getPassword()).equals("")){
                     objManejo.RegresarPrincipio(Archivo, strError);
                     var strActual = objManejo.BuscarLinea(Archivo, TF_Usuario.getText(), strError, 0, 9);
                     if(!strActual.equals("")){
                         var split = strActual.split(Pattern.quote("|"));
                         var objUsuario = new ManejoUsuario();
-                        if(TF_Password.getText().equals(objUsuario.decrypt(split[3]))){
+                        if(String.valueOf(TF_Password.getPassword()).equals(objUsuario.decrypt(split[3]))){
                             //INGRESO AL SISTEMA
                             JOptionPane.showMessageDialog(null, "Bienvenido", "EXITO", 1);
                             var sistema = new AplicacionMenu();
-                            var user = TF_Usuario.getText();
-                            sistema.Dato.setText(user);
+                            
                             Archivo = new File("C:/MEIA/usuario.txt");
+                            var user = TF_Usuario.getText();
                             var actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
-                            split = actual.split(Pattern("|"));
+                            split = actual.split(Pattern.quote("|"));
+                            
+                            sistema.L_Bienvenida.setText("BIENVENIDO " + user);
+                            sistema.Dato.setText(user);
+                            sistema.Dato.setVisible(false);
+                            if(split[4].equals("1")){
+                                sistema.L_Rol.setText("Rol: Administrador");
+                            }else{
+                                sistema.L_Rol.setText("Rol: Usuario");
+                            }
+                            
                             try
                             {
-                                var image = ImageIO.read(new File(split[8]));
-                                JLabel pic = new JLabel(new ImageIcon(image));
-                                sistema.P_Imagen.add(pic);
-                                sistema.P_Imagen.repaint(); 
-                                sistema.L_Bienvenida.setText("BIENVENIDO " + user);
+                                Image img = new ImageIcon(split[8]).getImage();
+                                Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
+                                sistema.L_Image.setIcon(new ImageIcon(newImg));
                             } catch(Exception ex){
                                 strError = ex.getMessage();
                             }
@@ -204,6 +232,16 @@ public class AccesoSistema extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed
 
+    private void L_VisibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_VisibleMouseClicked
+        visible = !visible;
+        if(visible){
+            TF_Password.setEchoChar((char)0);
+        }
+        else{
+            TF_Password.setEchoChar('*');
+        }
+    }//GEN-LAST:event_L_VisibleMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -243,7 +281,8 @@ public class AccesoSistema extends javax.swing.JFrame {
     private javax.swing.JButton BT_CrearUsuario;
     private javax.swing.JButton BT_Ingresar;
     private javax.swing.JButton BT_Salir;
-    private javax.swing.JTextField TF_Password;
+    private javax.swing.JLabel L_Visible;
+    private javax.swing.JPasswordField TF_Password;
     private javax.swing.JTextField TF_Usuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
