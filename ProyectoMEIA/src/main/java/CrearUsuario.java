@@ -326,9 +326,13 @@ public class CrearUsuario extends javax.swing.JFrame {
                         var Archivo = new File("C:/MEIA/usuario.txt");
                         var user = TF_Usuario.getText();
                         var actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
+                        if(actual.equals("")){
+                           Archivo = new File("C:/MEIA/bitacora_usuario.txt");
+                           actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
+                        }
                         var split = actual.split(Pattern.quote("|"));
 
-                        sistema.L_Bienvenida.setText("BIENVENIDO " + user);
+                        sistema.L_Bienvenida.setText("BIENVENIDO:" + user);
                         sistema.Dato.setText(user);
                         sistema.Dato.setVisible(false);
                         if(split[4].equals("1")){
@@ -347,6 +351,9 @@ public class CrearUsuario extends javax.swing.JFrame {
                         }
                         sistema.setVisible(true);
                         this.dispose();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "El usuario ya existe", "ERROR", 1);
                     }
                 }
                 else{

@@ -93,9 +93,11 @@ public class ManejoUsuario {
     public String crearUsuario(String user, String nombre, String apellido, String pass, int rol, Date fecha, String correoAlt, String telefono, String foto, int status){
         var objManejoArchivo = new ManejoArchivo();
         File Archivo = new File("C:/MEIA/usuario.txt");
+        File Bita = new File("C:/MEIA/bitacora_usuario.txt");
         var strError = "";
-        var actual = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
-        if(!actual.equals("")){
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, user, strError, 0, 9);
+        if(!ArchivoUser.equals("") && !ArchivoBita.equals("")){
             return "Usuario ya existe";
         }
         else{
@@ -104,7 +106,12 @@ public class ManejoUsuario {
                 pass = encrypt(pass, 2, 8);
                 foto = copyImage(foto, user);
                 var nuevoUsuario = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + rol + "|" + fecha + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + status;
-                objManejoArchivo.Escritura(Archivo, nuevoUsuario, strError, true);
+                if(objManejoArchivo.CantidadRegistros(Bita, strError) <= objManejoArchivo.maximoReorganizar()){
+                    objManejoArchivo.orderInsert(Bita, nuevoUsuario, strError);
+                }
+                else{
+                    objManejoArchivo.LimpiarBitacora();
+                }
             }catch(Exception ex){
                 return ex.getMessage();
             }

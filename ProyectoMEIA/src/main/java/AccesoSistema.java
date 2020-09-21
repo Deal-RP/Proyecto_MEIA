@@ -160,7 +160,7 @@ public class AccesoSistema extends javax.swing.JFrame {
                         var actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
                         split = actual.split(Pattern.quote("|"));
 
-                        sistema.L_Bienvenida.setText("BIENVENIDO " + user);
+                        sistema.L_Bienvenida.setText("BIENVENIDO:" + user);
                         sistema.Dato.setText(user);
                         sistema.Dato.setVisible(false);
                         if(split[4].equals("1")){
