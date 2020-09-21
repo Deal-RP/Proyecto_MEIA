@@ -1,4 +1,6 @@
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 /*
@@ -122,19 +124,6 @@ public class ManejoArchivo {
         }
         return cont;
     }
-    //Existe archivo, sino lo crea
-    public boolean ExisteCrear(File Archivo, String strError){
-        if (!Archivo.exists()){
-            try
-            {
-                Archivo.createNewFile();
-            } catch (IOException ex){
-                strError = ex.getMessage();
-                return false;
-            }
-        }
-        return true;
-    }
     //Regresar cursor al principio del txt
     public boolean RegresarPrincipio(File Archivo, String strError){
         try
@@ -144,6 +133,63 @@ public class ManejoArchivo {
         }catch (IOException ex){
             strError = ex.getMessage();
             return false;
+        }
+        return true;
+    }
+    //method to create the files of the user in the folder, the user file only create and the desc user create and write the description 
+    //The user of creation and modification we put root and the records are 0
+    public void CreationFilesUsers(String strError){
+        try {
+            File pathFileUser = new File("C:/MEIA/usuario.txt");
+            File pathFileUserDesc = new File("C:/MEIA/desc_usuario.txt");
+            File pathFileBita = new File("C:/MEIA/bitacora_usuario.txt");
+            File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_usuario.txt");
+            pathFileUser.createNewFile();
+            pathFileUserDesc.createNewFile();
+            pathFileBita.createNewFile();
+            pathFileBitaDesc.createNewFile();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            var writer = new FileWriter(pathFileUserDesc);
+            writer.write("nombre simbolico: usuario\n");
+            writer.write("fecha creacion: "+dateFormat.format(date)+"\n");
+            writer.write("usuario creacion: root\n");
+            writer.write("fecha modificacion: "+dateFormat.format(date)+"\n");
+            writer.write("usuario modificacion: root\n");
+            writer.write("# registros: 0\n");
+            writer.write("registros activos: 0\n");
+            writer.write("registros incactivos: 0\n");
+            writer.close();
+        } catch (IOException ex) {
+            //TODO: handle exception
+             strError = ex.getMessage();
+        }
+
+    }
+    //method to validate if exists the folder and files of the users and if is not exist create them 
+    // return true if the file users do not exist and false if they exists
+    public boolean ValidationUserFiles(){
+        File pathFolder = new File("C:/MEIA");
+        File pathFileUser = new File("C:/MEIA/usuario.txt");
+        File pathFileUserDesc = new File("C:/MEIA/desc_usuario.txt");
+        File pathFileBita = new File("C:/MEIA/bitacora_usuario.txt");
+        File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_usuario.txt");
+        File pathFolderFoto = new File("C:/MEIA/fotografia");
+        
+        if (pathFolder.exists()){
+            if(!pathFileUser.exists() || !pathFileUserDesc.exists() || !pathFileBita.exists() || !pathFileBitaDesc.exists()){
+                pathFileUser.delete();
+                pathFileUserDesc.delete();
+                pathFileBita.delete();
+                pathFileBitaDesc.delete();
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            pathFolder.mkdir();
+            pathFolderFoto.mkdir();
         }
         return true;
     }
