@@ -10,33 +10,33 @@
  */
 public class Data {
     
-        private String url;
+        private String user;
         
-        private String temp;
+        private String tempUser;
   
-      private static  Data miconfigurador = null;
+      private static  Data miUser = null;
       
       
 
       public  static Data getData() {
 
-      if (miconfigurador==null) {
+      if (miUser==null) {
 
-      miconfigurador=new Data();
+      miUser=new Data();
       }
-      return miconfigurador;
+      return miUser;
       }
 
      public Data(){
-         this.url = temp;
+         this.user = tempUser;
      }
 
-     public String getUrl() {
-      return temp;
+     public String getUser() {
+      return tempUser;
       }
 
-     public void setUrl(String url) {
-      temp = url;
+     public void setUser(String user) {
+      tempUser = user;
       }
  
     

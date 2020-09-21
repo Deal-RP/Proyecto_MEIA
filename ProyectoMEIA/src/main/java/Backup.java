@@ -114,16 +114,14 @@ public class Backup extends javax.swing.JFrame {
 
     private void jButton_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_generarActionPerformed
         // TODO add your handling code here:
+        // llamar al singleton
         var user = Data.getData();
-        var ola= user.getUrl();
+        var ola= user.getUser();
+          
          
-        
-        JOptionPane.showMessageDialog(null, ola, "ERROR",JOptionPane.ERROR_MESSAGE);
-        
-        var user2 = Data.getData();
-        var ola2= user.getUrl();
          
-        JOptionPane.showMessageDialog(null, ola2, "ERROR",JOptionPane.ERROR_MESSAGE);
+       
+         
          
         if (!"".equals(jTextField_path.getText())) {
             
