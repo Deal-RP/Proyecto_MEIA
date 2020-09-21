@@ -57,6 +57,11 @@ public class AplicacionMenu extends javax.swing.JFrame {
         });
 
         jButton_modificarUsuario.setText("Modificar");
+        jButton_modificarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_modificarUsuarioActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Usuario");
 
@@ -139,6 +144,12 @@ public class AplicacionMenu extends javax.swing.JFrame {
             this.dispose();
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed
+
+    private void jButton_modificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarUsuarioActionPerformed
+        // TODO add your handling code here:
+        var objUsuario = new ManejoUsuario();
+        
+    }//GEN-LAST:event_jButton_modificarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

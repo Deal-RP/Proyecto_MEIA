@@ -111,4 +111,8 @@ public class ManejoUsuario {
         }
         return "Se ha agregado existosamente el usuario";
     }
+    void ModificarUsuario()
+    {
+    
+    }
 }
