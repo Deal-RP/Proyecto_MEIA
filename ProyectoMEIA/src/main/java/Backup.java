@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
  
 
@@ -113,6 +114,16 @@ public class Backup extends javax.swing.JFrame {
 
     private void jButton_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_generarActionPerformed
         // TODO add your handling code here:
+        var user = Data.getData();
+        var ola= user.getUrl();
+         
+        
+        JOptionPane.showMessageDialog(null, ola, "ERROR",JOptionPane.ERROR_MESSAGE);
+        
+        var user2 = Data.getData();
+        var ola2= user.getUrl();
+         
+        JOptionPane.showMessageDialog(null, ola2, "ERROR",JOptionPane.ERROR_MESSAGE);
          
         if (!"".equals(jTextField_path.getText())) {
             
@@ -140,9 +151,13 @@ public class Backup extends javax.swing.JFrame {
                     }
             }
             else{
-                
+                JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
             }
              
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No selecciono lugar para guardar el backup", "ERROR",JOptionPane.ERROR_MESSAGE);
+            
         }
     }//GEN-LAST:event_jButton_generarActionPerformed
 

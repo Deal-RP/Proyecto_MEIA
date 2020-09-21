@@ -1,5 +1,7 @@
 import java.io.File;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -57,6 +59,11 @@ public class AplicacionMenu extends javax.swing.JFrame {
         });
 
         jButton_modificarUsuario.setText("Modificar");
+        jButton_modificarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_modificarUsuarioActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Usuario");
 
@@ -150,6 +157,18 @@ public class AplicacionMenu extends javax.swing.JFrame {
         var backup = new Backup();
         backup.setVisible(true);
     }//GEN-LAST:event_jButton_crearBackupActionPerformed
+
+    private void jButton_modificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarUsuarioActionPerformed
+        // TODO add your handling code here:
+        // guardar el dato en el singleton
+        Data.getData().setUrl("pablo");
+         
+        
+        
+ 
+        
+        
+    }//GEN-LAST:event_jButton_modificarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
