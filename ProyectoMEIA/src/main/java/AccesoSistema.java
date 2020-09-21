@@ -138,6 +138,7 @@ public class AccesoSistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BT_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_IngresarActionPerformed
+
         File Archivo = new File("C:/MEIA/usuario.txt");
         File Bitacora = new File("C:/MEIA/bitacora_usuarios.txt");
         var strError = "";
