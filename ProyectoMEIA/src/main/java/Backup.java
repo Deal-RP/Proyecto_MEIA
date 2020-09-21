@@ -114,15 +114,7 @@ public class Backup extends javax.swing.JFrame {
 
     private void jButton_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_generarActionPerformed
         // TODO add your handling code here:
-        // llamar al singleton
-        var user = Data.getData();
-        var ola= user.getUser();
-          
-         
-         
-       
-         
-         
+        
         if (!"".equals(jTextField_path.getText())) {
             
             if (CheckFiles()){
