@@ -1,5 +1,7 @@
 import java.io.File;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -67,6 +69,11 @@ public class AplicacionMenu extends javax.swing.JFrame {
 
         jButton_crearBackup.setText("Crear");
         jButton_crearBackup.setToolTipText("");
+        jButton_crearBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_crearBackupActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Back up");
 
@@ -145,9 +152,20 @@ public class AplicacionMenu extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed
 
+
+    private void jButton_crearBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_crearBackupActionPerformed
+        // TODO add your handling code here:
+        var backup = new Backup();
+        backup.setVisible(true);
+    }//GEN-LAST:event_jButton_crearBackupActionPerformed
+
     private void jButton_modificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarUsuarioActionPerformed
         // TODO add your handling code here:
-        var objUsuario = new ManejoUsuario();
+        // guardar el dato en el singleton
+        Data.getData().setUser("pablo");
+         
+        
+            
         
     }//GEN-LAST:event_jButton_modificarUsuarioActionPerformed
 
