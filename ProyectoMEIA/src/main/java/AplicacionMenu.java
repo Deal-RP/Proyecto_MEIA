@@ -62,6 +62,11 @@ public class AplicacionMenu extends javax.swing.JFrame {
 
         jButton_crearBackup.setText("Crear");
         jButton_crearBackup.setToolTipText("");
+        jButton_crearBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_crearBackupActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Back up");
 
@@ -139,6 +144,12 @@ public class AplicacionMenu extends javax.swing.JFrame {
             this.dispose();
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed
+
+    private void jButton_crearBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_crearBackupActionPerformed
+        // TODO add your handling code here:
+        var backup = new Backup();
+        backup.setVisible(true);
+    }//GEN-LAST:event_jButton_crearBackupActionPerformed
 
     /**
      * @param args the command line arguments

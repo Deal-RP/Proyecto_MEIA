@@ -1,3 +1,12 @@
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import javax.swing.JFileChooser;
+import org.apache.commons.io.FileUtils;
+ 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,22 +35,128 @@ public class Backup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jTextField_path = new javax.swing.JTextField();
+        jButton_buscar = new javax.swing.JButton();
+        jButton_generar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Seleccione la carpeta para guardar el backup");
+
+        jButton_buscar.setText("Buscar");
+        jButton_buscar.setToolTipText("");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_buscarActionPerformed(evt);
+            }
+        });
+
+        jButton_generar.setText("Generar");
+        jButton_generar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_generarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Back up");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField_path))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(53, 53, 53))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton_generar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)))
+                .addGap(30, 30, 30)
+                .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_buscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton_generar)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        var jf = new JFileChooser();
+        jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+        jf.showSaveDialog(null);
+        var path = jf.getSelectedFile();
+        if (path != null) {
+            jTextField_path.setText(path.getAbsolutePath());
+        }
+    }//GEN-LAST:event_jButton_buscarActionPerformed
+
+    private void jButton_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_generarActionPerformed
+        // TODO add your handling code here:
+         
+        if (!"".equals(jTextField_path.getText())) {
+            
+            if (CheckFiles()){
+                
+                var pathDestiny = jTextField_path.getText();
+                var folderSource = new File("C:/MEIA");
+                var folderDestiny = new File(pathDestiny +"/MEIA Backup");
+                
+                if (folderDestiny.exists()){
+                    
+                    folderDestiny.delete();
+                    folderDestiny.mkdir();
+                    
+                }else{
+                    folderDestiny.mkdir();
+                }
+                
+                 
+                 try{
+                        FileUtils.copyDirectory(folderSource, folderDestiny);
+                    } 
+                 catch(IOException e){
+             
+                    }
+            }
+            else{
+                
+            }
+             
+        }
+    }//GEN-LAST:event_jButton_generarActionPerformed
+
+    // Method to Check if the folder MEIA exist, if this exist return true and if not return false
+    private boolean CheckFiles(){
+        var path = new File("C:/MEIA");
+        if (path.exists()) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -78,5 +193,10 @@ public class Backup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_buscar;
+    private javax.swing.JButton jButton_generar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jTextField_path;
     // End of variables declaration//GEN-END:variables
 }
