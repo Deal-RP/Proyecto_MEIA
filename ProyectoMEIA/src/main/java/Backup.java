@@ -114,31 +114,19 @@ public class Backup extends javax.swing.JFrame {
 
     private void jButton_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_generarActionPerformed
         // TODO add your handling code here:
+        var objBackup= new BackupManagement();
+        var pathDestiny = jTextField_path.getText();
         
-        if (!"".equals(jTextField_path.getText())) {
+        if (!"".equals(pathDestiny)) {
             
-            if (CheckFiles()){
-                
-                var pathDestiny = jTextField_path.getText();
-                var folderSource = new File("C:/MEIA");
-                var folderDestiny = new File(pathDestiny +"/MEIA Backup");
-                
-                if (folderDestiny.exists()){
-                    
-                    folderDestiny.delete();
-                    folderDestiny.mkdir();
+            if (objBackup.CheckFolerMeia()){
+                if (objBackup.CheckFilesBackup()) {
+                    // modify files existing 
                     
                 }else{
-                    folderDestiny.mkdir();
+                    objBackup.CreateFiles(pathDestiny);
                 }
                 
-                 
-                 try{
-                        FileUtils.copyDirectory(folderSource, folderDestiny);
-                    } 
-                 catch(IOException e){
-             
-                    }
             }
             else{
                 JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
@@ -151,17 +139,11 @@ public class Backup extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_generarActionPerformed
 
-    // Method to Check if the folder MEIA exist, if this exist return true and if not return false
-    private boolean CheckFiles(){
-        var path = new File("C:/MEIA");
-        if (path.exists()) {
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
     
+    
+     
+    
+
     /**
      * @param args the command line arguments
      */
