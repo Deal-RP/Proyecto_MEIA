@@ -30,9 +30,9 @@ public class AccesoSistema extends javax.swing.JFrame {
         L_Visible.setIcon(new ImageIcon(newImg));
         ManejoArchivo objManejo = new ManejoArchivo();
         var strError = "";
-//        if(objManejo.ValidationUserFiles()){
-//            objManejo.CreationFilesUsers(strError);
-//        }
+        if(objManejo.ValidationUserFiles()){
+            objManejo.CreationFilesUsers(strError);
+        }
     }
 
     /**
