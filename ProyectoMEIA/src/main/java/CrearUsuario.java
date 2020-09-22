@@ -316,10 +316,10 @@ public class CrearUsuario extends javax.swing.JFrame {
                     && fecha != null && !TF_CorreoAlt.getText().equals("") && !TF_Telefono.getText().equals("") && !TF_Foto.getText().equals("")){
             if(String.valueOf(TF_Password.getPassword()).equals(String.valueOf(TF_Password1.getPassword()))){
                 if(L_Nivel.getText().equals("Nivel alto")){
-                    var rol = Dato.getText();
+                    var dataUser = Data.getData();
+                    var rol = dataUser.getRole();
                     strError = objUsuario.crearUsuario(TF_Usuario.getText(), TF_Nombre.getText(), TF_Apellido.getText(), String.valueOf(TF_Password.getPassword()), 
                             Integer.parseInt(rol), fecha, TF_CorreoAlt.getText(), TF_Telefono.getText(), TF_Foto.getText(), 1);
-                    JOptionPane.showMessageDialog(null, strError, "EXITO", 1);
                     if(!strError.equals("Usuario ya existe")){
                         //INGRESO AL SISTEMA
                         JOptionPane.showMessageDialog(null, "Bienvenido", "EXITO", 1);
@@ -328,9 +328,13 @@ public class CrearUsuario extends javax.swing.JFrame {
                         var Archivo = new File("C:/MEIA/usuario.txt");
                         var user = TF_Usuario.getText();
                         var actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
+                        if(actual.equals("")){
+                           Archivo = new File("C:/MEIA/bitacora_usuario.txt");
+                           actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
+                        }
                         var split = actual.split(Pattern.quote("|"));
 
-                        sistema.L_Bienvenida.setText("BIENVENIDO " + user);
+                        sistema.L_Bienvenida.setText("BIENVENIDO:" + user);
                         sistema.Dato.setText(user);
                         sistema.Dato.setVisible(false);
                         if(split[4].equals("1")){
@@ -350,6 +354,9 @@ public class CrearUsuario extends javax.swing.JFrame {
                         sistema.setVisible(true);
                         this.dispose();
                     }
+                    else{
+                        JOptionPane.showMessageDialog(null, "El usuario ya existe", "ERROR", 1);
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Contraseña no cumple: Ingrese por lo menos una letra mayuscula, al menos una letra minuscula, al menos un digito, no espacios en blanco, al menos 1 caracter especial, minimo 8 caracteres", "ERROR", 1);
@@ -368,6 +375,8 @@ public class CrearUsuario extends javax.swing.JFrame {
         int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir? ", "¿Salir?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (iRespuesta == 0) 
         {            
+            var inicioSesion = new AccesoSistema();
+            inicioSesion.setVisible(true);
             dispose();
         }
     }//GEN-LAST:event_BT_SalirActionPerformed

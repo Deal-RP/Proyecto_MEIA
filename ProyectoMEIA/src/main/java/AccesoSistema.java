@@ -1,12 +1,8 @@
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.regex.Pattern;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -140,14 +136,17 @@ public class AccesoSistema extends javax.swing.JFrame {
     private void BT_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_IngresarActionPerformed
 
         File Archivo = new File("C:/MEIA/usuario.txt");
-        File Bitacora = new File("C:/MEIA/bitacora_usuarios.txt");
+        File Bitacora = new File("C:/MEIA/bitacora_usuario.txt");
         var strError = "";
         ManejoArchivo objManejo = new ManejoArchivo();
-        if(objManejo.CantidadRegistros(Archivo, strError) > 0 && 
-                objManejo.CantidadRegistros(Bitacora, strError) > 0){
+        if(objManejo.CantidadRegistros(Archivo, strError) != 0 || 
+                objManejo.CantidadRegistros(Bitacora, strError) != 0){
             if(!TF_Usuario.getText().equals("") && !String.valueOf(TF_Password.getPassword()).equals("")){
                 objManejo.RegresarPrincipio(Archivo, strError);
                 var strActual = objManejo.BuscarLinea(Archivo, TF_Usuario.getText(), strError, 0, 9);
+                if(strActual.equals("")){
+                    strActual = objManejo.BuscarLinea(Bitacora, TF_Usuario.getText(), strError, 0, 9);
+                }
                 if(!strActual.equals("")){
                     var split = strActual.split(Pattern.quote("|"));
                     var objUsuario = new ManejoUsuario();
@@ -155,14 +154,8 @@ public class AccesoSistema extends javax.swing.JFrame {
                         //INGRESO AL SISTEMA
                         JOptionPane.showMessageDialog(null, "Bienvenido", "EXITO", 1);
                         var sistema = new AplicacionMenu();
-
-                        Archivo = new File("C:/MEIA/usuario.txt");
-                        var user = TF_Usuario.getText();
-                        var actual = objManejo.BuscarLinea(Archivo, user, strError, 0, 9);
-                        split = actual.split(Pattern.quote("|"));
-
-                        sistema.L_Bienvenida.setText("BIENVENIDO " + user);
-                        sistema.Dato.setText(user);
+                        sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
+                        sistema.Dato.setText(split[0]);
                         sistema.Dato.setVisible(false);
                         if(split[4].equals("1")){
                             sistema.L_Rol.setText("Rol: Administrador");
@@ -190,9 +183,9 @@ public class AccesoSistema extends javax.swing.JFrame {
                     if (iRespuesta == 0) 
                     {            
                         var fCrearUsuario = new CrearUsuario();
-                        fCrearUsuario.Dato.setText("0");
-                        fCrearUsuario.Dato.setVisible(false);
+                        Data.getData().setRole("0"); 
                         fCrearUsuario.setVisible(true);
+                        this.dispose();
                     }
                 }
             }
@@ -205,27 +198,28 @@ public class AccesoSistema extends javax.swing.JFrame {
             if (iRespuesta == 0) 
             {
                 var fCrearUsuario = new CrearUsuario();
-                fCrearUsuario.Dato.setText("1");
-                fCrearUsuario.Dato.setVisible(false);
+                Data.getData().setRole("1"); 
                 fCrearUsuario.setVisible(true);
+                this.dispose();
             }
         }
     }//GEN-LAST:event_BT_IngresarActionPerformed
 
     private void BT_CrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_CrearUsuarioActionPerformed
         File Archivo = new File("C:/MEIA/usuario.txt");
+        File Bitacora = new File("C:/MEIA/bitacora_usuario.txt");
         var fCrearUsuario = new CrearUsuario();
         ManejoArchivo objManejo = new ManejoArchivo();
         var strError = "";
-        if(objManejo.CantidadRegistros(Archivo, strError) > 0){ 
-            fCrearUsuario.Dato.setText("0");
-            fCrearUsuario.Dato.setVisible(false);
+        if(objManejo.CantidadRegistros(Archivo, strError) != 0 || 
+                objManejo.CantidadRegistros(Bitacora, strError) != 0){ 
+            Data.getData().setRole("0"); 
         }
         else{
-            fCrearUsuario.Dato.setText("1");
-            fCrearUsuario.Dato.setVisible(false);
+            Data.getData().setRole("1");
         }
         fCrearUsuario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BT_CrearUsuarioActionPerformed
 
     private void BT_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_SalirActionPerformed
