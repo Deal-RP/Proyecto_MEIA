@@ -1,10 +1,3 @@
-import java.io.File;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /*

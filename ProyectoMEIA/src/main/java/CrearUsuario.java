@@ -316,10 +316,10 @@ public class CrearUsuario extends javax.swing.JFrame {
                     && fecha != null && !TF_CorreoAlt.getText().equals("") && !TF_Telefono.getText().equals("") && !TF_Foto.getText().equals("")){
             if(String.valueOf(TF_Password.getPassword()).equals(String.valueOf(TF_Password1.getPassword()))){
                 if(L_Nivel.getText().equals("Nivel alto")){
-                    var rol = Dato.getText();
+                    var dataUser = Data.getData();
+                    var rol = dataUser.getRole();
                     strError = objUsuario.crearUsuario(TF_Usuario.getText(), TF_Nombre.getText(), TF_Apellido.getText(), String.valueOf(TF_Password.getPassword()), 
                             Integer.parseInt(rol), fecha, TF_CorreoAlt.getText(), TF_Telefono.getText(), TF_Foto.getText(), 1);
-                    JOptionPane.showMessageDialog(null, strError, "EXITO", 1);
                     if(!strError.equals("Usuario ya existe")){
                         //INGRESO AL SISTEMA
                         JOptionPane.showMessageDialog(null, "Bienvenido", "EXITO", 1);
@@ -375,6 +375,8 @@ public class CrearUsuario extends javax.swing.JFrame {
         int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir? ", "¿Salir?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (iRespuesta == 0) 
         {            
+            var inicioSesion = new AccesoSistema();
+            inicioSesion.setVisible(true);
             dispose();
         }
     }//GEN-LAST:event_BT_SalirActionPerformed

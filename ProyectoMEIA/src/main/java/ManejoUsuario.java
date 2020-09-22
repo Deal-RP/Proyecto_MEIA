@@ -97,7 +97,7 @@ public class ManejoUsuario {
         var strError = "";
         var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
         var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, user, strError, 0, 9);
-        if(!ArchivoUser.equals("") && !ArchivoBita.equals("")){
+        if(!ArchivoUser.equals("") || !ArchivoBita.equals("")){
             return "Usuario ya existe";
         }
         else{
@@ -106,11 +106,23 @@ public class ManejoUsuario {
                 pass = encrypt(pass, 2, 8);
                 foto = copyImage(foto, user);
                 var nuevoUsuario = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + rol + "|" + fecha + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + status;
-                if(objManejoArchivo.CantidadRegistros(Bita, strError) <= objManejoArchivo.maximoReorganizar()){
+                if(objManejoArchivo.CantidadRegistros(Bita, strError) >= objManejoArchivo.maximoReorganizar()){
+                    if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
+                        objManejoArchivo.LimpiarBitacora();
+                        objManejoArchivo.ModifyFilesDescUser(user, true, strError);
+                    }
+                    else{
+                        objManejoArchivo.LimpiarBitacora();
+                        objManejoArchivo.ModifyFilesDescUser(user, false, strError);
+                    }
+                }
+                if(objManejoArchivo.CantidadRegistros(Bita, strError) == 0){
                     objManejoArchivo.orderInsert(Bita, nuevoUsuario, strError);
+                    objManejoArchivo.ModifyFilesDescBita(user, true, strError);
                 }
                 else{
-                    objManejoArchivo.LimpiarBitacora();
+                    objManejoArchivo.orderInsert(Bita, nuevoUsuario, strError);
+                    objManejoArchivo.ModifyFilesDescBita(user, false, strError);
                 }
             }catch(Exception ex){
                 return ex.getMessage();
