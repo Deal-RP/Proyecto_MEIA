@@ -111,8 +111,17 @@ public class ManejoUsuario {
         }
         return "Se ha agregado existosamente el usuario";
     }
-    void ModificarUsuario()
+    void ModificarUsuario(String user, String nombre, String apellido, String pass, int rol, Date fecha, String correoAlt, String telefono, String foto, int status)
     {
-    
+      // volver a sobreescribir los datos
+        var objManejoArchivo = new ManejoArchivo();
+        File Archivo = new File("C:/MEIA/usuario.txt");
+        var strError = "";
+        var actual = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
+        if(!actual.equals("")){
+         //   return "Usuario ya existe";
+         
+         // sobre-escribir los datos en la misma linea
+        }     
     }
 }

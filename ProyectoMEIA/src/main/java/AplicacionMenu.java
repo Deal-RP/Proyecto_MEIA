@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.util.regex.Pattern;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -163,10 +164,30 @@ public class AplicacionMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         // guardar el dato en el singleton
         //Data.getData().setUser("pablo");
+        var Archivo = new File("C:/MEIA/usuario.txt");
+        var objManejoArchivo = new ManejoArchivo();
         String dato = Dato.getText();
         var Modificar = new ModificarUsuario();    
         Modificar.TF_Usuariofijo.setText(dato);
         Modificar.TF_Usuariofijo.setEditable(false);
+        String linea =  objManejoArchivo.BuscarLinea(Archivo, dato, "", 0, 9);
+        var split = linea.split(Pattern.quote("|"));
+        String Nombre = split[1];
+        String Apellido = split[2];
+        String Pasword = split[3];
+        var Fecha = split[5];
+        String Correo = split[6];
+        String Telefono = split[7];
+        String path_fotografia = split[8];
+        Modificar.TF_NombreModificar.setText(Nombre);
+        Modificar.TF_ApellidoModificar.setText(Apellido);
+        //Modificar.DC_Fecha.setDate(Fecha);
+        Modificar.TF_CorreoModificar.setText(Correo);
+        Modificar.TF_TelefonoModificar.setText(Telefono);
+        Modificar.TF_FotoModificar.setText(path_fotografia);
+        
+        
+        
         Modificar.setVisible(true);
         this.dispose();
             
