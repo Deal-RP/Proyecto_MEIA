@@ -79,7 +79,7 @@ public boolean CheckFolerMeia(){
     }
 }
 
-
+// method to create the files of the backup if they don't exist 
 public void CreateFiles(String pathDestiny){
     var pathBackupFile = new File("C:/MEIA/bitacora_backup.txt");
     var pathDescBackupFile = new File("C:/MEIA/desc_bitacora_backup.txt");
@@ -114,14 +114,6 @@ public void CreateFiles(String pathDestiny){
     } catch (IOException e) {
         //TODO: handle exception
     }
-    
-    
-
-    
-    
-    
-    
-    
 }
     
 
