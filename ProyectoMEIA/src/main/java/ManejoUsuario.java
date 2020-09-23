@@ -130,7 +130,7 @@ public class ManejoUsuario {
         }
         return "Se ha agregado existosamente el usuario";
     }
-    void ModificarUsuario(String user, String nombre, String apellido, String pass, String correoAlt, String telefono, String foto)
+    boolean ModificarUsuario(String user, String nombre, String apellido, String pass, String correoAlt, String telefono, String foto)
     {
       // volver a sobreescribir los datos
         var objManejoArchivo = new ManejoArchivo();
@@ -151,9 +151,11 @@ public class ManejoUsuario {
               pass = password;  
              }
               var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + split[4] + "|" + split[5] + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
-            objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
+            boolean mensaje = objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
+            return mensaje;
          }
-         catch(Exception ex){}
+         catch(Exception ex){return false;}
+         
         }
         else if(!ArchivoBita.equals(""))
         {
@@ -166,9 +168,12 @@ public class ManejoUsuario {
               pass = password;  
              }
               var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + split[4] + "|" + split[5] + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
-            objManejoArchivo.Modificar(Bita, ArchivoBita, strContenido, strError);
+         boolean mensaje = objManejoArchivo.Modificar(Bita, ArchivoBita, strContenido, strError);
+         return mensaje;
          }
-         catch(Exception ex){}
+         catch(Exception ex){  return false;}
         }
-    }
- }
+        return true;
+    }  
+}
+

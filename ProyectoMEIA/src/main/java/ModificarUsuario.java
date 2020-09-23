@@ -1,5 +1,10 @@
 
+import java.awt.Color;
+import java.awt.Image;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /*
@@ -17,8 +22,16 @@ public class ModificarUsuario extends javax.swing.JFrame {
     /**
      * Creates new form ModificarUsuario
      */
+    private boolean visible1 = false;
+    private boolean visible = false;
+    private boolean visible2 = false;
     public ModificarUsuario() {
         initComponents();
+        Image img = new ImageIcon("icon.png").getImage();
+        Image newImg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+         L_visible2.setIcon(new ImageIcon(newImg));
+         L_visible1.setIcon(new ImageIcon(newImg));
+          L_visible3.setIcon(new ImageIcon(newImg));
     }
 
     /**
@@ -44,13 +57,16 @@ public class ModificarUsuario extends javax.swing.JFrame {
         BT_GuardarCambios = new javax.swing.JButton();
         TF_NombreModificar = new javax.swing.JTextField();
         TF_ApellidoModificar = new javax.swing.JTextField();
-        TF_PaswordAnterior = new javax.swing.JTextField();
-        TF_PaswordModificar = new javax.swing.JTextField();
-        TF_confirmarPasword = new javax.swing.JTextField();
         L_nivel = new javax.swing.JLabel();
         TF_CorreoModificar = new javax.swing.JTextField();
         TF_TelefonoModificar = new javax.swing.JTextField();
         TF_FotoModificar = new javax.swing.JTextField();
+        TF_PaswordModificar = new javax.swing.JPasswordField();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordField2 = new javax.swing.JPasswordField();
+        L_visible2 = new javax.swing.JLabel();
+        L_visible1 = new javax.swing.JLabel();
+        L_visible3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(".");
@@ -108,6 +124,40 @@ public class ModificarUsuario extends javax.swing.JFrame {
             }
         });
 
+        TF_PaswordModificar.setText("Pasword Anterior");
+
+        jPasswordField1.setText("Ingrese Password");
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyTyped(evt);
+            }
+        });
+
+        jPasswordField2.setText("jPasswordField2");
+
+        L_visible2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                L_visible2MouseClicked(evt);
+            }
+        });
+
+        L_visible1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                L_visible1MouseClicked(evt);
+            }
+        });
+
+        L_visible3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                L_visible3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,34 +166,8 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(TF_confirmarPasword))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(L_nivel)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(35, 35, 35)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(TF_NombreModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                                            .addComponent(TF_ApellidoModificar)
-                                            .addComponent(TF_PaswordAnterior)
-                                            .addComponent(TF_PaswordModificar, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(TF_Usuariofijo, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(8, 8, 8))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
@@ -155,8 +179,47 @@ public class ModificarUsuario extends javax.swing.JFrame {
                                     .addComponent(TF_CorreoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TF_FotoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(BT_GuardarCambios))))
-                        .addGap(0, 23, Short.MAX_VALUE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addContainerGap(68, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPasswordField2))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(44, 44, 44)
+                                        .addComponent(L_nivel)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(TF_Usuariofijo, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(8, 8, 8))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(35, 35, 35)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(TF_NombreModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                                            .addComponent(TF_ApellidoModificar)
+                                            .addComponent(TF_PaswordModificar)
+                                            .addComponent(jPasswordField1))))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(L_visible1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(L_visible2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addContainerGap())))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(L_visible3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,30 +227,33 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(TF_Usuariofijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2))
-                            .addComponent(TF_NombreModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(TF_ApellidoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1)
+                            .addComponent(TF_Usuariofijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3))
-                    .addComponent(TF_PaswordAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2))
+                    .addComponent(TF_NombreModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(TF_ApellidoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(TF_PaswordModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(L_visible1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(TF_PaswordModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(L_nivel))
+                    .addComponent(L_nivel)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(L_visible2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(TF_confirmarPasword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(L_visible3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -204,7 +270,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BT_Regresar)
                     .addComponent(BT_GuardarCambios))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,36 +282,143 @@ public class ModificarUsuario extends javax.swing.JFrame {
 
     private void BT_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_RegresarActionPerformed
         // TODO add your handling code here:
-         int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Regresar? ", "¿Regresar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (iRespuesta == 0) 
-        {            
-            var inicioSesion = new AccesoSistema();
-            inicioSesion.setVisible(true);
-            dispose();
+        File Archivo = new File("C:/MEIA/usuario.txt");
+        File Bita = new File("C:/MEIA/bitacora_usuario.txt");
+         var objManejoArchivo = new ManejoArchivo();
+        var strError = "";
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, TF_Usuariofijo.getText(), strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, TF_Usuariofijo.getText(), strError, 0, 9);
+         var split = ArchivoBita.split(Pattern.quote("|"));
+        if(!ArchivoUser.equals("") ){
+            split = ArchivoUser.split(Pattern.quote("|"));
         }
+                        var sistema = new AplicacionMenu();
+                        sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
+                        sistema.Dato.setText(split[0]);
+                        sistema.Dato.setVisible(false);
+                        if(split[4].equals("1")){
+                            sistema.L_Rol.setText("Rol: Administrador");
+                        }else{
+                            sistema.L_Rol.setText("Rol: Usuario");
+                        }
+
+                        try
+                        {
+                            Image img = new ImageIcon(split[8]).getImage();
+                            Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
+                            sistema.L_Image.setIcon(new ImageIcon(newImg));
+                        } catch(Exception ex){
+                            strError = ex.getMessage();
+                        }
+                        sistema.setVisible(true);
+                        this.dispose();
     }//GEN-LAST:event_BT_RegresarActionPerformed
 
     private void BT_GuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_GuardarCambiosActionPerformed
         // TODO add your handling code here:
         File Archivo = new File("C:/MEIA/usuario.txt");
+        File Bita = new File("C:/MEIA/bitacora_usuario.txt");
         var objManejoUsuario = new ManejoUsuario();
          ManejoArchivo objManejoArchivo = new ManejoArchivo();
-        var strError = "";
-//        var strActual = objManejoArchivo.BuscarLinea(Archivo , TF_Usuariofijo.getText(), strError, 0, 9);
-//        if(TF_PaswordModificar.getText().length()!=0){
-//        
-//        
-//        }
-        objManejoUsuario.ModificarUsuario(TF_Usuariofijo.getText(), TF_NombreModificar.getText(),
-          TF_ApellidoModificar.getText(), TF_PaswordModificar.getText(), TF_CorreoModificar.getText(),
+        var strError = "";     
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, TF_Usuariofijo.getText(), strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, TF_Usuariofijo.getText(), strError, 0, 9);
+        var split = ArchivoUser.split(Pattern.quote("|"));
+        if(!ArchivoBita.equals("") ){
+            split = ArchivoBita.split(Pattern.quote("|"));
+        }
+        String Password = objManejoUsuario.decrypt(split[3]);
+        if(String.valueOf(TF_PaswordModificar.getPassword()).equals(objManejoUsuario.decrypt(split[3])))
+        {          
+          //si la contraseña es la correcta
+          if(String.valueOf(jPasswordField1.getPassword()).equals(String.valueOf(jPasswordField2.getPassword()))){          
+          if (L_nivel.getText().equals("Nivel alto")){        
+          Password = String.valueOf(jPasswordField1.getPassword());
+          Password = objManejoUsuario.encrypt(Password, 2, 8);
+          }
+          }
+          else  
+          {
+            JOptionPane.showMessageDialog(null, "Contraseña no cumple: Ingrese por lo menos una letra mayuscula, al menos una letra minuscula, al menos un digito, no espacios en blanco, al menos 1 caracter especial, minimo 8 caracteres", "ERROR", 1);
+          }         
+        }
+        else
+        {
+         // la contraseña no coinside mantener la misma    
+          Password =  objManejoUsuario.decrypt(split[3]);
+        }                                         
+       boolean mensaje =  objManejoUsuario.ModificarUsuario(TF_Usuariofijo.getText(), TF_NombreModificar.getText(),
+          TF_ApellidoModificar.getText(), Password, TF_CorreoModificar.getText(),
           TF_TelefonoModificar.getText(), TF_FotoModificar.getText());
-               
         
+        if (mensaje) {
+            JOptionPane.showMessageDialog(null, "Dato modificado", "EXITO", 1);
+        }
+        else
+        {
+             JOptionPane.showMessageDialog(null, "Dato No modificado", "Fallo", 1);
+        }              
     }//GEN-LAST:event_BT_GuardarCambiosActionPerformed
 
     private void TF_FotoModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_FotoModificarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_FotoModificarActionPerformed
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
+    private void jPasswordField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyTyped
+        // TODO add your handling code here:
+        if(String.valueOf(jPasswordField1.getPassword()).length()== 40){
+            evt.consume();
+        }
+        else{
+            Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])([A-Za-z\\d$@$!%*?&]|[^ ]){8,40}$");
+            Matcher matcher = pattern.matcher(String.valueOf(jPasswordField1.getPassword()) + evt.getKeyChar());
+            if(matcher.find()){
+                L_nivel.setText("Nivel alto");
+                L_nivel.setForeground(Color.GREEN);
+            }else{
+                L_nivel.setText("Nivel bajo");
+                L_nivel.setForeground(Color.RED);
+            }
+        }
+    }//GEN-LAST:event_jPasswordField1KeyTyped
+
+    private void L_visible1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_visible1MouseClicked
+        // TODO add your handling code here:
+         visible = !visible;
+        if( visible){
+            TF_PaswordModificar.setEchoChar((char)0);
+        }
+        else{
+            TF_PaswordModificar.setEchoChar('*');
+        }
+    }//GEN-LAST:event_L_visible1MouseClicked
+
+    private void L_visible2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_visible2MouseClicked
+        // TODO add your handling code here:
+        visible1 = !visible1;
+        if( visible1){
+            jPasswordField1.setEchoChar((char)0);
+        }
+        else{
+            jPasswordField1.setEchoChar('*');
+        }
+    }//GEN-LAST:event_L_visible2MouseClicked
+
+    private void L_visible3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_visible3MouseClicked
+        // TODO add your handling code here:
+         visible2 = !visible2;
+        if( visible2){
+            jPasswordField2.setEchoChar((char)0);
+        }
+        else{
+            jPasswordField2.setEchoChar('*');
+        }
+    }//GEN-LAST:event_L_visible3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -286,15 +459,16 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JButton BT_GuardarCambios;
     private javax.swing.JButton BT_Regresar;
     private javax.swing.JLabel L_nivel;
+    private javax.swing.JLabel L_visible1;
+    private javax.swing.JLabel L_visible2;
+    private javax.swing.JLabel L_visible3;
     public javax.swing.JTextField TF_ApellidoModificar;
     public javax.swing.JTextField TF_CorreoModificar;
     public javax.swing.JTextField TF_FotoModificar;
     public javax.swing.JTextField TF_NombreModificar;
-    public javax.swing.JTextField TF_PaswordAnterior;
-    private javax.swing.JTextField TF_PaswordModificar;
+    private javax.swing.JPasswordField TF_PaswordModificar;
     public javax.swing.JTextField TF_TelefonoModificar;
     public javax.swing.JTextField TF_Usuariofijo;
-    private javax.swing.JTextField TF_confirmarPasword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -304,5 +478,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
     // End of variables declaration//GEN-END:variables
 }
