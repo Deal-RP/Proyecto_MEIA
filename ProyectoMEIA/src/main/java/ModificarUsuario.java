@@ -1,4 +1,5 @@
 
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /*
@@ -226,7 +227,15 @@ public class ModificarUsuario extends javax.swing.JFrame {
 
     private void BT_GuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_GuardarCambiosActionPerformed
         // TODO add your handling code here:
+        File Archivo = new File("C:/MEIA/usuario.txt");
         var objManejoUsuario = new ManejoUsuario();
+         ManejoArchivo objManejoArchivo = new ManejoArchivo();
+        var strError = "";
+//        var strActual = objManejoArchivo.BuscarLinea(Archivo , TF_Usuariofijo.getText(), strError, 0, 9);
+//        if(TF_PaswordModificar.getText().length()!=0){
+//        
+//        
+//        }
         objManejoUsuario.ModificarUsuario(TF_Usuariofijo.getText(), TF_NombreModificar.getText(),
           TF_ApellidoModificar.getText(), TF_PaswordModificar.getText(), TF_CorreoModificar.getText(),
           TF_TelefonoModificar.getText(), TF_FotoModificar.getText());

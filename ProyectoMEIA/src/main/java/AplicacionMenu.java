@@ -159,12 +159,23 @@ public class AplicacionMenu extends javax.swing.JFrame {
         // guardar el dato en el singleton
         //Data.getData().setUser("pablo");git  
         var Archivo = new File("C:/MEIA/usuario.txt");
+         File Bitacora = new File("C:/MEIA/bitacora_usuario.txt");
         var objManejoArchivo = new ManejoArchivo();
         String dato = Dato.getText();
+        String strError = "";
         var Modificar = new ModificarUsuario();    
         Modificar.TF_Usuariofijo.setText(dato);
         Modificar.TF_Usuariofijo.setEditable(false);
-        String linea =  objManejoArchivo.BuscarLinea(Archivo, dato, "", 0, 9);
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, dato, strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bitacora, dato, strError, 0, 9);
+         String linea = "";
+        if (!ArchivoUser.equals("")) {
+             linea =  objManejoArchivo.BuscarLinea(Archivo, dato, "", 0, 9);
+        }
+        else if(!ArchivoBita.equals(""))
+        {
+              linea =  objManejoArchivo.BuscarLinea(Bitacora, dato, "", 0, 9);
+        }        
         var split = linea.split(Pattern.quote("|"));
         String Nombre = split[1];
         String Apellido = split[2];
@@ -179,9 +190,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
         Modificar.TF_CorreoModificar.setText(Correo);
         Modificar.TF_TelefonoModificar.setText(Telefono);
         Modificar.TF_FotoModificar.setText(path_fotografia);
-        
-        
-        
+                       
         Modificar.setVisible(true);
         this.dispose();
             
