@@ -144,7 +144,7 @@ public class AccesoSistema extends javax.swing.JFrame {
             if(!TF_Usuario.getText().equals("") && !String.valueOf(TF_Password.getPassword()).equals("")){
                 objManejo.RegresarPrincipio(Archivo, strError);
                 var strActual = objManejo.BuscarLinea(Archivo, TF_Usuario.getText(), strError, 0, 9);
-                if(strActual.equals("")){
+                if(strActual.equals("")){ 
                     strActual = objManejo.BuscarLinea(Bitacora, TF_Usuario.getText(), strError, 0, 9);
                 }
                 if(!strActual.equals("")){

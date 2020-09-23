@@ -26,6 +26,47 @@ public class ManejoArchivo {
             return false;
         }
     }
+    // Modificar
+    public boolean Modificar(File Archivo,String strContenidoBusqueda ,String strContenido, String strError)
+    {
+     try 
+     {
+         FileReader fReader = new FileReader(Archivo);
+         BufferedReader br = new BufferedReader(fReader);
+         FileWriter fWriter = new FileWriter(Archivo, false);
+         BufferedWriter bw = new BufferedWriter(fWriter);
+         try
+         {
+             var Linea = br.readLine();
+             while(Linea != null)
+             {
+                 if (Linea.equals(strContenidoBusqueda)) {
+                  bw.write(strContenido + System.getProperty( "line.separator" ));
+                    bw.close();
+                    fWriter.close();
+                    br.close();
+                    fReader.close();
+                    return true;
+                 }               
+             }             
+               bw.close();
+               fWriter.close();
+               br.close();
+               fReader.close();
+         }
+         catch(Exception ex)
+         {
+             strError= ex.getMessage();
+             return false;
+         }
+     }
+      catch(Exception ex) 
+      {
+          strError= ex.getMessage();
+          return false;
+      }
+     return true;
+    }
     //Lectura linea por linea
     public String LecturaLinea(File Archivo, String strError, int pos){
         var cont = 0;

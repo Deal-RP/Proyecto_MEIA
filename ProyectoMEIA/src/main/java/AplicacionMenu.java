@@ -157,7 +157,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
     private void jButton_modificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarUsuarioActionPerformed
         // TODO add your handling code here:
         // guardar el dato en el singleton
-        //Data.getData().setUser("pablo");
+        //Data.getData().setUser("pablo");git  
         var Archivo = new File("C:/MEIA/usuario.txt");
         var objManejoArchivo = new ManejoArchivo();
         String dato = Dato.getText();

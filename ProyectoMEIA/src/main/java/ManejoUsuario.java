@@ -130,17 +130,34 @@ public class ManejoUsuario {
         }
         return "Se ha agregado existosamente el usuario";
     }
-    void ModificarUsuario(String user, String nombre, String apellido, String pass, int rol, Date fecha, String correoAlt, String telefono, String foto, int status)
+    void ModificarUsuario(String user, String nombre, String apellido, String pass, String correoAlt, String telefono, String foto)
     {
       // volver a sobreescribir los datos
         var objManejoArchivo = new ManejoArchivo();
         File Archivo = new File("C:/MEIA/usuario.txt");
+        File Bita = new File("C:/MEIA/bitacora_usuario.txt");
         var strError = "";
-        var actual = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
-        if(!actual.equals("")){
-         //   return "Usuario ya existe";
-         
-         // sobre-escribir los datos en la misma linea
-        }     
+        //strContenidoBusqueda
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, user, strError, 0, 9);
+        if(!ArchivoUser.equals("") ){
+         //  Usuario ya existe y se sobreescribe                        
+         try
+         {
+          var split = ArchivoUser.split(Pattern.quote("|"));
+             if (pass.equals("")) 
+             {
+              String password = split[3];
+              pass = password;  
+             }
+              var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + split[4] + "|" + split[5] + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
+            objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
+         }
+         catch(Exception ex){}
+        }
+        else if(!ArchivoBita.equals(""))
+        {
+        
+        }
     }
 }
