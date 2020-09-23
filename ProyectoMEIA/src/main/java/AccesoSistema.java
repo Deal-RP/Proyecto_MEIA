@@ -153,16 +153,15 @@ public class AccesoSistema extends javax.swing.JFrame {
                     if(String.valueOf(TF_Password.getPassword()).equals(objUsuario.decrypt(split[3]))){
                         //INGRESO AL SISTEMA
                         JOptionPane.showMessageDialog(null, "Bienvenido", "EXITO", 1);
+                        if(split[4].equals("1")){
+                            Data.getData().setRole("1");
+                        }else{
+                            Data.getData().setRole("0");
+                        }
                         var sistema = new AplicacionMenu();
                         sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
                         sistema.Dato.setText(split[0]);
                         sistema.Dato.setVisible(false);
-                        if(split[4].equals("1")){
-                            sistema.L_Rol.setText("Rol: Administrador");
-                        }else{
-                            sistema.L_Rol.setText("Rol: Usuario");
-                        }
-
                         try
                         {
                             Image img = new ImageIcon(split[8]).getImage();
