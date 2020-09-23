@@ -32,25 +32,24 @@ public class ManejoArchivo {
      try 
      {
          FileReader fReader = new FileReader(Archivo);
-         BufferedReader br = new BufferedReader(fReader);
-         FileWriter fWriter = new FileWriter(Archivo, false);
-         BufferedWriter bw = new BufferedWriter(fWriter);
+         BufferedReader br = new BufferedReader(fReader);        
          try
          {
              var Linea = br.readLine();
              while(Linea != null)
              {
                  if (Linea.equals(strContenidoBusqueda)) {
+                  FileWriter fWriter = new FileWriter(Archivo, false);
+                  BufferedWriter bw = new BufferedWriter(fWriter);
                   bw.write(strContenido + System.getProperty( "line.separator" ));
                     bw.close();
                     fWriter.close();
                     br.close();
-                    fReader.close();
+                    fReader.close();                    
                     return true;
-                 }               
-             }             
-               bw.close();
-               fWriter.close();
+                 } 
+                 Linea = br.readLine();
+             }                            
                br.close();
                fReader.close();
          }

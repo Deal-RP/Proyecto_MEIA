@@ -348,11 +348,12 @@ public class CrearUsuario extends javax.swing.JFrame {
                             Image img = new ImageIcon(split[8]).getImage();
                             Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
                             sistema.L_Image.setIcon(new ImageIcon(newImg));
+                            
                         } catch(Exception ex){
                             strError = ex.getMessage();
                         }
-                        sistema.setVisible(true);
-                        this.dispose();
+                         sistema.setVisible(true);
+                         this.dispose();
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "El usuario ya existe", "ERROR", 1);
