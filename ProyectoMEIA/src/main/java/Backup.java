@@ -133,21 +133,25 @@ public class Backup extends javax.swing.JFrame {
         
         if (!"".equals(pathDestiny)) {
             
-            if (objBackup.CheckFolerMeia()){
-                if (objBackup.CheckFilesBackup()) {
-                    objBackup.ModificateFilesBackup(pathDestiny);
-                    objBackup.DoBackup(pathDestiny);
-                    
-                }else{
-                    objBackup.CreateFiles(pathDestiny);
-                    objBackup.DoBackup(pathDestiny);
-                }
+            if (pathDestiny.length() <= 100) {
                 
+                if (objBackup.CheckFolerMeia()){
+                   if (objBackup.CheckFilesBackup()) {
+                       objBackup.ModificateFilesBackup(pathDestiny);
+                       objBackup.DoBackup(pathDestiny);
+
+                   }else{
+                       objBackup.CreateFiles(pathDestiny);
+                       objBackup.DoBackup(pathDestiny);
+                   }
+               }
+                else{
+                    JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+            }else {
+                
+                JOptionPane.showMessageDialog(null, "La ruta supera los 200 caracteres","ERROR",JOptionPane.ERROR_MESSAGE);
             }
-            else{
-                JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
-            }
-             
         }
         else{
             JOptionPane.showMessageDialog(null, "No selecciono lugar para guardar el backup", "ERROR",JOptionPane.ERROR_MESSAGE);
