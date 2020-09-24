@@ -1,8 +1,11 @@
 
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /*
@@ -20,8 +23,14 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
     /**
      * Creates new form CrearNuevoUsuario
      */
+     private boolean visible1 = false;
+    private boolean visible = false;
     public CrearNuevoUsuario() {
         initComponents();
+        Image img = new ImageIcon("icon.png").getImage();
+        Image newImg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        L_Visible.setIcon(new ImageIcon(newImg));
+        L_Visible2.setIcon(new ImageIcon(newImg));
     }
 
     /**
@@ -56,7 +65,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         L_Nivel = new javax.swing.JLabel();
         L_Visible = new javax.swing.JLabel();
-        L_Visible1 = new javax.swing.JLabel();
+        L_Visible2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,8 +97,24 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
         jLabel9.setText("Foto:");
 
         TF_NPassword.setText("Ingresar Password");
+        TF_NPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TF_NPasswordKeyTyped(evt);
+            }
+        });
 
         TF_INPassword.setText("ngresar Password");
+
+        TF_NFoto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TF_NFotoMouseClicked(evt);
+            }
+        });
+        TF_NFoto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TF_NFotoKeyTyped(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Regresar");
@@ -107,65 +132,80 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
             }
         });
 
+        L_Visible.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                L_VisibleMouseClicked(evt);
+            }
+        });
+
+        L_Visible2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                L_Visible2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(TF_INPassword))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(TF_NFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(L_Usuario)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(L_Nivel)))
+                            .addComponent(jLabel4))
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(TF_NUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                                     .addComponent(TF_NNombre)
-                                    .addComponent(TF_NApellido)))
+                                    .addComponent(TF_NApellido))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(L_Nivel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(TF_NPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(L_Visible))))
+                                .addGap(18, 18, 18)
+                                .addComponent(L_Visible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(62, 62, 62)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TF_Telefono)
-                            .addComponent(TF_NFoto)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel7))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(TF_NCorreo))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2)
-                                .addGap(36, 36, 36)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(L_Visible1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(TF_INPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(TF_NFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TF_Telefono)
+                                    .addComponent(TF_NFoto)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton1)
+                                    .addComponent(jLabel7))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(48, 48, 48)
+                                        .addComponent(TF_NCorreo))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2)
+                                        .addGap(36, 36, 36)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(L_Visible2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,16 +223,17 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(TF_NApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(TF_NPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(L_Nivel)
-                    .addComponent(L_Visible))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(TF_NPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(L_Visible, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(L_Nivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(TF_INPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(L_Visible1))
+                    .addComponent(L_Visible2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
@@ -287,6 +328,75 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
         }        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void L_VisibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_VisibleMouseClicked
+        // TODO add your handling code here:
+        visible = !visible;
+        if(visible){
+           TF_NPassword.setEchoChar((char)0);
+        }
+        else{
+            TF_NPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_L_VisibleMouseClicked
+
+    private void L_Visible2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_Visible2MouseClicked
+        // TODO add your handling code here:
+          visible = !visible;
+        if(visible){
+           TF_INPassword.setEchoChar((char)0);
+        }
+        else{
+            TF_INPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_L_Visible2MouseClicked
+
+    private void TF_NPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_NPasswordKeyTyped
+        // TODO add your handling code here:
+        if(String.valueOf(TF_NPassword.getPassword()).length()== 40){
+            evt.consume();
+        }
+        else{
+            Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])([A-Za-z\\d$@$!%*?&]|[^ ]){8,40}$");
+            Matcher matcher = pattern.matcher(String.valueOf(TF_NPassword.getPassword()) + evt.getKeyChar());
+            if(matcher.find()){
+                L_Nivel.setText("Nivel alto");
+                L_Nivel.setForeground(Color.GREEN);
+            }else{
+                L_Nivel.setText("Nivel bajo");
+                L_Nivel.setForeground(Color.RED);
+            }
+        }
+    }//GEN-LAST:event_TF_NPasswordKeyTyped
+
+    private void TF_NFotoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_NFotoKeyTyped
+        // TODO add your handling code here:
+           evt.consume();
+        JFileChooser dialogo = new JFileChooser();
+        File ficheroImagen;
+        String rutaArchivo;
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) 
+        {
+            ficheroImagen = dialogo.getSelectedFile();
+            rutaArchivo = ficheroImagen.getPath();
+            TF_NFoto.setText(rutaArchivo);
+        }
+    }//GEN-LAST:event_TF_NFotoKeyTyped
+
+    private void TF_NFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TF_NFotoMouseClicked
+        // TODO add your handling code here:
+          JFileChooser dialogo = new JFileChooser();
+        File ficheroImagen;
+        String rutaArchivo;
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) 
+        {
+            ficheroImagen = dialogo.getSelectedFile();
+            rutaArchivo = ficheroImagen.getPath();
+            TF_NFoto.setText(rutaArchivo);
+        }
+    }//GEN-LAST:event_TF_NFotoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -326,7 +436,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel L_Nivel;
     private javax.swing.JLabel L_Usuario;
     private javax.swing.JLabel L_Visible;
-    private javax.swing.JLabel L_Visible1;
+    private javax.swing.JLabel L_Visible2;
     private javax.swing.JPasswordField TF_INPassword;
     private javax.swing.JTextField TF_NApellido;
     private javax.swing.JTextField TF_NCorreo;
