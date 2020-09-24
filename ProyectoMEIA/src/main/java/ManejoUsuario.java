@@ -145,11 +145,11 @@ public class ManejoUsuario {
          try
          {
           var split = ArchivoUser.split(Pattern.quote("|"));
-             if (pass.equals("")) 
-             {
-              String password = split[3];
-              pass = password;  
-             }
+//             if (pass.equals("")) 
+//             {
+//              String password = split[3];
+//              pass = password;  
+//             }
               var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + split[4] + "|" + split[5] + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
             boolean mensaje = objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
             return mensaje;
@@ -162,11 +162,11 @@ public class ManejoUsuario {
          try
          {
           var split = ArchivoBita.split(Pattern.quote("|"));
-             if (pass.equals("")) 
-             {
-              String password = split[3];
-              pass = password;  
-             }
+//             if (pass.equals("")) 
+//             {
+//              String password = split[3];
+//              pass = password;  
+//             }
               var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + split[4] + "|" + split[5] + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
          boolean mensaje = objManejoArchivo.Modificar(Bita, ArchivoBita, strContenido, strError);
          return mensaje;

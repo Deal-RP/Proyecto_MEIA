@@ -31,39 +31,36 @@ public class ManejoArchivo {
     {
      try 
      {
-         FileReader fReader = new FileReader(Archivo);
-         BufferedReader br = new BufferedReader(fReader);        
-         try
-         {
+//         PrintWriter writer = new PrintWriter(file);
+//         writer.print("");
+//        writer.close();
+            FileReader fReader = new FileReader(Archivo);
+            BufferedReader br = new BufferedReader(fReader);
              var Linea = br.readLine();
-             while(Linea != null)
-             {
-                 if (Linea.equals(strContenidoBusqueda)) {
-                  FileWriter fWriter = new FileWriter(Archivo, false);
+              FileWriter fWriter = new FileWriter(Archivo, true);
                   BufferedWriter bw = new BufferedWriter(fWriter);
-                  bw.write(strContenido + System.getProperty( "line.separator" ));
-                    bw.close();
-                    fWriter.close();
-                    br.close();
-                    fReader.close();                    
-                    return true;
-                 } 
-                 Linea = br.readLine();
-             }                            
-               br.close();
-               fReader.close();
-         }
-         catch(Exception ex)
-         {
-             strError= ex.getMessage();
-             return false;
-         }
+                PrintWriter writer = new PrintWriter(Archivo);
+                 writer.print("");
+                 writer.close();
+                while(Linea != null)
+                {                    
+                 if(Linea.equals(strContenidoBusqueda))
+                 {                
+                  bw.write(strContenido + System.getProperty( "line.separator" ));                                                
+                 }
+                 else
+                 {
+                 bw.write(Linea + System.getProperty( "line.separator" )); 
+                 }
+                   Linea = br.readLine();         
+                }               
+                bw.close();
+                fWriter.close();
+                br.close();
+                fReader.close();                
      }
-      catch(Exception ex) 
-      {
-          strError= ex.getMessage();
-          return false;
-      }
+     catch(Exception ex)
+     {strError= ex.getMessage(); return false;}
      return true;
     }
     //Lectura linea por linea

@@ -96,6 +96,11 @@ public class AplicacionMenu extends javax.swing.JFrame {
         });
 
         BT_Busqueda.setText("Busqueda de usuario");
+        BT_Busqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_BusquedaActionPerformed(evt);
+            }
+        });
 
         BT_CrearUsuario.setText("Crear nuevo usuario");
 
@@ -201,7 +206,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         // guardar el dato en el singleton
         //Data.getData().setUser("pablo");git  
-        var Archivo = new File("C:/MEIA/usuario.txt");
+         File Archivo = new File("C:/MEIA/usuario.txt");
          File Bitacora = new File("C:/MEIA/bitacora_usuario.txt");
         var objManejoArchivo = new ManejoArchivo();
         String dato = Dato.getText();
@@ -242,14 +247,67 @@ public class AplicacionMenu extends javax.swing.JFrame {
 
     private void BT_BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_BajaActionPerformed
         var dataUser = Data.getData();
-        var user = dataUser.getRole();
+        var user = dataUser.getRole();               
         if(user.equals("1")){
-            
+            // administrativo
+         File Archivo = new File("C:/MEIA/usuario.txt");
+         File Bitacora = new File("C:/MEIA/bitacora_usuario.txt");
+         var objManejoArchivo = new ManejoArchivo();
+        String Usuariodardebaja = TF_Baja.getText();
+        String strError = "";
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, Usuariodardebaja, strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bitacora, Usuariodardebaja, strError, 0, 9);               
+        if(!ArchivoBita.equals("") ){
+          var  split = ArchivoBita.split(Pattern.quote("|"));
+            var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
+        "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
+             objManejoArchivo.Modificar(Bitacora, ArchivoBita, strContenido, strError);
         }
-        else{
-            
+        else
+        {
+            var split = ArchivoUser.split(Pattern.quote("|"));
+             var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
+        "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
+          objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
+        }
+        JOptionPane.showMessageDialog(null, "Usuario dado de baja", "EXITO", 1);
+        }
+        else{            
+            File Archivo = new File("C:/MEIA/usuario.txt");
+         File Bitacora = new File("C:/MEIA/bitacora_usuario.txt");
+         var objManejoArchivo = new ManejoArchivo();
+        String Usuariodardebaja = Dato.getText();
+        String strError = "";
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, Usuariodardebaja, strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bitacora, Usuariodardebaja, strError, 0, 9);               
+        if(!ArchivoBita.equals("") ){
+          var  split = ArchivoBita.split(Pattern.quote("|"));
+            var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
+        "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
+             objManejoArchivo.Modificar(Bitacora, ArchivoBita, strContenido, strError);
+        }
+        else
+        {
+            var split = ArchivoUser.split(Pattern.quote("|"));
+             var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
+        "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
+          objManejoArchivo.Modificar(Archivo,ArchivoUser, strContenido, strError);
+        }
+         JOptionPane.showMessageDialog(null, "Usuario dado de baja", "EXITO", 1);        
+            var Busqueda = new BusquedaUsuario();
+            Busqueda.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_BT_BajaActionPerformed
+
+    private void BT_BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_BusquedaActionPerformed
+        // TODO add your handling code here:
+           String dato = Dato.getText();          
+           var Busqueda = new BusquedaUsuario();
+           Busqueda.L_Usuario.setText(dato);
+            Busqueda.setVisible(true);           
+            this.dispose();        
+    }//GEN-LAST:event_BT_BusquedaActionPerformed
 
     /**
      * @param args the command line arguments

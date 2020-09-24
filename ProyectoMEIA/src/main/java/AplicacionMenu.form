@@ -194,6 +194,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Busqueda de usuario"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BT_BusquedaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BT_CrearUsuario">
       <Properties>
