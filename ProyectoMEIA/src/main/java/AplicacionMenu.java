@@ -103,6 +103,11 @@ public class AplicacionMenu extends javax.swing.JFrame {
         });
 
         BT_CrearUsuario.setText("Crear nuevo usuario");
+        BT_CrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_CrearUsuarioActionPerformed(evt);
+            }
+        });
 
         TF_Baja.setText("Usuario");
 
@@ -308,6 +313,15 @@ public class AplicacionMenu extends javax.swing.JFrame {
             Busqueda.setVisible(true);           
             this.dispose();        
     }//GEN-LAST:event_BT_BusquedaActionPerformed
+
+    private void BT_CrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_CrearUsuarioActionPerformed
+        // TODO add your handling code here:
+           String dato = Dato.getText();          
+           var CrearNuevo = new CrearNuevoUsuario();
+                CrearNuevo.L_NUSUARIO.setText(dato);
+            CrearNuevo.setVisible(true);           
+            this.dispose();        
+    }//GEN-LAST:event_BT_CrearUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
