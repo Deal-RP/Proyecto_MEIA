@@ -3,6 +3,7 @@ import java.awt.Image;
 import java.io.File;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -48,6 +49,9 @@ public class BusquedaUsuario extends javax.swing.JFrame {
         TF_CorreoB = new javax.swing.JTextField();
         TF_TelefonoB = new javax.swing.JTextField();
         BT_Regresar = new javax.swing.JButton();
+        CB_Rol = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        BT_Modificar = new javax.swing.JButton();
 
         L_Usuario.setText("jLabel7");
 
@@ -87,6 +91,19 @@ public class BusquedaUsuario extends javax.swing.JFrame {
             }
         });
 
+        CB_Rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Administrador" }));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Rol");
+
+        BT_Modificar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        BT_Modificar.setText("Modificar");
+        BT_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_ModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,29 +112,21 @@ public class BusquedaUsuario extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BT_Regresar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BT_Regresar)
+                            .addComponent(jLabel7))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(L_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(CB_Rol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(141, 141, 141))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(TF_TelefonoB)
-                                .addGap(35, 35, 35))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addContainerGap())
+                                .addComponent(L_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BT_Modificar)
+                                .addContainerGap())))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TF_CorreoB)
-                                    .addComponent(TF_FechaB)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(29, 29, 29)
@@ -131,7 +140,17 @@ public class BusquedaUsuario extends javax.swing.JFrame {
                                 .addGap(70, 70, 70)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(TF_NombreB)
-                                    .addComponent(TF_ApellidoB))))
+                                    .addComponent(TF_ApellidoB)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TF_TelefonoB)
+                                    .addComponent(TF_CorreoB)
+                                    .addComponent(TF_FechaB))))
                         .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
@@ -162,15 +181,21 @@ public class BusquedaUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(TF_TelefonoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CB_Rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(L_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BT_Regresar)
-                        .addGap(20, 20, 20))))
+                        .addGap(20, 20, 20))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BT_Modificar)
+                            .addComponent(L_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -189,40 +214,28 @@ public class BusquedaUsuario extends javax.swing.JFrame {
         {
          var split = ArchivoUser.split(Pattern.quote("|"));               
           TF_NombreB.setText(split[1]);
-          TF_NombreB.setEditable(false);
           TF_ApellidoB.setText(split[2]);
-          TF_ApellidoB.setEditable(false);
           TF_FechaB.setText(split[5]);
           TF_FechaB.setEditable(false);
           TF_CorreoB.setText(split[6]);
-          TF_CorreoB.setEditable(false);
           TF_TelefonoB.setText(split[7]);
-          TF_TelefonoB.setEditable(false);
         Image img = new ImageIcon(split[8]).getImage();
          Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
-          L_Imagen.setIcon(new ImageIcon(newImg));
-        
+          L_Imagen.setIcon(new ImageIcon(newImg));        
         }
         else
         {
           var split = ArchivoBita.split(Pattern.quote("|"));   
           TF_NombreB.setText(split[1]);
-          TF_NombreB.setEditable(false);
           TF_ApellidoB.setText(split[2]);
-          TF_ApellidoB.setEditable(false);
           TF_FechaB.setText(split[5]);
           TF_FechaB.setEditable(false);
           TF_CorreoB.setText(split[6]);
-          TF_CorreoB.setEditable(false);
           TF_TelefonoB.setText(split[7]);
-          TF_TelefonoB.setEditable(false);
         Image img = new ImageIcon(split[8]).getImage();
          Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
           L_Imagen.setIcon(new ImageIcon(newImg));
-        }
-        
-        
-                
+        }                               
     }//GEN-LAST:event_BT_BuscarActionPerformed
 
     private void BT_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_RegresarActionPerformed
@@ -258,6 +271,34 @@ public class BusquedaUsuario extends javax.swing.JFrame {
                         sistema.setVisible(true);
                         this.dispose();
     }//GEN-LAST:event_BT_RegresarActionPerformed
+
+    private void BT_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_ModificarActionPerformed
+        // TODO add your handling code here:
+          File Archivo = new File("C:/MEIA/usuario.txt");
+        File Bita = new File("C:/MEIA/bitacora_usuario.txt");
+        var objManejoUsuario = new ManejoUsuario();
+         ManejoArchivo objManejoArchivo = new ManejoArchivo();
+        var strError = "";     
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, TF_Busquedausuario.getText(), strError, 0, 9);
+        var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, TF_Busquedausuario.getText(), strError, 0, 9);
+        var split = ArchivoUser.split(Pattern.quote("|"));
+        if(!ArchivoBita.equals("") ){
+            split = ArchivoBita.split(Pattern.quote("|"));
+        }   
+        int rol = CB_Rol.getSelectedIndex();
+       boolean mensaje =  objManejoUsuario.ModificarUsuario(TF_Busquedausuario.getText(), TF_NombreB.getText(),
+          TF_ApellidoB.getText(), split[3], rol, TF_CorreoB.getText(),
+          TF_TelefonoB.getText(), split[8]);
+        
+        if (mensaje) {
+            JOptionPane.showMessageDialog(null, "Dato modificado", "EXITO", 1);
+        }
+        else
+        {
+             JOptionPane.showMessageDialog(null, "Dato No modificado", "Fallo", 1);
+        }
+        
+    }//GEN-LAST:event_BT_ModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,7 +337,9 @@ public class BusquedaUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BT_Buscar;
+    private javax.swing.JButton BT_Modificar;
     private javax.swing.JButton BT_Regresar;
+    private javax.swing.JComboBox<String> CB_Rol;
     private javax.swing.JLabel L_Imagen;
     public javax.swing.JLabel L_Usuario;
     private javax.swing.JTextField TF_ApellidoB;
@@ -311,5 +354,6 @@ public class BusquedaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

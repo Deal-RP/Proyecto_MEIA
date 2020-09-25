@@ -307,8 +307,8 @@ public class AplicacionMenu extends javax.swing.JFrame {
           objManejoArchivo.Modificar(Archivo,ArchivoUser, strContenido, strError);
         }
          JOptionPane.showMessageDialog(null, "Usuario dado de baja", "EXITO", 1);        
-            var Busqueda = new BusquedaUsuario();
-            Busqueda.setVisible(true);
+            var Inicio = new AccesoSistema();
+             Inicio.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_BT_BajaActionPerformed

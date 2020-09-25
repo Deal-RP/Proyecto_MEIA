@@ -52,7 +52,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jPasswordField2" max="32767" attributes="0"/>
+                              <Component id="ValidarNueva_contraseña" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -78,7 +78,7 @@
                                           <Component id="TF_NombreModificar" pref="316" max="32767" attributes="0"/>
                                           <Component id="TF_ApellidoModificar" max="32767" attributes="0"/>
                                           <Component id="TF_PaswordModificar" max="32767" attributes="0"/>
-                                          <Component id="jPasswordField1" max="32767" attributes="0"/>
+                                          <Component id="Nueva_Contraseña" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -140,13 +140,13 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="L_nivel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jPasswordField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Nueva_Contraseña" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPasswordField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ValidarNueva_contraseña" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="L_visible3" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -308,16 +308,16 @@
         <Property name="text" type="java.lang.String" value="Pasword Anterior"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+    <Component class="javax.swing.JPasswordField" name="Nueva_Contrase&#xf1;a">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ingrese Password"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordField1ActionPerformed"/>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jPasswordField1KeyTyped"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Nueva_Contrase&#xf1;aActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Nueva_Contrase&#xf1;aKeyTyped"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jPasswordField2">
+    <Component class="javax.swing.JPasswordField" name="ValidarNueva_contrase&#xf1;a">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ingrese Password"/>
       </Properties>

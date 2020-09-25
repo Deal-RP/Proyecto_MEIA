@@ -63,8 +63,8 @@ public class ModificarUsuario extends javax.swing.JFrame {
         TF_TelefonoModificar = new javax.swing.JTextField();
         TF_FotoModificar = new javax.swing.JTextField();
         TF_PaswordModificar = new javax.swing.JPasswordField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        Nueva_Contraseña = new javax.swing.JPasswordField();
+        ValidarNueva_contraseña = new javax.swing.JPasswordField();
         L_visible2 = new javax.swing.JLabel();
         L_visible1 = new javax.swing.JLabel();
         L_visible3 = new javax.swing.JLabel();
@@ -137,19 +137,19 @@ public class ModificarUsuario extends javax.swing.JFrame {
 
         TF_PaswordModificar.setText("Pasword Anterior");
 
-        jPasswordField1.setText("Ingrese Password");
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        Nueva_Contraseña.setText("Ingrese Password");
+        Nueva_Contraseña.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                Nueva_ContraseñaActionPerformed(evt);
             }
         });
-        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        Nueva_Contraseña.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jPasswordField1KeyTyped(evt);
+                Nueva_ContraseñaKeyTyped(evt);
             }
         });
 
-        jPasswordField2.setText("Ingrese Password");
+        ValidarNueva_contraseña.setText("Ingrese Password");
 
         L_visible2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -196,7 +196,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPasswordField2))
+                                .addComponent(ValidarNueva_contraseña))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
@@ -218,7 +218,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                                             .addComponent(TF_NombreModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                                             .addComponent(TF_ApellidoModificar)
                                             .addComponent(TF_PaswordModificar)
-                                            .addComponent(jPasswordField1))))))
+                                            .addComponent(Nueva_Contraseña))))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -260,11 +260,11 @@ public class ModificarUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
                         .addComponent(L_nivel)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Nueva_Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ValidarNueva_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(L_visible3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -340,28 +340,32 @@ public class ModificarUsuario extends javax.swing.JFrame {
             split = ArchivoBita.split(Pattern.quote("|"));
         }
         String Password = objManejoUsuario.decrypt(split[3]);
-        if(String.valueOf(TF_PaswordModificar.getPassword()).equals(objManejoUsuario.decrypt(split[3])))
+        if(String.valueOf(TF_PaswordModificar.getPassword()).equals(Password))
         {          
           //si la contraseña es la correcta
-          if(String.valueOf(jPasswordField1.getPassword()).equals(String.valueOf(jPasswordField2.getPassword()))){          
+          if(String.valueOf(Nueva_Contraseña.getPassword()).equals(String.valueOf(ValidarNueva_contraseña.getPassword()))){          
           if (L_nivel.getText().equals("Nivel alto")){        
-          Password = String.valueOf(jPasswordField1.getPassword());
+          Password = String.valueOf(Nueva_Contraseña.getPassword());
           Password = objManejoUsuario.encrypt(Password, 2, 8);
-          }
           }
           else  
           {
             JOptionPane.showMessageDialog(null, "Contraseña no cumple: Ingrese por lo menos una letra mayuscula, al menos una letra minuscula, al menos un digito, no espacios en blanco, al menos 1 caracter especial, minimo 8 caracteres", "ERROR", 1);
           }         
+          }
+          else
+          {
+              JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+          }         
         }
         else
         {
          // la contraseña no coinside mantener la misma    
-         
+         JOptionPane.showMessageDialog(null, "Mantener misma contraseña", "ADVERTENCIA", 1);
           Password =  objManejoUsuario.encrypt(Password,2,8);
         }                                         
        boolean mensaje =  objManejoUsuario.ModificarUsuario(TF_Usuariofijo.getText(), TF_NombreModificar.getText(),
-          TF_ApellidoModificar.getText(), Password, TF_CorreoModificar.getText(),
+          TF_ApellidoModificar.getText(), Password,Integer.parseInt(split[4]),TF_CorreoModificar.getText(),
           TF_TelefonoModificar.getText(), TF_FotoModificar.getText());
         
         if (mensaje) {
@@ -377,19 +381,19 @@ public class ModificarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_FotoModificarActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void Nueva_ContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_ContraseñaActionPerformed
         // TODO add your handling code here:
      
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_Nueva_ContraseñaActionPerformed
 
-    private void jPasswordField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyTyped
+    private void Nueva_ContraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Nueva_ContraseñaKeyTyped
         // TODO add your handling code here:
-        if(String.valueOf(jPasswordField1.getPassword()).length()== 40){
+        if(String.valueOf(Nueva_Contraseña.getPassword()).length()== 40){
             evt.consume();
         }
         else{
             Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])([A-Za-z\\d$@$!%*?&]|[^ ]){8,40}$");
-            Matcher matcher = pattern.matcher(String.valueOf(jPasswordField1.getPassword()) + evt.getKeyChar());
+            Matcher matcher = pattern.matcher(String.valueOf(Nueva_Contraseña.getPassword()) + evt.getKeyChar());
             if(matcher.find()){
                 L_nivel.setText("Nivel alto");
                 L_nivel.setForeground(Color.GREEN);
@@ -398,7 +402,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 L_nivel.setForeground(Color.RED);
             }
         }
-    }//GEN-LAST:event_jPasswordField1KeyTyped
+    }//GEN-LAST:event_Nueva_ContraseñaKeyTyped
 
     private void L_visible1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_visible1MouseClicked
         // TODO add your handling code here:
@@ -415,10 +419,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         visible1 = !visible1;
         if( visible1){
-            jPasswordField1.setEchoChar((char)0);
+            Nueva_Contraseña.setEchoChar((char)0);
         }
         else{
-            jPasswordField1.setEchoChar('*');
+            Nueva_Contraseña.setEchoChar('*');
         }
     }//GEN-LAST:event_L_visible2MouseClicked
 
@@ -426,10 +430,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
          visible2 = !visible2;
         if( visible2){
-            jPasswordField2.setEchoChar((char)0);
+            ValidarNueva_contraseña.setEchoChar((char)0);
         }
         else{
-            jPasswordField2.setEchoChar('*');
+            ValidarNueva_contraseña.setEchoChar('*');
         }
     }//GEN-LAST:event_L_visible3MouseClicked
 
@@ -502,6 +506,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel L_visible1;
     private javax.swing.JLabel L_visible2;
     private javax.swing.JLabel L_visible3;
+    private javax.swing.JPasswordField Nueva_Contraseña;
     public javax.swing.JTextField TF_ApellidoModificar;
     public javax.swing.JTextField TF_CorreoModificar;
     public javax.swing.JTextField TF_FotoModificar;
@@ -509,6 +514,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JPasswordField TF_PaswordModificar;
     public javax.swing.JTextField TF_TelefonoModificar;
     public javax.swing.JTextField TF_Usuariofijo;
+    private javax.swing.JPasswordField ValidarNueva_contraseña;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -518,7 +524,5 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     // End of variables declaration//GEN-END:variables
 }
