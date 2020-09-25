@@ -304,26 +304,26 @@ public class ModificarUsuario extends javax.swing.JFrame {
         if(!ArchivoUser.equals("") ){
             split = ArchivoUser.split(Pattern.quote("|"));
         }
-                        var sistema = new AplicacionMenu();
-                        sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
-                        sistema.Dato.setText(split[0]);
-                        sistema.Dato.setVisible(false);
-                        if(split[4].equals("1")){
-                            sistema.L_Rol.setText("Rol: Administrador");
-                        }else{
-                            sistema.L_Rol.setText("Rol: Usuario");
-                        }
+                var sistema = new AplicacionMenu();
+                sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
+                sistema.Dato.setText(split[0]);
+                sistema.Dato.setVisible(false);
+                if(split[4].equals("1")){
+                    sistema.L_Rol.setText("Rol: Administrador");
+                }else{
+                    sistema.L_Rol.setText("Rol: Usuario");
+                }
 
-                        try
-                        {
-                            Image img = new ImageIcon(split[8]).getImage();
-                            Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
-                            sistema.L_Image.setIcon(new ImageIcon(newImg));
-                        } catch(Exception ex){
-                            strError = ex.getMessage();
-                        }
-                        sistema.setVisible(true);
-                        this.dispose();
+                try
+                {
+                    Image img = new ImageIcon(split[8]).getImage();
+                    Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
+                    sistema.L_Image.setIcon(new ImageIcon(newImg));
+                } catch(Exception ex){
+                    strError = ex.getMessage();
+                }
+                sistema.setVisible(true);
+                this.dispose();
     }//GEN-LAST:event_BT_RegresarActionPerformed
 
     private void BT_GuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_GuardarCambiosActionPerformed

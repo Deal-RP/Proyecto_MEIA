@@ -324,6 +324,7 @@ public class CrearUsuario extends javax.swing.JFrame {
                         //INGRESO AL SISTEMA
                         JOptionPane.showMessageDialog(null, "Bienvenido", "EXITO", 1);
                         var objManejo = new ManejoArchivo();
+                        Data.getData().setUser(TF_Usuario.getText());
                         var sistema = new AplicacionMenu();
                         var Archivo = new File("C:/MEIA/usuario.txt");
                         var user = TF_Usuario.getText();

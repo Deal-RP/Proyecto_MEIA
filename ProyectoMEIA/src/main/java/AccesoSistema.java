@@ -158,6 +158,7 @@ public class AccesoSistema extends javax.swing.JFrame {
                         }else{
                             Data.getData().setRole("0");
                         }
+                        Data.getData().setUser(split[0]);
                         var sistema = new AplicacionMenu();
                         sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
                         sistema.Dato.setText(split[0]);
