@@ -1,4 +1,5 @@
 import java.io.File;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.regex.Pattern;
 
@@ -233,17 +234,21 @@ public class AplicacionMenu extends javax.swing.JFrame {
         String Nombre = split[1];
         String Apellido = split[2];
         String Pasword = split[3];
-        var Fecha = split[5];
+        String Fecha = split[5];        
         String Correo = split[6];
         String Telefono = split[7];
         String path_fotografia = split[8];
+         try{java.util.Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(Fecha);
+        Modificar.DC_Fecha.setDate(date2);
+        }catch(Exception ex){}
         Modificar.TF_NombreModificar.setText(Nombre);
         Modificar.TF_ApellidoModificar.setText(Apellido);
         //Modificar.DC_Fecha.setDate(Fecha);
         Modificar.TF_CorreoModificar.setText(Correo);
         Modificar.TF_TelefonoModificar.setText(Telefono);
         Modificar.TF_FotoModificar.setText(path_fotografia);
-                       
+       
+              
         Modificar.setVisible(true);
         this.dispose();
             
