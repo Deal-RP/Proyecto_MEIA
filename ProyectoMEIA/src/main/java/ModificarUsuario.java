@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /*
@@ -118,9 +119,19 @@ public class ModificarUsuario extends javax.swing.JFrame {
             }
         });
 
+        TF_FotoModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TF_FotoModificarMouseClicked(evt);
+            }
+        });
         TF_FotoModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_FotoModificarActionPerformed(evt);
+            }
+        });
+        TF_FotoModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TF_FotoModificarKeyTyped(evt);
             }
         });
 
@@ -138,7 +149,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField2.setText("jPasswordField2");
+        jPasswordField2.setText("Ingrese Password");
 
         L_visible2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -421,6 +432,33 @@ public class ModificarUsuario extends javax.swing.JFrame {
             jPasswordField2.setEchoChar('*');
         }
     }//GEN-LAST:event_L_visible3MouseClicked
+
+    private void TF_FotoModificarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_FotoModificarKeyTyped
+        evt.consume();
+        JFileChooser dialogo = new JFileChooser();
+        File ficheroImagen;
+        String rutaArchivo;
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) 
+        {
+            ficheroImagen = dialogo.getSelectedFile();
+            rutaArchivo = ficheroImagen.getPath();
+            TF_FotoModificar.setText(rutaArchivo);
+        }
+    }//GEN-LAST:event_TF_FotoModificarKeyTyped
+
+    private void TF_FotoModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TF_FotoModificarMouseClicked
+        JFileChooser dialogo = new JFileChooser();
+        File ficheroImagen;
+        String rutaArchivo;
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) 
+        {
+            ficheroImagen = dialogo.getSelectedFile();
+            rutaArchivo = ficheroImagen.getPath();
+            TF_Foto.setText(rutaArchivo);
+        }
+    }//GEN-LAST:event_TF_FotoModificarMouseClicked
 
     /**
      * @param args the command line arguments

@@ -295,7 +295,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TF_FotoModificar">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TF_FotoModificarMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_FotoModificarActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_FotoModificarKeyTyped"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -317,7 +319,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPasswordField2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField2"/>
+        <Property name="text" type="java.lang.String" value="Ingrese Password"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="L_visible2">
