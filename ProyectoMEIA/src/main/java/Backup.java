@@ -41,6 +41,7 @@ public class Backup extends javax.swing.JFrame {
         jButton_buscar = new javax.swing.JButton();
         jButton_generar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,24 +64,35 @@ public class Backup extends javax.swing.JFrame {
 
         jLabel2.setText("Back up");
 
+        jButton_regresar.setText("Regresar");
+        jButton_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_regresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField_path))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(53, 53, 53))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField_path))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(53, 53, 53)))
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton_generar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)))
-                .addGap(30, 30, 30)
-                .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)
+                        .addComponent(jButton_generar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton_regresar)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,8 +106,10 @@ public class Backup extends javax.swing.JFrame {
                     .addComponent(jTextField_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_generar)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_regresar)
+                    .addComponent(jButton_generar))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,36 +128,30 @@ public class Backup extends javax.swing.JFrame {
 
     private void jButton_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_generarActionPerformed
         // TODO add your handling code here:
+        var objBackup= new BackupManagement();
+        var pathDestiny = jTextField_path.getText();
         
-        if (!"".equals(jTextField_path.getText())) {
+        if (!"".equals(pathDestiny)) {
             
-            if (CheckFiles()){
+            if (pathDestiny.length() <= 100) {
                 
-                var pathDestiny = jTextField_path.getText();
-                var folderSource = new File("C:/MEIA");
-                var folderDestiny = new File(pathDestiny +"/MEIA Backup");
-                
-                if (folderDestiny.exists()){
-                    
-                    folderDestiny.delete();
-                    folderDestiny.mkdir();
-                    
-                }else{
-                    folderDestiny.mkdir();
+                if (objBackup.CheckFolerMeia()){
+                   if (objBackup.CheckFilesBackup()) {
+                       objBackup.ModificateFilesBackup(pathDestiny);
+                       objBackup.DoBackup(pathDestiny);
+
+                   }else{
+                       objBackup.CreateFiles(pathDestiny);
+                       objBackup.DoBackup(pathDestiny);
+                   }
+               }
+                else{
+                    JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
                 }
+            }else {
                 
-                 
-                 try{
-                        FileUtils.copyDirectory(folderSource, folderDestiny);
-                    } 
-                 catch(IOException e){
-             
-                    }
+                JOptionPane.showMessageDialog(null, "La ruta supera los 200 caracteres","ERROR",JOptionPane.ERROR_MESSAGE);
             }
-            else{
-                JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
-            }
-             
         }
         else{
             JOptionPane.showMessageDialog(null, "No selecciono lugar para guardar el backup", "ERROR",JOptionPane.ERROR_MESSAGE);
@@ -151,17 +159,16 @@ public class Backup extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_generarActionPerformed
 
-    // Method to Check if the folder MEIA exist, if this exist return true and if not return false
-    private boolean CheckFiles(){
-        var path = new File("C:/MEIA");
-        if (path.exists()) {
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    private void jButton_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_regresarActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton_regresarActionPerformed
+
     
+    
+     
+    
+
     /**
      * @param args the command line arguments
      */
@@ -200,6 +207,7 @@ public class Backup extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JButton jButton_generar;
+    private javax.swing.JButton jButton_regresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField_path;
