@@ -225,7 +225,20 @@ public class AccesoSistema extends javax.swing.JFrame {
     private void BT_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_SalirActionPerformed
         int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir? ", "¿Salir?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (iRespuesta == 0) 
-        {            
+        {
+            var objManejoArchivo = new ManejoArchivo();
+            File Archivo = new File("C:/MEIA/usuario.txt");
+            File Bita = new File("C:/MEIA/bitacora_usuario.txt");
+            var strError = "";
+            if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
+                objManejoArchivo.LimpiarBitacora();
+                objManejoArchivo.ModifyFilesDescUser("root", true, strError);
+            }
+            else{
+                objManejoArchivo.LimpiarBitacora();
+                objManejoArchivo.ModifyFilesDescUser("root", false, strError);
+            }
+            objManejoArchivo.ModifyFilesDescBita("root", true, strError);
             System.exit(0);
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed
