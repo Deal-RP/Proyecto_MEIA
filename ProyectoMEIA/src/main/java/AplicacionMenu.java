@@ -252,7 +252,8 @@ public class AplicacionMenu extends javax.swing.JFrame {
 
     private void BT_BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_BajaActionPerformed
         var dataUser = Data.getData();
-        var user = dataUser.getRole();               
+        var user = dataUser.getRole();  
+        var Nusuario = dataUser.getUser();
         if(user.equals("1")){
             // administrativo
          File Archivo = new File("C:/MEIA/usuario.txt");
@@ -260,6 +261,12 @@ public class AplicacionMenu extends javax.swing.JFrame {
          var objManejoArchivo = new ManejoArchivo();
         String Usuariodardebaja = TF_Baja.getText();
         String strError = "";
+            if (Nusuario.equals(Usuariodardebaja)) {
+                JOptionPane.showMessageDialog(null, "No se puede dar de baja", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+            
         var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, Usuariodardebaja, strError, 0, 9);
         var ArchivoBita = objManejoArchivo.BuscarLinea(Bitacora, Usuariodardebaja, strError, 0, 9);               
         if(!ArchivoBita.equals("") ){
@@ -274,8 +281,9 @@ public class AplicacionMenu extends javax.swing.JFrame {
              var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
         "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
           objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
-        }
+        }  
         JOptionPane.showMessageDialog(null, "Usuario dado de baja", "EXITO", 1);
+            }
         }
         else{            
             File Archivo = new File("C:/MEIA/usuario.txt");

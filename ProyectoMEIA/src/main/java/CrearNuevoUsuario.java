@@ -31,6 +31,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
         Image newImg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         L_Visible.setIcon(new ImageIcon(newImg));
         L_Visible2.setIcon(new ImageIcon(newImg));
+        
     }
 
     /**
@@ -66,6 +67,8 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
         L_Nivel = new javax.swing.JLabel();
         L_Visible = new javax.swing.JLabel();
         L_Visible2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        CB_Rol = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,6 +147,11 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Rol");
+
+        CB_Rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Administrador", " " }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,7 +173,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
                                     .addComponent(TF_NUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                                     .addComponent(TF_NNombre)
                                     .addComponent(TF_NApellido))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE))
+                                .addContainerGap(96, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(L_Nivel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -173,16 +181,20 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(L_Visible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(83, 83, 83)
+                                .addComponent(CB_Rol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(TF_INPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addComponent(TF_NFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel9))
@@ -190,7 +202,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(TF_Telefono)
                                     .addComponent(TF_NFoto)))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton1)
                                     .addComponent(jLabel7))
@@ -203,8 +215,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
                                         .addComponent(jButton2)
                                         .addGap(36, 36, 36)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(L_Visible2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 0, 0))
+                        .addComponent(L_Visible2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +261,11 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(TF_NFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(CB_Rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -304,9 +319,9 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
             if(String.valueOf(TF_NPassword.getPassword()).equals(String.valueOf(TF_INPassword.getPassword()))){
                 if(L_Nivel.getText().equals("Nivel alto")){
                     var dataUser = Data.getData();
-                    var rol = dataUser.getRole();
+                    var rol = CB_Rol.getSelectedIndex();                    
                     strError = objUsuario.crearUsuario(TF_NUsuario.getText(), TF_NNombre.getText(), TF_NApellido.getText(), String.valueOf(TF_NPassword.getPassword()), 
-                            Integer.parseInt(rol), fecha, TF_NCorreo.getText(), TF_Telefono.getText(), TF_NFoto.getText(), 1);
+                            rol, fecha, TF_NCorreo.getText(), TF_Telefono.getText(), TF_NFoto.getText(), 1);
                     if(!strError.equals("Usuario ya existe")){
                         //Usuario Registrado con exito                       
                         JOptionPane.showMessageDialog(null, "Usuario Registrado con exito", "Excelente", 1);
@@ -432,6 +447,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CB_Rol;
     public javax.swing.JLabel L_NUSUARIO;
     private javax.swing.JLabel L_Nivel;
     private javax.swing.JLabel L_Usuario;
@@ -448,6 +464,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField TF_Telefono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
