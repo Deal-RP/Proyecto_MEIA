@@ -447,7 +447,9 @@ public class ModificarUsuario extends javax.swing.JFrame {
         {
             ficheroImagen = dialogo.getSelectedFile();
             rutaArchivo = ficheroImagen.getPath();
-            TF_FotoModificar.setText(rutaArchivo);
+            var dataUser = Data.getData();
+            var objUsuario = new ManejoUsuario();
+            TF_FotoModificar.setText(objUsuario.copyImage(rutaArchivo, dataUser.getUser()));
         }
     }//GEN-LAST:event_TF_FotoModificarKeyTyped
 
@@ -460,7 +462,9 @@ public class ModificarUsuario extends javax.swing.JFrame {
         {
             ficheroImagen = dialogo.getSelectedFile();
             rutaArchivo = ficheroImagen.getPath();
-            TF_FotoModificar.setText(rutaArchivo);
+            var dataUser = Data.getData();
+            var objUsuario = new ManejoUsuario();
+            TF_FotoModificar.setText(objUsuario.copyImage(rutaArchivo, dataUser.getUser()));
         }
     }//GEN-LAST:event_TF_FotoModificarMouseClicked
 

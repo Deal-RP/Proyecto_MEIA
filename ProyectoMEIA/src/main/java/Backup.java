@@ -144,9 +144,10 @@ public class Backup extends javax.swing.JFrame {
                        objBackup.CreateFiles(pathDestiny);
                        objBackup.DoBackup(pathDestiny);
                    }
+                   JOptionPane.showMessageDialog(null, "BACKUP realizado exitosamente", "EXITO",JOptionPane.INFORMATION_MESSAGE);
                }
                 else{
-                    JOptionPane.showMessageDialog(null, "No existe la parpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No existe la carpeta MEIA en C:", "ERROR",JOptionPane.ERROR_MESSAGE);
                 }
             }else {
                 
