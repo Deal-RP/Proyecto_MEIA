@@ -456,7 +456,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
         {
             ficheroImagen = dialogo.getSelectedFile();
             rutaArchivo = ficheroImagen.getPath();
-            TF_Foto.setText(rutaArchivo);
+            TF_FotoModificar.setText(rutaArchivo);
         }
     }//GEN-LAST:event_TF_FotoModificarMouseClicked
 
