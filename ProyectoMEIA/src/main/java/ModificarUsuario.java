@@ -356,7 +356,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
         if(!ArchivoBita.equals("") ){
             split = ArchivoBita.split(Pattern.quote("|"));
         }
-        String Password = objManejoUsuario.decrypt(split[3]);
+        var Password = objManejoUsuario.decrypt(split[3]);
         if(String.valueOf(TF_PaswordModificar.getPassword()).equals(Password))
         {          
           //si la contraseña es la correcta
@@ -368,18 +368,20 @@ public class ModificarUsuario extends javax.swing.JFrame {
           else  
           {
             JOptionPane.showMessageDialog(null, "Contraseña no cumple: Ingrese por lo menos una letra mayuscula, al menos una letra minuscula, al menos un digito, no espacios en blanco, al menos 1 caracter especial, minimo 8 caracteres", "ERROR", 1);
-          }         
+            Password = split[3];
+          }
           }
           else
           {
               JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+              Password = split[3];
           }         
         }
         else
         {
          // la contraseña no coinside mantener la misma    
-         JOptionPane.showMessageDialog(null, "Mantener misma contraseña", "ADVERTENCIA", 1);
-          Password =  objManejoUsuario.encrypt(Password,2,8);
+            JOptionPane.showMessageDialog(null, "Mantener misma contraseña", "ADVERTENCIA", 1);
+            Password = split[3];
         }                                         
        boolean mensaje =  objManejoUsuario.ModificarUsuario(TF_Usuariofijo.getText(), TF_NombreModificar.getText(),
           TF_ApellidoModificar.getText(), Password,Integer.parseInt(split[4]),TF_CorreoModificar.getText(),
