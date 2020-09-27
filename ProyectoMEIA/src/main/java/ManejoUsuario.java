@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Date;
@@ -174,6 +177,33 @@ public class ManejoUsuario {
          catch(Exception ex){  return false;}
         }
         return true;
-    }  
+    } 
+    
+    public String[] ReadFile(){
+        
+          var arrayData = new String[9];
+         try {
+            
+            var descBitacoraUsuario = new File("C:/MEIA/des_bitacora_usuario");
+
+            
+            var counter = 0;
+
+            BufferedReader br = new BufferedReader(new FileReader(descBitacoraUsuario)); 
+
+            String st; 
+            while ((st = br.readLine()) != null){
+                arrayData[counter] = st;
+                counter ++;
+            }
+
+            br.close();
+            return arrayData;
+
+        } catch (Exception e) {
+            //TODO: handle exception
+            return arrayData;
+        }
+    }
 }
 
