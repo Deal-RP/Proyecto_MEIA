@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 /*
@@ -179,6 +181,8 @@ public class ManejoUsuario {
         return true;
     } 
     
+    //function to read te file des bitacora usert
+    // return an array that have de lines of the file 
     public String[] ReadFile(){
         
           var arrayData = new String[9];
@@ -204,6 +208,55 @@ public class ManejoUsuario {
             //TODO: handle exception
             return arrayData;
         }
+    }
+    //method that modify the the reoganization in the des bitacora user
+    public void ModifyFileDes(String numReorganization){
+        try {
+            var dataUser=Data.getData();
+            var user = dataUser.getUser();
+            var dataFile = ReadFile();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+
+            for (int i = 3; i < dataFile.length; i++) {
+
+
+                if (i==3) {
+
+                     var split = dataFile[i].split(":");
+                     dataFile[i] = split[0] + ":" + dateFormat.format(date) ;
+
+                }else if (i==4) {
+                     var split = dataFile[i].split(":");
+                     dataFile[i] = split[0] + ":" + user ;
+
+                }else if (i==8) {
+                     var split = dataFile[i].split(":");
+                     dataFile[i] = split[0] + ":" + numReorganization ;
+
+                }
+
+            }
+
+            var descBitacoraFile = new File("C:/MEIA/desc_bitacora_usuario.txt");
+
+            var writer = new FileWriter(descBitacoraFile);
+
+            for (int i = 0; i < dataFile.length; i++) {
+
+                writer.write(dataFile[i] + "\n");
+
+            }
+
+        writer.close();
+
+        } catch (Exception e) {
+            //TODO: handle exception
+
+        }
+
+        
     }
 }
 

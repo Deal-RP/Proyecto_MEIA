@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.util.regex.*;  
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +22,7 @@ public class ModifyBitacoraUser extends javax.swing.JFrame {
         
     }
     
+    // methot tho display de data that have the file des bitacora file into the text area
     private void DisplayData(){
         var objUsuario= new ManejoUsuario();
         var arrayData=objUsuario.ReadFile();
@@ -53,6 +56,11 @@ public class ModifyBitacoraUser extends javax.swing.JFrame {
         jLabel2.setText("Nueva Reorganización ");
 
         jButton_change.setText("Cambiar");
+        jButton_change.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_changeActionPerformed(evt);
+            }
+        });
 
         jButton_return.setText("Regresar");
         jButton_return.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +121,21 @@ public class ModifyBitacoraUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton_returnActionPerformed
+
+    private void jButton_changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_changeActionPerformed
+        // TODO add your handling code here:
+        String regex = "[0-9]+";
+       
+        if (jTextField_newReorganization.getText().matches(regex)) {
+            
+            var objUser = new ManejoUsuario();
+            objUser.ModifyFileDes(jTextField_newReorganization.getText());
+            DisplayData();
+            
+        }else  {
+            JOptionPane.showMessageDialog(null, "Ingreso algo distinto a un numero", "ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton_changeActionPerformed
 
     /**
      * @param args the command line arguments
