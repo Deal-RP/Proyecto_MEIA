@@ -345,6 +345,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
 
     private void BT_GuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_GuardarCambiosActionPerformed
         // TODO add your handling code here:
+        var cont = 0;
         File Archivo = new File("C:/MEIA/usuario.txt");
         File Bita = new File("C:/MEIA/bitacora_usuario.txt");
         var objManejoUsuario = new ManejoUsuario();
@@ -355,6 +356,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
         var split = ArchivoUser.split(Pattern.quote("|"));
         if(!ArchivoBita.equals("") ){
             split = ArchivoBita.split(Pattern.quote("|"));
+            cont = 1;
         }
         var Password = objManejoUsuario.decrypt(split[3]);
         if(String.valueOf(TF_PaswordModificar.getPassword()).equals(Password))
@@ -389,6 +391,12 @@ public class ModificarUsuario extends javax.swing.JFrame {
         
         if (mensaje) {
             JOptionPane.showMessageDialog(null, "Dato modificado", "EXITO", 1);
+            if(cont == 1){
+                objManejoArchivo.ModifyFilesDescBita(split[0], false, strError);
+            }
+            else{
+                objManejoArchivo.ModifyFilesDescUser(split[0], false, strError);
+            }
         }
         else
         {
