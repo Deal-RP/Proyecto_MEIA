@@ -230,15 +230,26 @@ public class AccesoSistema extends javax.swing.JFrame {
             File Archivo = new File("C:/MEIA/usuario.txt");
             File Bita = new File("C:/MEIA/bitacora_usuario.txt");
             var strError = "";
-            if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
-                objManejoArchivo.LimpiarBitacora();
-                objManejoArchivo.ModifyFilesDescUser("root", true, strError);
+            if(objManejoArchivo.CantidadRegistros(Bita, strError) != 0){
+                if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
+                    objManejoArchivo.LimpiarBitacora();
+                    objManejoArchivo.ModifyFilesDescUser("root", true, strError);
+                }
+                else{
+                    objManejoArchivo.LimpiarBitacora();
+                    objManejoArchivo.ModifyFilesDescUser("root", false, strError);
+                }
+                objManejoArchivo.ModifyFilesDescBita("root", true, strError);
             }
-            else{
-                objManejoArchivo.LimpiarBitacora();
-                objManejoArchivo.ModifyFilesDescUser("root", false, strError);
+            if(objManejoArchivo.CantidadRegistros(Archivo, strError) != 0){
+                objManejoArchivo.LimpiarUsuario();
+                if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
+                    objManejoArchivo.ModifyFilesDescUser("root", true, strError);
+                }
+                else{
+                    objManejoArchivo.ModifyFilesDescUser("root", false, strError);
+                }
             }
-            objManejoArchivo.ModifyFilesDescBita("root", true, strError);
             System.exit(0);
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed

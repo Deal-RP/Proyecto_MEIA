@@ -356,13 +356,46 @@ public class ManejoArchivo {
             strError = ex.getMessage();
         }
     }
+    //Limpieza usuario
+    public void LimpiarUsuario(){
+        File oldfile = new File("C:/MEIA/usuario.txt");
+        File newfile = new File("C:/MEIA/usuario_temp.txt");
+        oldfile.renameTo(newfile);
+        File inputFile = new File("C:/MEIA/usuario_temp.txt");
+        File outputFile = new File("C:/MEIA/usuario.txt");
+        try {
+          BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+          BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+
+        String Linea;
+
+        while((Linea = reader.readLine()) != null) {
+            var split = Linea.split(Pattern.quote("|"));
+            if(split[9].equals("0")){ 
+                continue;
+            }
+            writer.write(Linea + System.getProperty("line.separator"));
+        }       
+
+        writer.close();
+        reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        inputFile.delete();
+    }
     //Modificacion desc_usuario_bitacora
     public void ModifyFilesDescBita(String user, boolean creacion, String strError){
         try {
             File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_usuario.txt");
             var cant = maximoReorganizar();
-            var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 2);
-            var userCreacion = LecturaLinea(pathFileBitaDesc, strError, 3);
+            var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 1);
+            var split = fechaCreacion.split(Pattern.quote(":"));
+            fechaCreacion = split[1] +":"+ split[2]+":"+ split[3];
+            var userCreacion = LecturaLinea(pathFileBitaDesc, strError, 2);
+            split = userCreacion.split(Pattern.quote(":"));
+            userCreacion = split[1];
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileBitaDesc);
@@ -391,8 +424,12 @@ public class ManejoArchivo {
     public void ModifyFilesDescUser(String user, boolean creacion, String strError){
         try {
             File pathFileBitaDesc = new File("C:/MEIA/desc_usuario.txt");
-            var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 2);
-            var userCreacion = LecturaLinea(pathFileBitaDesc, strError, 3);
+            var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 1);
+            var split = fechaCreacion.split(Pattern.quote(":"));
+            fechaCreacion = split[1] +":"+ split[2]+":"+ split[3];
+            var userCreacion = LecturaLinea(pathFileBitaDesc, strError, 2);
+            split = userCreacion.split(Pattern.quote(":"));
+            userCreacion = split[1];
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileBitaDesc);
