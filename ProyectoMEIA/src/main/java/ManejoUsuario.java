@@ -184,7 +184,7 @@ public class ManejoUsuario {
           var arrayData = new String[9];
          try {
             
-            var descBitacoraUsuario = new File("C:/MEIA/des_bitacora_usuario");
+            var descBitacoraUsuario = new File("C:/MEIA/desc_bitacora_usuario.txt");
 
             
             var counter = 0;
