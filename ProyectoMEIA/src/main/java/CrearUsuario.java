@@ -309,9 +309,9 @@ public class CrearUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_TF_FotoMouseClicked
 
     private void BT_CrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_CrearUsuarioActionPerformed
-        var objUsuario = new ManejoUsuario();
+        var objUsuario = new ManejoUsuario();      
         var fecha = cFecha.getDate();
-        var strError = "";
+        var strError = "";        
         if(!TF_Usuario.getText().equals("") && !TF_Nombre.getText().equals("") && !TF_Apellido.getText().equals("") && !String.valueOf(TF_Password.getPassword()).equals("")
                     && fecha != null && !TF_CorreoAlt.getText().equals("") && !TF_Telefono.getText().equals("") && !TF_Foto.getText().equals("")){
             if(String.valueOf(TF_Password.getPassword()).equals(String.valueOf(TF_Password1.getPassword()))){

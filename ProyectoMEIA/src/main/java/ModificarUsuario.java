@@ -2,6 +2,8 @@
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
@@ -349,14 +351,14 @@ public class ModificarUsuario extends javax.swing.JFrame {
         File Bita = new File("C:/MEIA/bitacora_usuario.txt");
         var objManejoUsuario = new ManejoUsuario();
          ManejoArchivo objManejoArchivo = new ManejoArchivo();
-        var strError = "";     
+        var strError = "";                     
         var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, TF_Usuariofijo.getText(), strError, 0, 9);
         var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, TF_Usuariofijo.getText(), strError, 0, 9);
         var split = ArchivoUser.split(Pattern.quote("|"));
         if(!ArchivoBita.equals("") ){
             split = ArchivoBita.split(Pattern.quote("|"));
         }
-        String Password = objManejoUsuario.decrypt(split[3]);
+        String Password = objManejoUsuario.decrypt(split[3]);    
         if(String.valueOf(TF_PaswordModificar.getPassword()).equals(Password))
         {          
           //si la contraseña es la correcta
@@ -380,9 +382,22 @@ public class ModificarUsuario extends javax.swing.JFrame {
          // la contraseña no coinside mantener la misma    
          JOptionPane.showMessageDialog(null, "Mantener misma contraseña", "ADVERTENCIA", 1);
           Password =  objManejoUsuario.encrypt(Password,2,8);
-        }                                         
+        }      
+        String fecha = "";
+        Date date;
+        date = DC_Fecha.getDate();
+        if(date == null)
+        {
+            // conservar misma fecha
+            fecha = split[5];
+        }
+        else
+        {
+          //agregar nueva fecha
+           fecha = DC_Fecha.getDate().toString();
+        }
        boolean mensaje =  objManejoUsuario.ModificarUsuario(TF_Usuariofijo.getText(), TF_NombreModificar.getText(),
-          TF_ApellidoModificar.getText(), Password,Integer.parseInt(split[4]),TF_CorreoModificar.getText(),
+          TF_ApellidoModificar.getText(), Password,Integer.parseInt(split[4]),fecha ,TF_CorreoModificar.getText(),
           TF_TelefonoModificar.getText(), TF_FotoModificar.getText());
         
         if (mensaje) {

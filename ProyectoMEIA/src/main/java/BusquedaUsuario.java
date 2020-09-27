@@ -287,7 +287,7 @@ public class BusquedaUsuario extends javax.swing.JFrame {
         }   
         int rol = CB_Rol.getSelectedIndex();
        boolean mensaje =  objManejoUsuario.ModificarUsuario(TF_Busquedausuario.getText(), TF_NombreB.getText(),
-          TF_ApellidoB.getText(), split[3], rol, TF_CorreoB.getText(),
+          TF_ApellidoB.getText(), split[3], rol, split[5],TF_CorreoB.getText(),
           TF_TelefonoB.getText(), split[8]);
         
         if (mensaje) {
