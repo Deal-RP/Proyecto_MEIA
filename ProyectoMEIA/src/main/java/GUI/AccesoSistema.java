@@ -1,3 +1,10 @@
+package GUI;
+
+import Management.ManejoUsuario;
+import Management.Data;
+import Management.ManejoArchivo;
+import GUI.CrearUsuario;
+import GUI.AplicacionMenu;
 import java.awt.Image;
 import java.io.File;
 import java.util.regex.Pattern;

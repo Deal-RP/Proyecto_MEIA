@@ -1,4 +1,12 @@
+package GUI;
 
+
+import Management.ManejoArchivo;
+import Management.Data;
+import GUI.Backup;
+import GUI.BusquedaUsuario;
+import GUI.ModificarUsuario;
+import GUI.ModifyBitacoraUser;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -32,6 +40,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
             BT_CrearUsuario.setVisible(false);
             BT_Busqueda.setVisible(false);
             TF_Baja.setVisible(false);
+            jButton_changeMaxOrganization.setVisible(false);
         }
     }
 
@@ -193,12 +202,12 @@ public class AplicacionMenu extends javax.swing.JFrame {
                         .addComponent(BT_Busqueda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BT_CrearUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_changeMaxOrganization)
+                        .addComponent(jButton_changeMaxOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

@@ -1,6 +1,11 @@
+package GUI;
 
 
 
+
+import Management.ManejoArchivo;
+import Management.Data;
+import Management.ManejoUsuario;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;

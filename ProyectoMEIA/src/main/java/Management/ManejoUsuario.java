@@ -1,3 +1,5 @@
+package Management;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -36,12 +38,12 @@ public class ManejoUsuario {
         }
         return in.toString();
     }
-    String decrypt(String encryted) {
+    public String decrypt(String encryted) {
         String half1 = halfOfString(encryted, 0);
         String half2 = halfOfString(encryted, 1);
         return encrypt(encryted, 26 - 2, 26 - 8);
     }
-    String halfOfString(String message, int start){
+    public String halfOfString(String message, int start){
         String in = "";
         for(int i =0; i < message.length(); i++){
             if(i % 2 == start){
@@ -50,7 +52,7 @@ public class ManejoUsuario {
         }
         return in;
     }
-    String encrypt(String input, int key1, int key2){
+    public String encrypt(String input, int key1, int key2){
         String abc = "abcdefghijklmnopqrstuvwxyz";
         String ABC = abc.toUpperCase();
         StringBuilder in = new StringBuilder(input);
@@ -81,7 +83,7 @@ public class ManejoUsuario {
         }
         return in.toString();
     }
-    String copyImage(String strOrigen, String user){
+    public String copyImage(String strOrigen, String user){
         try{
             FileSystem sysArchivo = FileSystems.getDefault();
             Path ruta = sysArchivo.getPath(strOrigen);
@@ -135,7 +137,7 @@ public class ManejoUsuario {
         }
         return "Se ha agregado existosamente el usuario";
     }
-    boolean ModificarUsuario(String user, String nombre, String apellido, String pass,int rol, String correoAlt, String telefono, String foto)
+    public boolean ModificarUsuario(String user, String nombre, String apellido, String pass,int rol, String correoAlt, String telefono, String foto)
     {
       // volver a sobreescribir los datos
         var objManejoArchivo = new ManejoArchivo();
