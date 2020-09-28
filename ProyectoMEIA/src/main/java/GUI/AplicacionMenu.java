@@ -313,6 +313,8 @@ public class AplicacionMenu extends javax.swing.JFrame {
             var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
         "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
              objManejoArchivo.Modificar(Bitacora, ArchivoBita, strContenido, strError);
+             objManejoArchivo.ModifyFilesDescBita(Nusuario, false, strError);
+             
         }
         else
         {
@@ -320,6 +322,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
              var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
         "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
           objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
+          objManejoArchivo.ModifyFilesDescUser(Nusuario,false, strError);
         }  
         JOptionPane.showMessageDialog(null, "Usuario dado de baja", "EXITO", 1);
             }
@@ -337,6 +340,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
             var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
         "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
              objManejoArchivo.Modificar(Bitacora, ArchivoBita, strContenido, strError);
+             objManejoArchivo.ModifyFilesDescBita(Usuariodardebaja, false, strError);
         }
         else
         {
@@ -344,6 +348,7 @@ public class AplicacionMenu extends javax.swing.JFrame {
              var strContenido = split[0] + "|" + split[1] + "|" + split[2] + "|" + split[3] +
         "|" + split[4] + "|" + split[5] + "|" + split[6] + "|" + split[7] + "|" + split[8] + "|" + "0";
           objManejoArchivo.Modificar(Archivo,ArchivoUser, strContenido, strError);
+          objManejoArchivo.ModifyFilesDescUser(Usuariodardebaja,false, strError);
         }
          JOptionPane.showMessageDialog(null, "Usuario dado de baja", "EXITO", 1);        
             var Inicio = new AccesoSistema();
