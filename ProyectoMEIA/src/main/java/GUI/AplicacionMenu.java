@@ -41,6 +41,9 @@ public class AplicacionMenu extends javax.swing.JFrame {
             BT_Busqueda.setVisible(false);
             TF_Baja.setVisible(false);
             jButton_changeMaxOrganization.setVisible(false);
+            jLabel3.setVisible(false);
+            jLabel2.setVisible(false);
+            jButton_crearBackup.setVisible(false);
         }
     }
 
