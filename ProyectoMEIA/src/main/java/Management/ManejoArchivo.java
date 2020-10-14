@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
+import javax.swing.DefaultListModel;
 
 public class ManejoArchivo {
     //Escritura en el archivo
@@ -162,6 +163,58 @@ public class ManejoArchivo {
         }
         return "";
     }
+    
+    //Busqueda de varias lineas en archivo
+    public DefaultListModel BuscarContacto(File Archivo, String strBuscar, int cant, String strError, int lastPos){
+        var lista = new DefaultListModel();
+        try 
+        {
+            FileReader fReader = new FileReader(Archivo);
+            BufferedReader br = new BufferedReader(fReader);
+            try
+            {
+                var Linea = br.readLine();
+                while(Linea != null)
+                {
+                    if(!"".equals(Linea))
+                    {
+                        var cont = 0;
+                        var split = Linea.split(Pattern.quote("|"));
+                        var splitBuscar = strBuscar.split(Pattern.quote("|"));
+                        if(!splitBuscar[0].equals("")){
+                            if(split[0].equals(splitBuscar[0]) && split[lastPos].equals("1")){
+                                cont++;
+                            }
+                        }
+                        if(!splitBuscar[1].equals("")){
+                            if(split[1].equals(splitBuscar[1]) && split[lastPos].equals("1")){
+                                cont++;
+                            }
+                        }
+                        if(!splitBuscar[2].equals("")){
+                            if(split[2].equals(splitBuscar[2]) && split[lastPos].equals("1")){
+                                cont++;
+                            }
+                        }
+                        if(cont == cant){
+                            lista.addElement(split[0] + "|" + split[1] + "|" + split[2]);
+                        }
+                    }
+                    Linea = br.readLine();
+                }
+                br.close();
+                fReader.close();
+            } catch (IOException ex) {
+                strError= ex.getMessage();
+                return lista;
+            }
+        } catch (FileNotFoundException ex) {
+            strError= ex.getMessage();
+            return lista;
+        }
+        return lista;
+    }
+    
     //Cantidad total de registros
     public int cantVigente(File Archivo, String strError, int lastPos, int vigente){
         var cont = 0;
@@ -239,12 +292,12 @@ public class ManejoArchivo {
     }
     //method to create the files of the user in the folder, the user file only create and the desc user create and write the description 
     //The user of creation and modification we put root and the records are 0
-    public void CreationFilesUsers(String strError){
+    public void CreationFilesUsers(String nombre, String strError){
         try {
-            File pathFileUser = new File("C:/MEIA/usuario.txt");
-            File pathFileUserDesc = new File("C:/MEIA/desc_usuario.txt");
-            File pathFileBita = new File("C:/MEIA/bitacora_usuario.txt");
-            File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_usuario.txt");
+            File pathFileUser = new File("C:/MEIA/" + nombre + ".txt");
+            File pathFileUserDesc = new File("C:/MEIA/desc_" + nombre + ".txt");
+            File pathFileBita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
+            File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_" + nombre + ".txt");
             pathFileUser.createNewFile();
             pathFileUserDesc.createNewFile();
             pathFileBita.createNewFile();
@@ -252,7 +305,7 @@ public class ManejoArchivo {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileUserDesc);
-            writer.write("nombre simbolico:usuario\n");
+            writer.write("nombre simbolico:" + nombre + "\n");
             writer.write("fecha creacion:"+dateFormat.format(date)+"\n");
             writer.write("usuario creacion:root\n");
             writer.write("fecha modificacion:"+dateFormat.format(date)+"\n");
@@ -262,7 +315,7 @@ public class ManejoArchivo {
             writer.write("registros incactivos:0\n");
             writer.close();
             writer = new FileWriter(pathFileBitaDesc);
-            writer.write("nombre simbolico:bitacora_usuario\n");
+            writer.write("nombre simbolico:bitacora_" + nombre + "\n");
             writer.write("fecha creacion:"+dateFormat.format(date)+"\n");
             writer.write("usuario creacion:root\n");
             writer.write("fecha modificacion:"+dateFormat.format(date)+"\n");
@@ -286,13 +339,27 @@ public class ManejoArchivo {
         File pathFileBita = new File("C:/MEIA/bitacora_usuario.txt");
         File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_usuario.txt");
         File pathFolderFoto = new File("C:/MEIA/fotografia");
+        File pathFileContact =  new File("C:/MEIA/contactos.txt");
+        File pathFileContactDesc = new File("C:/MEIA/desc_contactos.txt");
+        File pathFileLista = new File("C:/MEIA/lista.txt");
+        File pathFileListaDesc =  new File("C:/MEIA/desc_lista.txt");
+        File pathFileListaUsuario = new File("C:/MEIA/Lista_usuario.txt");
+        File pathFileListaUsuarioInd = new File("C:/MEIA/ind_Lista_usuario.txt");
         
         if (pathFolder.exists()){
-            if(!pathFileUser.exists() || !pathFileUserDesc.exists() || !pathFileBita.exists() || !pathFileBitaDesc.exists()){
+            if(!pathFileUser.exists() || !pathFileUserDesc.exists() || !pathFileBita.exists() || !pathFileBitaDesc.exists()
+                    || !pathFileContact.exists() || !pathFileContactDesc.exists() || !pathFileLista.exists() 
+                    || !pathFileListaDesc.exists() || !pathFileListaUsuario.exists() || !pathFileListaUsuarioInd.exists()){
                 pathFileUser.delete();
                 pathFileUserDesc.delete();
                 pathFileBita.delete();
                 pathFileBitaDesc.delete();
+                pathFileContact.delete();
+                pathFileContactDesc.delete();
+                pathFileLista.delete();
+                pathFileListaDesc.delete();
+                pathFileListaUsuario.delete();
+                pathFileListaUsuarioInd.delete();
             }
             else{
                 return false;
@@ -388,9 +455,9 @@ public class ManejoArchivo {
         inputFile.delete();
     }
     //Modificacion desc_usuario_bitacora
-    public void ModifyFilesDescBita(String user, boolean creacion, String strError){
+    public void ModifyFilesDescBita(String nombre, int lastPos, String user, boolean creacion, String strError){
         try {
-            File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_usuario.txt");
+            File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_" + nombre + ".txt");
             var cant = maximoReorganizar();
             var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 1);
             var split = fechaCreacion.split(Pattern.quote(":"));
@@ -401,7 +468,7 @@ public class ManejoArchivo {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileBitaDesc);
-            writer.write("nombre simbolico:bitacora_usuario\n");
+            writer.write("nombre simbolico:bitacora_" + nombre + "\n");
             if(creacion){
                 writer.write("fecha creacion:"+dateFormat.format(date)+"\n");
                 writer.write("usuario creacion:"+user+"\n");
@@ -412,9 +479,9 @@ public class ManejoArchivo {
             }
             writer.write("fecha modificacion:"+dateFormat.format(date)+"\n");
             writer.write("usuario modificacion:"+user+"\n");
-            writer.write("# registros:"+CantidadRegistros(new File("C:/MEIA/bitacora_usuario.txt"), strError)+"\n");
-            writer.write("registros activos:"+cantVigente(new File("C:/MEIA/bitacora_usuario.txt"), strError, 9, 1)+"\n");
-            writer.write("registros inactivos:"+cantVigente(new File("C:/MEIA/bitacora_usuario.txt"), strError, 9, 0)+"\n");
+            writer.write("# registros:"+CantidadRegistros(new File("C:/MEIA/bitacora_" + nombre + ".txt"), strError)+"\n");
+            writer.write("registros activos:"+cantVigente(new File("C:/MEIA/bitacora_" + nombre + ".txt"), strError, lastPos, 1)+"\n");
+            writer.write("registros inactivos:"+cantVigente(new File("C:/MEIA/bitacora_" + nombre + ".txt"), strError, lastPos, 0)+"\n");
             writer.write("max_reorganizacion:"+cant+"\n");
             writer.close();
         } catch (IOException ex) {
@@ -423,9 +490,9 @@ public class ManejoArchivo {
         }
     }
     //Modificacion desc_usuario
-    public void ModifyFilesDescUser(String user, boolean creacion, String strError){
+    public void ModifyFilesDescUser(String nombre, int lastPos, String user, boolean creacion, String strError){
         try {
-            File pathFileBitaDesc = new File("C:/MEIA/desc_usuario.txt");
+            File pathFileBitaDesc = new File("C:/MEIA/desc_" + nombre + ".txt");
             var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 1);
             var split = fechaCreacion.split(Pattern.quote(":"));
             fechaCreacion = split[1] +":"+ split[2]+":"+ split[3];
@@ -435,7 +502,7 @@ public class ManejoArchivo {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileBitaDesc);
-            writer.write("nombre simbolico:usuario\n");
+            writer.write("nombre simbolico:" + nombre + "\n");
             if(creacion){
                 writer.write("fecha creacion:"+dateFormat.format(date)+"\n");
                 writer.write("usuario creacion:"+user+"\n");
@@ -446,9 +513,9 @@ public class ManejoArchivo {
             }
             writer.write("fecha modificacion:"+dateFormat.format(date)+"\n");
             writer.write("usuario modificacion:"+user+"\n");
-            writer.write("# registros:"+CantidadRegistros(new File("C:/MEIA/usuario.txt"), strError)+"\n");
-            writer.write("registros activos:"+cantVigente(new File("C:/MEIA/usuario.txt"), strError, 9, 1)+"\n");
-            writer.write("registros incactivos:"+cantVigente(new File("C:/MEIA/usuario.txt"), strError, 9, 0)+"\n");
+            writer.write("# registros:"+CantidadRegistros(new File("C:/MEIA/" + nombre + ".txt"), strError)+"\n");
+            writer.write("registros activos:"+cantVigente(new File("C:/MEIA/" + nombre + ".txt"), strError, lastPos, 1)+"\n");
+            writer.write("registros incactivos:"+cantVigente(new File("C:/MEIA/" + nombre + ".txt"), strError, lastPos, 0)+"\n");
             writer.close();
         } catch (IOException ex) {
             //TODO: handle exception

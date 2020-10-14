@@ -251,7 +251,7 @@ public class BusquedaUsuario extends javax.swing.JFrame {
         var strError = "";
         var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, L_Usuario.getText(), strError, 0, 9);
         var ArchivoBita = objManejoArchivo.BuscarLinea(Bita, L_Usuario.getText(), strError, 0, 9);
-         var split = ArchivoBita.split(Pattern.quote("|"));
+        var split = ArchivoBita.split(Pattern.quote("|"));
         if(!ArchivoUser.equals("") ){
             split = ArchivoUser.split(Pattern.quote("|"));
         }

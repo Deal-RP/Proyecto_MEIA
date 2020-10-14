@@ -116,20 +116,20 @@ public class ManejoUsuario {
                 if(objManejoArchivo.CantidadRegistros(Bita, strError) >= objManejoArchivo.maximoReorganizar()){
                     if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
                         objManejoArchivo.LimpiarBitacora();
-                        objManejoArchivo.ModifyFilesDescUser(user, true, strError);
+                        objManejoArchivo.ModifyFilesDescUser("usuario", 9, user, true, strError);
                     }
                     else{
                         objManejoArchivo.LimpiarBitacora();
-                        objManejoArchivo.ModifyFilesDescUser(user, false, strError);
+                        objManejoArchivo.ModifyFilesDescUser("usuario", 9, user, false, strError);
                     }
                 }
                 if(objManejoArchivo.CantidadRegistros(Bita, strError) == 0){
                     objManejoArchivo.orderInsert(Bita, nuevoUsuario, strError);
-                    objManejoArchivo.ModifyFilesDescBita(user, true, strError);
+                    objManejoArchivo.ModifyFilesDescBita("usuario", 9, user, true, strError);
                 }
                 else{
                     objManejoArchivo.orderInsert(Bita, nuevoUsuario, strError);
-                    objManejoArchivo.ModifyFilesDescBita(user, false, strError);
+                    objManejoArchivo.ModifyFilesDescBita("usuario", 9, user, false, strError);
                 }
             }catch(Exception ex){
                 return ex.getMessage();

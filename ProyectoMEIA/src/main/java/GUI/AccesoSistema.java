@@ -42,7 +42,9 @@ public class AccesoSistema extends javax.swing.JFrame {
         ManejoArchivo objManejo = new ManejoArchivo();
         var strError = "";
         if(objManejo.ValidationUserFiles()){
-            objManejo.CreationFilesUsers(strError);
+            objManejo.CreationFilesUsers("usuario", strError);
+            objManejo.CreationFilesUsers("contactos", strError);
+            objManejo.CreationFilesUsers("lista", strError);
         }
     }
 
@@ -264,21 +266,21 @@ public class AccesoSistema extends javax.swing.JFrame {
             if(objManejoArchivo.CantidadRegistros(Bita, strError) != 0){
                 if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
                     objManejoArchivo.LimpiarBitacora();
-                    objManejoArchivo.ModifyFilesDescUser("root", true, strError);
+                    objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", true, strError);
                 }
                 else{
                     objManejoArchivo.LimpiarBitacora();
-                    objManejoArchivo.ModifyFilesDescUser("root", false, strError);
+                    objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", false, strError);
                 }
-                objManejoArchivo.ModifyFilesDescBita("root", true, strError);
+                objManejoArchivo.ModifyFilesDescBita("usuario", 9, "root", true, strError);
             }
             if(objManejoArchivo.CantidadRegistros(Archivo, strError) != 0){
                 objManejoArchivo.LimpiarUsuario();
                 if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
-                    objManejoArchivo.ModifyFilesDescUser("root", true, strError);
+                    objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", true, strError);
                 }
                 else{
-                    objManejoArchivo.ModifyFilesDescUser("root", false, strError);
+                    objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", false, strError);
                 }
             }
             System.exit(0);

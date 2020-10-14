@@ -414,10 +414,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
         if (mensaje) {
             JOptionPane.showMessageDialog(null, "Dato modificado", "EXITO", 1);
             if(cont == 1){
-                objManejoArchivo.ModifyFilesDescBita(split[0], false, strError);
+                objManejoArchivo.ModifyFilesDescBita("usuario", 9, split[0], false, strError);
             }
             else{
-                objManejoArchivo.ModifyFilesDescUser(split[0], false, strError);
+                objManejoArchivo.ModifyFilesDescUser("usuario", 9, split[0], false, strError);
             }
         }
         else
