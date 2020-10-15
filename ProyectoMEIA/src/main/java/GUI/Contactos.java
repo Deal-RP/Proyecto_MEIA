@@ -8,6 +8,9 @@ import Management.Data;
 import Management.ManejoArchivo;
 import java.awt.Image;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -24,6 +27,24 @@ public class Contactos extends javax.swing.JFrame {
      */
     public Contactos() {
         initComponents();
+        var strError = "";
+        var objManejoArchivo = new ManejoArchivo();
+        
+        var listaMostrar = new DefaultListModel();
+        File Archivo = new File("C:/MEIA/contactos.txt");
+        var lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+        for (int i = 0; i < lista.size(); i++) {
+            var splitAux = lista.get(i).split(Pattern.quote("|"));
+            listaMostrar.addElement(splitAux[1]);
+        }
+
+        Archivo = new File("C:/MEIA/bitacora_contactos.txt");
+        lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+        for (int i = 0; i < lista.size(); i++) {
+            var splitAux = lista.get(i).split(Pattern.quote("|"));
+            listaMostrar.addElement(splitAux[1]);
+        }
+        lContactos.setModel(listaMostrar);
     }
 
     /**
@@ -156,7 +177,7 @@ public class Contactos extends javax.swing.JFrame {
         var objManejoArchivo = new ManejoArchivo();
         var strError = "";
         File Archivo = new File("C:/MEIA/usuario.txt");
-        objManejoArchivo.LimpiarBitacora();
+        objManejoArchivo.LimpiarBitacora("usuario");
         var cant = 0;
         var usuario = " ";
         var nombre = " ";
@@ -212,11 +233,11 @@ public class Contactos extends javax.swing.JFrame {
 
     private void lContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lContactosMouseClicked
         var seleccion = lContactos.getSelectedValue();
+        var strError = "";
         if (!seleccion.equals("")) {
             int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el contacto? ", "¿Eliminar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (iRespuesta == 0) {
-                File Archivo = new File("C:/MEIA/usuario.txt");
-                var objManejoArchivo = new ManejoArchivo();
+                
                 //Agregar dar de baja a contactos
                 listaResultadoBusqueda.clearSelection();
             }
@@ -226,13 +247,40 @@ public class Contactos extends javax.swing.JFrame {
     private void listaResultadoBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaResultadoBusquedaMouseClicked
         var seleccion = listaResultadoBusqueda.getSelectedValue();
         if (!seleccion.equals("")) {
-            int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Desea agregar el contacto? ", "¿Agregar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (iRespuesta == 0) {
-                File Archivo = new File("C:/MEIA/usuario.txt");
-                var objManejoArchivo = new ManejoArchivo();
-                //Agregar insertar en archivo contacto
-                //Agregar validacion que no se puede agregar a el mismo
-                listaResultadoBusqueda.clearSelection();
+            var dataUser = Data.getData();
+            var user = dataUser.getUser();
+            var split = seleccion.split(Pattern.quote("|"));
+            if(split[0].equals(user)){
+                JOptionPane.showMessageDialog(null, "No te puedes agregar como contacto", "FALLO", 1);
+            }
+            else{
+                int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Desea agregar el contacto? ", "¿Agregar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (iRespuesta == 0) {
+                    var objManejoArchivo = new ManejoArchivo();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
+                    var linea = user + "|" + split[0] + "|" + dateFormat.format(date) + "|" + user + "|1";
+                    objManejoArchivo.insertarLinea(linea, "contactos", user, split[0], 4);
+                    JOptionPane.showMessageDialog(null, "Contacto agregado", "EXITO", 1);
+                    listaResultadoBusqueda.clearSelection();
+                    var strError = "";
+                    
+                    var listaMostrar = new DefaultListModel();
+                    File Archivo = new File("C:/MEIA/contactos.txt");
+                    var lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+                    for (int i = 0; i < lista.size(); i++) {
+                        var splitAux = lista.get(i).split(Pattern.quote("|"));
+                        listaMostrar.addElement(splitAux[1]);
+                    }
+                    
+                    Archivo = new File("C:/MEIA/bitacora_contactos.txt");
+                    lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+                    for (int i = 0; i < lista.size(); i++) {
+                        var splitAux = lista.get(i).split(Pattern.quote("|"));
+                        listaMostrar.addElement(splitAux[1]);
+                    }
+                    lContactos.setModel(listaMostrar);
+                }
             }
         }
     }//GEN-LAST:event_listaResultadoBusquedaMouseClicked

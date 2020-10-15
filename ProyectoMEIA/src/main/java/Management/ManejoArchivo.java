@@ -1,9 +1,15 @@
 package Management;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 
@@ -144,6 +150,39 @@ public class ManejoArchivo {
                     {
                         var split = Linea.split(Pattern.quote("|"));
                         if(split[pos].equals(strBuscar) && split[lastPos].equals("1")){
+                            br.close();
+                            fReader.close();
+                            return Linea;
+                        }
+                    }
+                    Linea = br.readLine();
+                }
+                br.close();
+                fReader.close();
+            } catch (IOException ex) {
+                strError= ex.getMessage();
+                return "";
+            }
+        } catch (FileNotFoundException ex) {
+            strError= ex.getMessage();
+            return "";
+        }
+        return "";
+    }
+    public String BuscarLinea2(File Archivo, String strBuscar1, String strBuscar2, String strError, int pos, int lastPos){
+        try 
+        {
+            FileReader fReader = new FileReader(Archivo);
+            BufferedReader br = new BufferedReader(fReader);
+            try
+            {
+                var Linea = br.readLine();
+                while(Linea != null)
+                {
+                    if(!"".equals(Linea))
+                    {
+                        var split = Linea.split(Pattern.quote("|"));
+                        if(split[pos].equals(strBuscar1) && split[pos + 1].equals(strBuscar2) && split[lastPos].equals("1")){
                             br.close();
                             fReader.close();
                             return Linea;
@@ -341,23 +380,32 @@ public class ManejoArchivo {
         File pathFolderFoto = new File("C:/MEIA/fotografia");
         File pathFileContact =  new File("C:/MEIA/contactos.txt");
         File pathFileContactDesc = new File("C:/MEIA/desc_contactos.txt");
+        File pathFileContactBita =  new File("C:/MEIA/bitacora_contactos.txt");
+        File pathFileContactBitaDesc =  new File("C:/MEIA/desc_bitacora_contactos.txt");
         File pathFileLista = new File("C:/MEIA/lista.txt");
         File pathFileListaDesc =  new File("C:/MEIA/desc_lista.txt");
+        File pathFileListaBita = new File("C:/MEIA/bitacora_lista.txt");
+        File pathFileListaBitaDesc =  new File("C:/MEIA/desc_bitacora_lista.txt");
         File pathFileListaUsuario = new File("C:/MEIA/Lista_usuario.txt");
         File pathFileListaUsuarioInd = new File("C:/MEIA/ind_Lista_usuario.txt");
         
         if (pathFolder.exists()){
             if(!pathFileUser.exists() || !pathFileUserDesc.exists() || !pathFileBita.exists() || !pathFileBitaDesc.exists()
                     || !pathFileContact.exists() || !pathFileContactDesc.exists() || !pathFileLista.exists() 
-                    || !pathFileListaDesc.exists() || !pathFileListaUsuario.exists() || !pathFileListaUsuarioInd.exists()){
+                    || !pathFileListaDesc.exists() || !pathFileContactBita.exists() || !pathFileContactBitaDesc.exists()
+                    || !pathFileListaBita.exists() || !pathFileListaBitaDesc.exists() ){//|| !pathFileListaUsuario.exists() || !pathFileListaUsuarioInd.exists()){
                 pathFileUser.delete();
                 pathFileUserDesc.delete();
                 pathFileBita.delete();
                 pathFileBitaDesc.delete();
                 pathFileContact.delete();
                 pathFileContactDesc.delete();
+                pathFileContactBita.delete();
+                pathFileContactBitaDesc.delete();
                 pathFileLista.delete();
                 pathFileListaDesc.delete();
+                pathFileListaBita.delete();
+                pathFileListaBitaDesc.delete();
                 pathFileListaUsuario.delete();
                 pathFileListaUsuarioInd.delete();
             }
@@ -372,8 +420,8 @@ public class ManejoArchivo {
         return true;
     }
     //Obtener maximo de organizacion
-    public int maximoReorganizar(){
-        File Bita = new File("C:/MEIA/desc_bitacora_usuario.txt");
+    public int maximoReorganizar(String nombre){
+        File Bita = new File("C:/MEIA/desc_bitacora_" + nombre + ".txt");
         var strError = "";
         var split = LecturaLinea(Bita, strError, 8).split(Pattern.quote(":"));
         return Integer.parseInt(split[1]);
@@ -401,10 +449,32 @@ public class ManejoArchivo {
             Escritura(Archivo, list.get(entry.getValue()), strError, true);
         }
     }
+    public void orderInsert2(File Archivo, String strContenido, String strError){
+        RegresarPrincipio(Archivo, strError);
+        var list = LecturaCompleta(Archivo, strError);
+        list.add(strContenido);
+        try
+        {
+            PrintWriter writer = new PrintWriter(Archivo);
+            writer.print("");
+            writer.close();
+        }catch(FileNotFoundException ex){
+            strError = ex.getMessage();
+        }
+        Map<String, Integer> listDesorder = new HashMap<String, Integer>();
+        for(int i = 0; i < list.size(); i++){
+            var split = list.get(i).split(Pattern.quote("|"));
+            listDesorder.put(split[0] + split[1], i);
+        }
+        Map<String, Integer> listOrder = new TreeMap<String, Integer>(listDesorder);
+        for (Map.Entry<String, Integer> entry : listOrder.entrySet()) {
+            Escritura(Archivo, list.get(entry.getValue()), strError, true);
+        }
+    }
     //Limpieza bitacora
-    public void LimpiarBitacora(){
-        File Bita = new File("C:/MEIA/bitacora_usuario.txt");
-        File Archivo = new File("C:/MEIA/usuario.txt");
+    public void LimpiarBitacora(String nombre){
+        File Bita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
+        File Archivo = new File("C:/MEIA/" + nombre + ".txt");
         var strError = "";
         var cont = 0;
         var actual = LecturaLinea(Bita, strError, cont);
@@ -425,13 +495,38 @@ public class ManejoArchivo {
             strError = ex.getMessage();
         }
     }
+    public void LimpiarBitacora2(String nombre, int lastPos){
+        File Bita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
+        File Archivo = new File("C:/MEIA/" + nombre + ".txt");
+        var strError = "";
+        var cont = 0;
+        var actual = LecturaLinea(Bita, strError, cont);
+        while(cont < CantidadRegistros(Bita, strError) && !actual.equals("")){
+            var split = actual.split(Pattern.quote("|"));
+            if(split[lastPos].equals("1")){
+                orderInsert2(Archivo, actual, strError);
+            }
+            cont ++;
+            actual = LecturaLinea(Bita, strError, cont);
+        }
+        try
+        {
+            PrintWriter writer = new PrintWriter(Bita);
+            writer.print("");
+            writer.close();
+        }catch(FileNotFoundException ex){
+            strError = ex.getMessage();
+        }
+    }
     //Limpieza usuario
-    public void LimpiarUsuario(){
-        File oldfile = new File("C:/MEIA/usuario.txt");
-        File newfile = new File("C:/MEIA/usuario_temp.txt");
-        oldfile.renameTo(newfile);
-        File inputFile = new File("C:/MEIA/usuario_temp.txt");
-        File outputFile = new File("C:/MEIA/usuario.txt");
+    public void LimpiarPrincipal(String nombre, int lastPos){
+        Path destino = Paths.get("C:/MEIA/" + nombre + "_temp.txt");
+        Path origen = Paths.get("C:/MEIA/" + nombre + ".txt");
+        try {
+            Files.copy(origen, destino, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {}
+        File inputFile = new File("C:/MEIA/" + nombre + "_temp.txt");
+        File outputFile = new File("C:/MEIA/" + nombre + ".txt");
         try {
           BufferedReader reader = new BufferedReader(new FileReader(inputFile));
           BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
@@ -440,10 +535,12 @@ public class ManejoArchivo {
 
         while((Linea = reader.readLine()) != null) {
             var split = Linea.split(Pattern.quote("|"));
-            if(split[9].equals("0")){ 
+            if(split[lastPos].equals("0")){ 
                 continue;
             }
-            writer.write(Linea + System.getProperty("line.separator"));
+            else{
+                writer.write(Linea + System.getProperty("line.separator"));
+            }
         }       
 
         writer.close();
@@ -458,7 +555,7 @@ public class ManejoArchivo {
     public void ModifyFilesDescBita(String nombre, int lastPos, String user, boolean creacion, String strError){
         try {
             File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_" + nombre + ".txt");
-            var cant = maximoReorganizar();
+            var cant = maximoReorganizar(nombre);
             var fechaCreacion = LecturaLinea(pathFileBitaDesc, strError, 1);
             var split = fechaCreacion.split(Pattern.quote(":"));
             fechaCreacion = split[1] +":"+ split[2]+":"+ split[3];
@@ -520,6 +617,72 @@ public class ManejoArchivo {
         } catch (IOException ex) {
             //TODO: handle exception
              strError = ex.getMessage();
+        }
+    }
+    
+    public String insertarLinea (String linea, String nombre, String llave1, String llave2, int lastPos){
+        var objManejoArchivo = new ManejoArchivo();
+        var dataUser = Data.getData();
+        var user = dataUser.getUser();
+        File Archivo = new File("C:/MEIA/"+ nombre +".txt");
+        File Bita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
+        var strError = "";
+        var ArchivoUser = objManejoArchivo.BuscarLinea2(Archivo, llave1, llave2, strError, 0, lastPos);       //Cambiar
+        var ArchivoBita = objManejoArchivo.BuscarLinea2(Bita, llave1, llave2, strError, 0, lastPos);         //Cambiar
+        if(!ArchivoUser.equals("") || !ArchivoBita.equals("")){
+            return "Registro ya existe";
+        }
+        else{
+            try
+            {
+                if(objManejoArchivo.CantidadRegistros(Bita, strError) >= objManejoArchivo.maximoReorganizar(nombre)){
+                    if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
+                        objManejoArchivo.LimpiarBitacora2(nombre, lastPos);                               //Cambiar
+                        objManejoArchivo.ModifyFilesDescUser(nombre, lastPos, user, true, strError);
+                    }
+                    else{
+                        objManejoArchivo.LimpiarBitacora2(nombre, lastPos);                               //Cambiar
+                        objManejoArchivo.ModifyFilesDescUser(nombre, lastPos, user, false, strError);
+                    }
+                }
+                if(objManejoArchivo.CantidadRegistros(Bita, strError) == 0){
+                    objManejoArchivo.orderInsert2(Bita, linea, strError);                        //Cambiar
+                    objManejoArchivo.ModifyFilesDescBita(nombre, lastPos, user, true, strError);
+                }
+                else{
+                    objManejoArchivo.orderInsert2(Bita, linea, strError);                        //Cambiar
+                    objManejoArchivo.ModifyFilesDescBita(nombre, lastPos, user, false, strError);
+                }
+            }catch(Exception ex){
+                return ex.getMessage();
+            }
+        }
+        return "Se ha agregado existosamente el usuario";
+    }
+    
+    public void limpiarSalir(String nombre, int lastPos){
+        File Archivo = new File("C:/MEIA/" + nombre + ".txt");
+        File Bita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
+        var strError = "";
+        if(CantidadRegistros(Bita, strError) != 0){
+            if(CantidadRegistros(Archivo, strError) == 0){
+                LimpiarBitacora2(nombre, lastPos);
+                ModifyFilesDescUser(nombre, lastPos, "root", true, strError);
+            }
+            else{
+                LimpiarBitacora2(nombre, lastPos);
+                ModifyFilesDescUser(nombre, lastPos, "root", false, strError);
+            }
+            ModifyFilesDescBita(nombre, lastPos, "root", true, strError);
+        }
+        if(CantidadRegistros(Archivo, strError) != 0){
+            LimpiarPrincipal(nombre, lastPos);
+            if(CantidadRegistros(Archivo, strError) == 0){
+                ModifyFilesDescUser(nombre, lastPos, "root", true, strError);
+            }
+            else{
+                ModifyFilesDescUser(nombre, lastPos, "root", false, strError);
+            }
         }
     }
 }

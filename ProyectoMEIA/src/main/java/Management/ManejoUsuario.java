@@ -113,13 +113,13 @@ public class ManejoUsuario {
                 pass = encrypt(pass, 2, 8);
                 foto = copyImage(foto, user);
                 var nuevoUsuario = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + rol + "|" + fecha + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + status;
-                if(objManejoArchivo.CantidadRegistros(Bita, strError) >= objManejoArchivo.maximoReorganizar()){
+                if(objManejoArchivo.CantidadRegistros(Bita, strError) >= objManejoArchivo.maximoReorganizar("usuario")){
                     if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
-                        objManejoArchivo.LimpiarBitacora();
+                        objManejoArchivo.LimpiarBitacora("usuario");
                         objManejoArchivo.ModifyFilesDescUser("usuario", 9, user, true, strError);
                     }
                     else{
-                        objManejoArchivo.LimpiarBitacora();
+                        objManejoArchivo.LimpiarBitacora("usuario");
                         objManejoArchivo.ModifyFilesDescUser("usuario", 9, user, false, strError);
                     }
                 }
@@ -153,11 +153,6 @@ public class ManejoUsuario {
          try
          {
           var split = ArchivoUser.split(Pattern.quote("|"));
-//             if (pass.equals("")) 
-//             {
-//              String password = split[3];
-//              pass = password;  
-//             }
               var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + rol + "|" + fecha + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
             boolean mensaje = objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
             return mensaje;
@@ -170,11 +165,6 @@ public class ManejoUsuario {
          try
          {
           var split = ArchivoBita.split(Pattern.quote("|"));
-//             if (pass.equals("")) 
-//             {
-//              String password = split[3];
-//              pass = password;  
-//             }
               var strContenido = user + "|" + nombre + "|" + apellido + "|" + pass + "|" + rol + "|" + fecha + "|" + correoAlt + "|" + telefono + "|" + foto + "|" + split[9];          
          boolean mensaje = objManejoArchivo.Modificar(Bita, ArchivoBita, strContenido, strError);
          return mensaje;

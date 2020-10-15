@@ -45,6 +45,7 @@ public class AccesoSistema extends javax.swing.JFrame {
             objManejo.CreationFilesUsers("usuario", strError);
             objManejo.CreationFilesUsers("contactos", strError);
             objManejo.CreationFilesUsers("lista", strError);
+            //Agregar creacion de Lista_Usuarios
         }
     }
 
@@ -265,17 +266,17 @@ public class AccesoSistema extends javax.swing.JFrame {
             var strError = "";
             if(objManejoArchivo.CantidadRegistros(Bita, strError) != 0){
                 if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
-                    objManejoArchivo.LimpiarBitacora();
+                    objManejoArchivo.LimpiarBitacora("usuario");
                     objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", true, strError);
                 }
                 else{
-                    objManejoArchivo.LimpiarBitacora();
+                    objManejoArchivo.LimpiarBitacora("usuario");
                     objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", false, strError);
                 }
                 objManejoArchivo.ModifyFilesDescBita("usuario", 9, "root", true, strError);
             }
             if(objManejoArchivo.CantidadRegistros(Archivo, strError) != 0){
-                objManejoArchivo.LimpiarUsuario();
+                objManejoArchivo.LimpiarPrincipal("usuario", 9);
                 if(objManejoArchivo.CantidadRegistros(Archivo, strError) == 0){
                     objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", true, strError);
                 }
@@ -283,6 +284,9 @@ public class AccesoSistema extends javax.swing.JFrame {
                     objManejoArchivo.ModifyFilesDescUser("usuario", 9, "root", false, strError);
                 }
             }
+            objManejoArchivo.limpiarSalir("contactos", 4);
+            objManejoArchivo.limpiarSalir("lista", 5);
+            objManejoArchivo.LimpiarPrincipal("Lista_usuario", 5);
             System.exit(0);
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed
