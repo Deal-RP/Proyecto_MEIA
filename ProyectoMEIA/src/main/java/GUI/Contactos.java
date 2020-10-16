@@ -27,6 +27,8 @@ public class Contactos extends javax.swing.JFrame {
      */
     public Contactos() {
         initComponents();
+        var dataUser = Data.getData();
+        var user = dataUser.getUser();
         var strError = "";
         var objManejoArchivo = new ManejoArchivo();
         
@@ -35,14 +37,18 @@ public class Contactos extends javax.swing.JFrame {
         var lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
         for (int i = 0; i < lista.size(); i++) {
             var splitAux = lista.get(i).split(Pattern.quote("|"));
-            listaMostrar.addElement(splitAux[1]);
+            if(splitAux[0].equals(user) && splitAux[4].equals("1")){
+               listaMostrar.addElement(splitAux[1]);
+            }
         }
 
         Archivo = new File("C:/MEIA/bitacora_contactos.txt");
         lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
         for (int i = 0; i < lista.size(); i++) {
             var splitAux = lista.get(i).split(Pattern.quote("|"));
-            listaMostrar.addElement(splitAux[1]);
+            if(splitAux[0].equals(user) && splitAux[4].equals("1")){
+               listaMostrar.addElement(splitAux[1]);
+            }
         }
         lContactos.setModel(listaMostrar);
     }
@@ -234,11 +240,49 @@ public class Contactos extends javax.swing.JFrame {
     private void lContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lContactosMouseClicked
         var seleccion = lContactos.getSelectedValue();
         var strError = "";
+        var dataUser = Data.getData();
+        var user = dataUser.getUser();
         if (!seleccion.equals("")) {
             int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el contacto? ", "¿Eliminar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (iRespuesta == 0) {
+                File Archivo = new File("C:/MEIA/contactos.txt");
+                File Bitacora = new File("C:/MEIA/bitacora_contactos.txt");
+                var objManejoArchivo = new ManejoArchivo();
+                var ArchivoUser = objManejoArchivo.BuscarLinea2(Archivo, user, seleccion, strError, 0, 4);
+                var ArchivoBita = objManejoArchivo.BuscarLinea2(Bitacora, user, seleccion, strError, 0, 4);               
+                if(!ArchivoBita.equals("") ){
+                  var  splitAux = ArchivoBita.split(Pattern.quote("|"));
+                    var strContenido = splitAux[0] + "|" + splitAux[1] + "|" + splitAux[2] + "|" + splitAux[3] + "|" + "0";
+                     objManejoArchivo.Modificar(Bitacora, ArchivoBita, strContenido, strError);
+                     objManejoArchivo.ModifyFilesDescBita("contactos", 4, user, false, strError);
+
+                }
+                else
+                {
+                    var splitAux = ArchivoUser.split(Pattern.quote("|"));
+                     var strContenido = splitAux[0] + "|" + splitAux[1] + "|" + splitAux[2] + "|" + splitAux[3] + "|" + "0";
+                  objManejoArchivo.Modificar(Archivo, ArchivoUser, strContenido, strError);
+                  objManejoArchivo.ModifyFilesDescUser("contactos", 4, user,false, strError);
+                }  
+                JOptionPane.showMessageDialog(null, "Amistad eliminada", "EXITO", 1);
+        
+                var listaMostrar = new DefaultListModel();
+                var lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+                for (int i = 0; i < lista.size(); i++) {
+                    var splitAux = lista.get(i).split(Pattern.quote("|"));
+                    if(splitAux[0].equals(user) && splitAux[4].equals("1")){
+                       listaMostrar.addElement(splitAux[1]);
+                    }
+                }
+                lista = objManejoArchivo.LecturaCompleta(Bitacora, strError);
+                for (int i = 0; i < lista.size(); i++) {
+                    var splitAux = lista.get(i).split(Pattern.quote("|"));
+                    if(splitAux[0].equals(user) && splitAux[4].equals("1")){
+                       listaMostrar.addElement(splitAux[1]);
+                    }
+                }
+                lContactos.setModel(listaMostrar);
                 
-                //Agregar dar de baja a contactos
                 listaResultadoBusqueda.clearSelection();
             }
         }
@@ -247,9 +291,9 @@ public class Contactos extends javax.swing.JFrame {
     private void listaResultadoBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaResultadoBusquedaMouseClicked
         var seleccion = listaResultadoBusqueda.getSelectedValue();
         if (!seleccion.equals("")) {
+            var split = seleccion.split(Pattern.quote("|"));
             var dataUser = Data.getData();
             var user = dataUser.getUser();
-            var split = seleccion.split(Pattern.quote("|"));
             if(split[0].equals(user)){
                 JOptionPane.showMessageDialog(null, "No te puedes agregar como contacto", "FALLO", 1);
             }
@@ -260,24 +304,34 @@ public class Contactos extends javax.swing.JFrame {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date date = new Date();
                     var linea = user + "|" + split[0] + "|" + dateFormat.format(date) + "|" + user + "|1";
-                    objManejoArchivo.insertarLinea(linea, "contactos", user, split[0], 4);
-                    JOptionPane.showMessageDialog(null, "Contacto agregado", "EXITO", 1);
+                    var strError = objManejoArchivo.insertarLinea(linea, "contactos", user, split[0], 4);
+                    
+                    
+                    if (strError.equals("Registro ya existe")) {
+                        JOptionPane.showMessageDialog(null, strError, "FALLO", 1);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Contacto agregado", "EXITO", 1);
+                    }
                     listaResultadoBusqueda.clearSelection();
-                    var strError = "";
                     
                     var listaMostrar = new DefaultListModel();
                     File Archivo = new File("C:/MEIA/contactos.txt");
-                    var lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+                    var lista = objManejoArchivo.LecturaCompleta(Archivo, strError);    //Modificar
                     for (int i = 0; i < lista.size(); i++) {
                         var splitAux = lista.get(i).split(Pattern.quote("|"));
-                        listaMostrar.addElement(splitAux[1]);
+                        if(splitAux[0].equals(user) && splitAux[4].equals("1")){
+                            listaMostrar.addElement(splitAux[1]);
+                        }
                     }
                     
                     Archivo = new File("C:/MEIA/bitacora_contactos.txt");
-                    lista = objManejoArchivo.LecturaCompleta(Archivo, strError);
+                    lista = objManejoArchivo.LecturaCompleta(Archivo, strError);    //Modificar
                     for (int i = 0; i < lista.size(); i++) {
                         var splitAux = lista.get(i).split(Pattern.quote("|"));
-                        listaMostrar.addElement(splitAux[1]);
+                        if(splitAux[0].equals(user) && splitAux[4].equals("1")){
+                            listaMostrar.addElement(splitAux[1]);
+                        }
                     }
                     lContactos.setModel(listaMostrar);
                 }
