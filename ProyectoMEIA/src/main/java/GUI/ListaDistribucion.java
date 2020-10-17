@@ -76,12 +76,13 @@ public class ListaDistribucion extends javax.swing.JFrame {
         BT_Modificar = new javax.swing.JButton();
         BT_Salir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        TF_Descripcion = new javax.swing.JTextArea();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Listas de distribucion");
 
+        lListas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lListas);
 
         jLabel2.setText("Crear lista de distribucion");
@@ -118,9 +119,9 @@ public class ListaDistribucion extends javax.swing.JFrame {
             }
         });
 
-        TF_Descripcion.setColumns(20);
-        TF_Descripcion.setRows(5);
-        jScrollPane2.setViewportView(TF_Descripcion);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,7 +195,7 @@ public class ListaDistribucion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BT_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_crearActionPerformed
-        if(TF_Nombre.getText().equals("") && TF_Descripcion.getText().equals("")){
+        if(TF_Nombre.getText().equals("") && jTextArea1.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Llene los campos", "FALLO", 1);
         }
         else{
@@ -203,7 +204,7 @@ public class ListaDistribucion extends javax.swing.JFrame {
             var user = dataUser.getUser();
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-            var linea = TF_Nombre.getText() + "|" + user + "|" + TF_Descripcion.getText() + "|0|" + dateFormat.format(date) + "|1";
+            var linea = TF_Nombre.getText() + "|" + user + "|" + jTextArea1.getText() + "|0|" + dateFormat.format(date) + "|1";
             var strError = objManejoArchivo.insertarLinea(linea, "lista", TF_Nombre.getText(), user, 5);
 
             if (strError.equals("Registro ya existe")) {
@@ -415,7 +416,6 @@ public class ListaDistribucion extends javax.swing.JFrame {
     private javax.swing.JButton BT_Modificar;
     private javax.swing.JButton BT_Salir;
     private javax.swing.JButton BT_crear;
-    private javax.swing.JTextArea TF_Descripcion;
     private javax.swing.JTextField TF_Nombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -423,6 +423,7 @@ public class ListaDistribucion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JList<String> lListas;
     // End of variables declaration//GEN-END:variables
 }
