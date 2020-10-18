@@ -38,39 +38,32 @@ public class ManejoArchivo {
     // Modificar
     public boolean Modificar(File Archivo,String strContenidoBusqueda ,String strContenido, String strError)
     {
-     try 
-     {
-//         PrintWriter writer = new PrintWriter(file);
-//         writer.print("");
-//        writer.close();
+        try 
+        {
             FileReader fReader = new FileReader(Archivo);
             BufferedReader br = new BufferedReader(fReader);
-             var Linea = br.readLine();
-              FileWriter fWriter = new FileWriter(Archivo, true);
-                  BufferedWriter bw = new BufferedWriter(fWriter);
-                PrintWriter writer = new PrintWriter(Archivo);
-                 writer.print("");
-                 writer.close();
-                while(Linea != null)
-                {                    
-                 if(Linea.equals(strContenidoBusqueda))
-                 {                
-                  bw.write(strContenido + System.getProperty( "line.separator" ));                                                
-                 }
-                 else
-                 {
-                 bw.write(Linea + System.getProperty( "line.separator" )); 
-                 }
-                   Linea = br.readLine();         
-                }               
-                bw.close();
-                fWriter.close();
-                br.close();
-                fReader.close();                
-     }
-     catch(Exception ex)
-     {strError= ex.getMessage(); return false;}
-     return true;
+            var Linea = br.readLine();
+            FileWriter fWriter = new FileWriter(Archivo, true);
+            BufferedWriter bw = new BufferedWriter(fWriter);
+            PrintWriter writer = new PrintWriter(Archivo);
+            writer.print("");
+            writer.close();
+            while(Linea != null){                    
+                if(Linea.equals(strContenidoBusqueda)){                
+                    bw.write(strContenido + System.getProperty( "line.separator" ));                                                
+                }
+                else{
+                    bw.write(Linea + System.getProperty( "line.separator" )); 
+                }
+                Linea = br.readLine();         
+            }               
+            bw.close();
+            fWriter.close();
+            br.close();
+            fReader.close();                
+        }
+        catch(Exception ex){strError= ex.getMessage(); return false;}
+        return true;
     }
     //Lectura linea por linea
     public String LecturaLinea(File Archivo, String strError, int pos){
@@ -388,12 +381,13 @@ public class ManejoArchivo {
         File pathFileListaBitaDesc =  new File("C:/MEIA/desc_bitacora_lista.txt");
         File pathFileListaUsuario = new File("C:/MEIA/Lista_usuario.txt");
         File pathFileListaUsuarioInd = new File("C:/MEIA/ind_Lista_usuario.txt");
+        File pathFileListaUsuarioDesc = new File("C:/MEIA/desc_Lista_usuario.txt");
         
         if (pathFolder.exists()){
             if(!pathFileUser.exists() || !pathFileUserDesc.exists() || !pathFileBita.exists() || !pathFileBitaDesc.exists()
                     || !pathFileContact.exists() || !pathFileContactDesc.exists() || !pathFileLista.exists() 
                     || !pathFileListaDesc.exists() || !pathFileContactBita.exists() || !pathFileContactBitaDesc.exists()
-                    || !pathFileListaBita.exists() || !pathFileListaBitaDesc.exists() ){//|| !pathFileListaUsuario.exists() || !pathFileListaUsuarioInd.exists()){
+                    || !pathFileListaBita.exists() || !pathFileListaBitaDesc.exists() ){//|| !pathFileListaUsuario.exists() || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioDesc.exists()){
                 pathFileUser.delete();
                 pathFileUserDesc.delete();
                 pathFileBita.delete();
@@ -408,6 +402,7 @@ public class ManejoArchivo {
                 pathFileListaBitaDesc.delete();
                 pathFileListaUsuario.delete();
                 pathFileListaUsuarioInd.delete();
+                pathFileListaUsuarioDesc.delete();
             }
             else{
                 return false;
@@ -684,5 +679,66 @@ public class ManejoArchivo {
                 ModifyFilesDescUser(nombre, lastPos, "root", false, strError);
             }
         }
+    }
+    
+    //MANEJO DE ARVHIVO TIPO SECUENCIAL INDEXADO
+    boolean modificarIndex(File Archivo, int pos, int newIndex){
+        try 
+        {
+            FileReader fReader = new FileReader(Archivo);
+            BufferedReader br = new BufferedReader(fReader);
+            var Linea = br.readLine();
+            FileWriter fWriter = new FileWriter(Archivo, true);
+            BufferedWriter bw = new BufferedWriter(fWriter);
+            var cont = 0;
+            while(Linea != null){                    
+                if(pos == cont){
+                    var split = Linea.split(Pattern.quote("|"));
+                    bw.write(split[0] + "|" + split[1] + "|" + String.valueOf(newIndex) + "|" + split[3] + "|" 
+                            + split[4] + "|" + split[5] + "|" + split[6]);                                                
+                }        
+            }               
+            bw.close();
+            fWriter.close();
+            br.close();
+            fReader.close();                
+        }
+        catch(Exception ex){return false;}
+        return true;
+    }
+    
+    void orderIndex(File Archivo){
+        var strError = "";
+        var list = LecturaCompleta(Archivo, strError);
+        
+        Map<String, Integer> listDesorder = new HashMap<String, Integer>();
+        for(int i = 1; i <= list.size(); i++){
+            var split = list.get(i).split(Pattern.quote("|"));
+            if(split[7].equals("1")){
+                listDesorder.put(split[3] + split[4] + split[5], i);
+            }
+        }
+        TreeMap<String, Integer> sorted = new TreeMap<>(); 
+        sorted.putAll(listDesorder);
+        
+        for(int i = 0; i <= list.size(); i++){
+            var split = list.get(i).split(Pattern.quote("|"));
+            var newPos = 0;
+            if(sorted.containsKey(split[3] + split[4] + split[5])){
+                newPos = sorted.get(split[3] + split[4] + split[5]);
+            }
+            modificarIndex(Archivo, i, newPos);
+        }
+        
+        //AGREGAR MODIFICAR INCIO EN EL DESCRIPTOR
+    }
+    
+    public void insertar(String nombre, String strContenido, String strError){
+        var desc = new File("C:/MEIA/desc_" + nombre + ".txt");
+        var num = 0;
+        //Obtener num de bloque final
+        
+        var Archivo = new File("C:/MEIA/" + nombre + num + ".txt");
+        
     }
 }
