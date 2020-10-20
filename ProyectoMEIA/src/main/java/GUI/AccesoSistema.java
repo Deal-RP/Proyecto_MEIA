@@ -45,7 +45,7 @@ public class AccesoSistema extends javax.swing.JFrame {
             objManejo.CreationFilesUsers("usuario", strError);
             objManejo.CreationFilesUsers("contactos", strError);
             objManejo.CreationFilesUsers("lista", strError);
-            //Agregar creacion de Lista_Usuarios
+            objManejo.creationDescListContact("Lista_usuario");
         }
     }
 
@@ -287,6 +287,9 @@ public class AccesoSistema extends javax.swing.JFrame {
             objManejoArchivo.limpiarSalir("contactos", 4);
             objManejoArchivo.limpiarSalir("lista", 5);
             objManejoArchivo.LimpiarPrincipal("Lista_usuario", 5);
+            
+            
+            
             System.exit(0);
         } 
     }//GEN-LAST:event_BT_SalirActionPerformed

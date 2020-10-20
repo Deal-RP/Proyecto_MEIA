@@ -208,14 +208,23 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
 
     private void lListasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lListasMouseClicked
         var seleccion = lListas.getSelectedValue();
-        var strError = "";
         var dataUser = Data.getData();
         var user = dataUser.getUser();
         if (seleccion != null) {
-            //METODO DESPLEGAR TODOS LOS USUARIOS CON NOMBRE LISTA EN LISTA_CONTACTO A lContactos
-            lContacto.clearSelection();
-            lContactoTotal.clearSelection();
+            var objManejo = new ManejoArchivo();
+            var split = seleccion.split(Pattern.quote("-"));
+            
+            
+            var listaMostrar = new DefaultListModel();
+            var lista = objManejo.lecturaCompleta("Lista_usuario", split[0], user);
+            for (int i = 0; i < lista.size(); i++) {
+                var splitAux = lista.get(i).split(Pattern.quote("|"));
+                listaMostrar.addElement(splitAux[3]);
+            }
+            lContacto.setModel(listaMostrar);
         }
+        lContacto.clearSelection();
+        lContactoTotal.clearSelection();
     }//GEN-LAST:event_lListasMouseClicked
 
     private void lContactoTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lContactoTotalMouseClicked
@@ -227,7 +236,23 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
         if (seleccionLista != null && seleccionUsuario != null) {
             int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Desea agregar el contacto? ", "¿Insertar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (iRespuesta == 0) {
-                //METODO INSERTAR EN LISTA_CONTACTO
+                var objManejo = new ManejoArchivo();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                var split = seleccionLista.split(Pattern.quote("-"));
+                var linea = split[0] + "|" + user + "|" + seleccionUsuario + "|" + split[1] + "|" + dateFormat.format(date) + "|1";
+                if(!objManejo.insertar("Lista_usuario", linea, strError)){
+                    JOptionPane.showMessageDialog(null, "Registro ya existe", "FALLO", 1);
+                }
+                else{
+                    var listaMostrar = new DefaultListModel();
+                    var lista = objManejo.lecturaCompleta("Lista_usuario", split[0], user);
+                    for (int i = 0; i < lista.size(); i++) {
+                        var splitAux = lista.get(i).split(Pattern.quote("|"));
+                        listaMostrar.addElement(splitAux[3]);
+                    }
+                    lContacto.setModel(listaMostrar);
+                }
                 lContactoTotal.clearSelection();
             }
         }
@@ -242,9 +267,17 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
         if (seleccionLista != null && seleccionUsuario != null) {
             int iRespuesta = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el contacto? ", "¿Eliminar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (iRespuesta == 0) {
-                //METODO ELIMINAR EN LISTA_CONTACTO
+                var objManejo = new ManejoArchivo();
+                var split = seleccionLista.split(Pattern.quote("-"));
+                objManejo.darBaja("Lista_usuario", split[0], user, seleccionUsuario);
                 
-                //ACTUALIZAR lContacto
+                var listaMostrar = new DefaultListModel();
+                var lista = objManejo.lecturaCompleta("Lista_usuario", split[0], user);
+                for (int i = 0; i < lista.size(); i++) {
+                    var splitAux = lista.get(i).split(Pattern.quote("|"));
+                    listaMostrar.addElement(splitAux[3]);
+                }
+                lContacto.setModel(listaMostrar);
                 lContacto.clearSelection();
             }
         }
