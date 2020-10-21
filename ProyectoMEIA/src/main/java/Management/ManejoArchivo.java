@@ -849,9 +849,15 @@ public class ManejoArchivo {
             
             Escritura(Archivo, line,strError, true);
         }
-        for(Map.Entry<String,Integer> entry : sorted.entrySet()){ 
-            modNumInicial("Lista_usuario", entry.getValue());
-            break;
+        
+        if(sorted.size() != 0){
+            for(Map.Entry<String,Integer> entry : sorted.entrySet()){ 
+                modNumInicial("Lista_usuario", entry.getValue());
+                break;
+            }
+        }
+        else{
+            modNumInicial("Lista_usuario", 0);
         }
     }
     
