@@ -285,8 +285,8 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
                 }
                 lContacto.setModel(listaMostrar);
                 lContacto.clearSelection();
-              //  var objManagment = new ManagmentList();
-                // objManagment.ModifyQuantityFriends(split[0],2);
+                var objManagment = new ManagmentList();
+                objManagment.ModifyQuantityFriends(split[0],2);
             }
         }
     }//GEN-LAST:event_lContactoMouseClicked
