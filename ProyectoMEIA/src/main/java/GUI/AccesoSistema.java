@@ -286,9 +286,7 @@ public class AccesoSistema extends javax.swing.JFrame {
             }
             objManejoArchivo.limpiarSalir("contactos", 4);
             objManejoArchivo.limpiarSalir("lista", 5);
-            objManejoArchivo.LimpiarPrincipal("Lista_usuario", 5);
-            
-            
+            objManejoArchivo.limpiarBI("Lista_usuario");
             
             System.exit(0);
         } 
