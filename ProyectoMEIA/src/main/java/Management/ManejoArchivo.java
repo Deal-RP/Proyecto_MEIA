@@ -36,6 +36,11 @@ public class ManejoArchivo {
         }
     }
     // Modificar
+    //archivo = archivo donde se va a modificar el registros
+    // strContenidoBusqueda = el registro completo a modifcar
+    // strContenido = regitro completo modificado
+    // strError = error
+    // retorna un bool, true si se logro realizar y false sino se logro modificar
     public boolean Modificar(File Archivo,String strContenidoBusqueda ,String strContenido, String strError)
     {
         try 
@@ -129,6 +134,12 @@ public class ManejoArchivo {
         return lista;
     }
     //Busqueda en el archivo
+    // Archivo = el arhcivo donde se desea buscar el dato
+    //strBuscar = el dato que se esta buscando 
+    // strError = el error 
+    // pos = la posicion donde del registro donde se desea buscar el dato
+    // lastPos = el numero de la ultima posicion para verificar si el registro esta acitvo o inactivo
+    // Retorna el dato que se esta buscando
     public String BuscarLinea(File Archivo, String strBuscar, String strError, int pos, int lastPos){
         try 
         {
@@ -162,6 +173,7 @@ public class ManejoArchivo {
         }
         return "";
     }
+    
     public String BuscarLinea2(File Archivo, String strBuscar1, String strBuscar2, String strError, int pos, int lastPos){
         try 
         {

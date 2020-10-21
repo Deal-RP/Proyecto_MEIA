@@ -203,6 +203,7 @@ public class ManejoUsuario {
         }
     }
     //method that modify the the reoganization in the des bitacora user
+    // numReorganization = new number of the max reorganization of the file
     public void ModifyFileDes(String numReorganization){
         try {
             var dataUser=Data.getData();

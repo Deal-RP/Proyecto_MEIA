@@ -5,6 +5,7 @@
  */
 package GUI;
 import Management.Data;
+import Management.ManagmentList;
 import Management.ManejoArchivo;
 import java.awt.Image;
 import java.io.File;
@@ -252,6 +253,12 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
                         listaMostrar.addElement(splitAux[3]);
                     }
                     lContacto.setModel(listaMostrar);
+
+                    var objManagment = new ManagmentList();
+                    objManagment.ModifyQuantityFriends(split[0],1);
+                   
+
+
                 }
                 lContactoTotal.clearSelection();
             }
@@ -270,7 +277,6 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
                 var objManejo = new ManejoArchivo();
                 var split = seleccionLista.split(Pattern.quote("-"));
                 objManejo.darBaja("Lista_usuario", split[0], user, seleccionUsuario);
-                
                 var listaMostrar = new DefaultListModel();
                 var lista = objManejo.lecturaCompleta("Lista_usuario", split[0], user);
                 for (int i = 0; i < lista.size(); i++) {
@@ -279,6 +285,8 @@ public class ManejoListaDistribucion extends javax.swing.JFrame {
                 }
                 lContacto.setModel(listaMostrar);
                 lContacto.clearSelection();
+                var objManagment = new ManagmentList();
+                objManagment.ModifyQuantityFriends(split[0],2);
             }
         }
     }//GEN-LAST:event_lContactoMouseClicked
