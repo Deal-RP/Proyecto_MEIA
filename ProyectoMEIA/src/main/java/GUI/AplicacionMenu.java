@@ -472,7 +472,6 @@ public class AplicacionMenu extends javax.swing.JFrame {
     private void BT_EnviarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_EnviarCorreoActionPerformed
         var EnviarCorreo = new EnvioCorreo();
         EnviarCorreo.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_BT_EnviarCorreoActionPerformed
 
     /**
