@@ -461,7 +461,8 @@ public class AplicacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void JBandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBandejaEntradaActionPerformed
-        
+        var inbox = new Inbox();
+        inbox.setVisible(true);
     }//GEN-LAST:event_JBandejaEntradaActionPerformed
 
     private void BT_BandejaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_BandejaSalidaActionPerformed

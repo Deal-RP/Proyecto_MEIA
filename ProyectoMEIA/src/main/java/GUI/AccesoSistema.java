@@ -99,6 +99,11 @@ public class AccesoSistema extends javax.swing.JFrame {
         });
 
         TF_Password.setText("Ingrese password");
+        TF_Password.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Clean(evt);
+            }
+        });
 
         L_Visible.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -301,6 +306,11 @@ public class AccesoSistema extends javax.swing.JFrame {
             TF_Password.setEchoChar('*');
         }
     }//GEN-LAST:event_L_VisibleMouseClicked
+
+    private void Clean(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Clean
+        // TODO add your handling code here:
+        TF_Password.setText(null);
+    }//GEN-LAST:event_Clean
 
     /**
      * @param args the command line arguments
