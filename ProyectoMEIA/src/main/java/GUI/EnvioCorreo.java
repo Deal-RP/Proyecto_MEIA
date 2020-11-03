@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class EnvioCorreo extends javax.swing.JFrame {
      ABB ABB = new ABB();
+     int Contador = 0;
     /**
      * Creates new form EnvioCorreo
      */
@@ -213,7 +214,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
     }//GEN-LAST:event_TF_ArchivoMouseClicked
 
     private void BT_EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_EnviarActionPerformed
-        
+        Contador++;
         var dataUser = Data.getData();
         var user = dataUser.getUser();
         var strError = "";
@@ -232,7 +233,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
-                ABB.Insertar(LLave);
+                ABB.Insertar(LLave, todosLosRegistros,Contador);
             }
         }
         else if(RB_Usuario.isSelected()){          
@@ -242,7 +243,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
             var todosLosRegistros = user + "|" + CB_Envios.getSelectedItem().toString() + "|" + dateFormat.format(date) + "|" 
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
              String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
-             ABB.Insertar(LLave);
+             ABB.Insertar(LLave, todosLosRegistros,Contador);
         }
         else{
             JOptionPane.showMessageDialog(null, "Error no ha escogido a quien enviar", "ERROR", 1);
