@@ -43,10 +43,8 @@ public void Insertar(String llave, String data){
   }
 
 private Node InsertNode(Node currentNode, Node newNode){
-    var keyCurrent = currentNode.llave.split(Pattern.quote("|"));
-    var keyNew = newNode.llave.split(Pattern.quote("|"));
-       
-    if (keyCurrent[0].compareTo(keyNew[0]) < 0) {
+
+    if (currentNode.llave.compareTo(newNode.llave) < 0) {
         if (currentNode.Izq == null) {
             currentNode.Izq = newNode;
             return currentNode;
@@ -54,7 +52,7 @@ private Node InsertNode(Node currentNode, Node newNode){
             currentNode.Izq = InsertNode(currentNode.Izq, newNode);
             return currentNode;
         }
-    }else if (keyCurrent[0].compareTo(keyNew[0]) > 0) {
+    }else if (currentNode.llave.compareTo(newNode.llave) > 0) {
         if (currentNode.Der == null) {
             currentNode.Der = newNode;
             return currentNode;
@@ -62,47 +60,9 @@ private Node InsertNode(Node currentNode, Node newNode){
             currentNode.Der = InsertNode(currentNode.Der, newNode);
             return currentNode;
         }
-    } else {
-        if (keyCurrent[1].compareTo(keyNew[1]) < 0) {
-            if (currentNode.Izq == null) {
-                currentNode.Izq = newNode;
-                return currentNode;
-            } else {
-                currentNode.Izq = InsertNode(currentNode.Izq, newNode);
-                return currentNode;
-            }
-        } else if (keyCurrent[1].compareTo(keyNew[1]) > 0) {
-            if (currentNode.Der == null) {
-                currentNode.Der = newNode;
-                return currentNode;
-            } else {
-                currentNode.Der = InsertNode(currentNode.Der, newNode);
-                return currentNode;
-            }
-        }else {
-            if (keyCurrent[2].compareTo(keyNew[2]) < 0) {
-                if (currentNode.Izq == null) {
-                    currentNode.Izq = newNode;
-                    return currentNode;
-                } else {
-                    currentNode.Izq = InsertNode(currentNode.Izq, newNode);
-                    return currentNode;
-                }
-            } else if (keyCurrent[2].compareTo(keyNew[2]) < 0) {
-                if (currentNode.Der == null) {
-                    currentNode.Der = newNode;
-                    return currentNode;
-                } else {
-                    currentNode.Der = InsertNode(currentNode.Der, newNode);
-                    return currentNode;
-                }
-            }else {
-                return null;
-            }
-        }
+    } else {         
+        return null;
     }
-       
-
 }
 
  private void inOrder(Node root) {
