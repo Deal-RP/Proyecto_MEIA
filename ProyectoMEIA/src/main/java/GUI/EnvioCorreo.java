@@ -7,6 +7,7 @@ package GUI;
 
 import Management.Data;
 import Management.ManejoArchivo;
+import Management.ABB;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author derly
  */
 public class EnvioCorreo extends javax.swing.JFrame {
-
+     ABB ABB = new ABB();
     /**
      * Creates new form EnvioCorreo
      */
@@ -175,7 +176,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
     private void RB_UsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RB_UsuarioMouseClicked
         
     }//GEN-LAST:event_RB_UsuarioMouseClicked
@@ -212,6 +213,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
     }//GEN-LAST:event_TF_ArchivoMouseClicked
 
     private void BT_EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_EnviarActionPerformed
+        
         var dataUser = Data.getData();
         var user = dataUser.getUser();
         var strError = "";
@@ -226,17 +228,21 @@ public class EnvioCorreo extends javax.swing.JFrame {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             for (int i = 0; i < listaEnviar.getSize(); i++) {
-                //Insertar en arbol de correo
+                //Insertar en arbol de correo                 
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
+                String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
+                ABB.Insertar(LLave);
             }
         }
-        else if(RB_Usuario.isSelected()){
+        else if(RB_Usuario.isSelected()){          
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-                //Insertar en arbol de correo
+                //Insertar en arbol de correo                
             var todosLosRegistros = user + "|" + CB_Envios.getSelectedItem().toString() + "|" + dateFormat.format(date) + "|" 
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
+             String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
+             ABB.Insertar(LLave);
         }
         else{
             JOptionPane.showMessageDialog(null, "Error no ha escogido a quien enviar", "ERROR", 1);

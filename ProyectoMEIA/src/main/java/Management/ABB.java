@@ -4,26 +4,29 @@
  * and open the template in the editor.
  */
 package Management;
-
+ 
 /**
  *
  * @author Santiago Bocel
  */
 public class ABB {
+    int Contador = 0;
      private class nodoArbol {
         private ABB Izq;
         private ABB Der;
         private String dato;
+        private int No_registro; 
  
         private void nodoArbol(){
             Izq = null;
             Der = null;
             dato = " ";
+            No_registro = 0;
         }
     }
  public nodoArbol raiz;
  
-  public void abb(){
+  public void ABB(){
         nodoArbol raiz = new nodoArbol();
     }
   
@@ -32,12 +35,14 @@ public class ABB {
     }
   
 public void Insertar(String dato)
- {
+ {   
+        Contador ++;
         if (esVacio()) {
             nodoArbol nuevo = new nodoArbol();
             nuevo.dato = dato;
             nuevo.Der = new ABB();
             nuevo.Izq  = new ABB();
+            nuevo.No_registro = Contador;
             raiz = nuevo;
         }
         else {
@@ -47,8 +52,23 @@ public void Insertar(String dato)
             if (dato.compareTo(raiz.dato) < 0){
                 (raiz.Der).Insertar(dato);
             }
-        }  
+        }
+        
   }
+
+ public void inOrder(){
+        if (!esVacio()) {
+            raiz.Izq.inOrder();
+            System.out.print( raiz.dato + ", "  );
+            raiz.Der.inOrder();
+        }
+    }
+ private void Imprimir(String dato)
+ {
+ 
+ }
+ 
+
  public ABB buscar(String dato){
         ABB arbolito = null;
         if (!esVacio()) {
