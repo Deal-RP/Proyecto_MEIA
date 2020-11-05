@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class ABB {
 
-   private int counter = 0;
+   private int counter = 1;
 
    public Node raiz = null;
     
@@ -44,7 +44,16 @@ public void Insertar(String llave, String data){
 
 private Node InsertNode(Node currentNode, Node newNode){
 
-    if (currentNode.llave.compareTo(newNode.llave) < 0) {
+    if (newNode.llave.compareTo(currentNode.llave) > 0) {
+             if (currentNode.Der == null) {
+                  currentNode.Der = newNode;
+             return currentNode;
+        } else {
+            currentNode.Der = InsertNode(currentNode.Der, newNode);
+            return currentNode;
+        }
+      }
+     if (newNode.llave.compareTo(currentNode.llave) < 0) {
         if (currentNode.Izq == null) {
             currentNode.Izq = newNode;
             return currentNode;
@@ -52,17 +61,8 @@ private Node InsertNode(Node currentNode, Node newNode){
             currentNode.Izq = InsertNode(currentNode.Izq, newNode);
             return currentNode;
         }
-    }else if (currentNode.llave.compareTo(newNode.llave) > 0) {
-        if (currentNode.Der == null) {
-            currentNode.Der = newNode;
-            return currentNode;
-        } else {
-            currentNode.Der = InsertNode(currentNode.Der, newNode);
-            return currentNode;
-        }
-    } else {         
-        return null;
-    }
+     }   
+   return null;
 }
 
  private void inOrder(Node root) {
