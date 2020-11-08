@@ -5,6 +5,7 @@
  */
 package Management;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,39 +68,50 @@ private Node InsertNode(Node currentNode, Node newNode){
 
  private void inOrder(Node root) {
         if (root != null) {
-            inOrder(raiz.Izq);
+            inOrder(root.Izq);
             var izqNo = "";
             var derNo = "";
-            if (raiz.Izq == null) {
+            if (root.Izq == null) {
                 izqNo = "-1";
             }else{
-                izqNo =   Integer.toString(raiz.Der.No_registro);  
+                izqNo =   Integer.toString(root.Der.No_registro);  
             }
-            if (raiz.Izq == null) {
+            if (root.Izq == null) {
                 derNo = "-1";
             }else{
-                derNo =  Integer.toString(raiz.Izq.No_registro); 
+                derNo =  Integer.toString(root.Izq.No_registro); 
             }
-            var raizNo =  Integer.toString(raiz.No_registro);   
-            var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + raiz.datos;
+            var raizNo =  Integer.toString(root.No_registro);   
+            var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;
 
             listDataTree.add(register);
-            inOrder(raiz.Der);    
+            inOrder(root.Der);    
         }
     }
 
 public void WriteTree(String pathFileTree) throws IOException{
     listDataTree = new ArrayList(); 
+    inOrder(raiz);
+    int valor = 5;
+    try {
+    FileWriter fwriter = new FileWriter(pathFileTree, true);
+    BufferedWriter bw = new BufferedWriter(fwriter);
     PrintWriter writer = new PrintWriter(pathFileTree);
     writer.print("");
     writer.close();
-    inOrder(raiz);
-    var writerFileTree = new FileWriter(pathFileTree, true);
+
     for (int i = 0; i < listDataTree.size(); i++) {
-        writer.write((String) listDataTree.get(i));
+        bw.write((String) listDataTree.get(i));
+        bw.write("\n");
     }
-    writerFileTree.close();
+     bw.close();
+     fwriter.close();
     listDataTree.clear();
+    }
+    catch (IOException ex) {
+            //TODO: handle exception
+          
+        }
 }
  
 
