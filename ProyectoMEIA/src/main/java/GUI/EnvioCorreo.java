@@ -226,7 +226,12 @@ public class EnvioCorreo extends javax.swing.JFrame {
     }// GEN-LAST:event_TF_ArchivoMouseClicked
 
     private void BT_EnviarActionPerformed(java.awt.event.ActionEvent evt){// GEN-FIRST:event_BT_EnviarActionPerformed
-        Contador++;
+        Contador++;                
+          try{
+                ABB.Cargar();
+                }catch(IOException ex) 
+                {
+                }
         var dataUser = Data.getData();
         var user = dataUser.getUser();
         var strError = "";
@@ -245,11 +250,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
-                try{
-                ABB.Cargar();
-                }catch(IOException ex) 
-                {
-                }
+              
                 ABB.Insertar(LLave, todosLosRegistros);
             }
             try {
@@ -266,11 +267,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
                 var todosLosRegistros = user + "|" + CB_Envios.getSelectedItem().toString() + "|" + dateFormat.format(date) + "|"
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
-                try{
-                ABB.Cargar();
-                }catch(IOException ex) 
-                {
-                }
+            
                 ABB.Insertar(LLave, todosLosRegistros);
                 ABB.WriteTree("C:/MEIA/tree.txt");
             } catch (IOException ex) {

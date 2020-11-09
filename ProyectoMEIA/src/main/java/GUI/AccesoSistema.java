@@ -5,9 +5,11 @@ import Management.Data;
 import Management.ManejoArchivo;
 import GUI.CrearUsuario;
 import GUI.AplicacionMenu;
+import Management.ABB;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -40,6 +42,7 @@ public class AccesoSistema extends javax.swing.JFrame {
      
         
         ManejoArchivo objManejo = new ManejoArchivo();
+
         var strError = "";
         if(objManejo.ValidationUserFiles()){
             objManejo.CreationFilesUsers("usuario", strError);

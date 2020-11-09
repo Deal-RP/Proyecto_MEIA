@@ -42,7 +42,7 @@ public void Cargar() throws FileNotFoundException, IOException
                 {
                     if(!"".equals(Linea))
                     {
-                        var datos = Linea.split("|");
+                        var datos = Linea.split(Pattern.quote("|"));
                         String llave = datos[3] + datos[4] + datos[5];
                         String data = Linea;
                          Insertar(llave,data);       
@@ -72,7 +72,13 @@ private Node InsertNode(Node currentNode, Node newNode){
 
     if (newNode.llave.compareTo(currentNode.llave) > 0) {
              if (currentNode.Der == null) {
-                  currentNode.Der = newNode;
+                 var datos = currentNode.datos; 
+                 var Array_datos = datos.split(Pattern.quote("|"));
+                 var nuevo_dato = Array_datos[3] + "|"
+                         + Array_datos[4] + "|" + Array_datos[5] + "|" + Array_datos[6] + "|"
+                         + Array_datos[7] + "|" + Array_datos[8] + "|";
+                 currentNode.datos = nuevo_dato;
+                 currentNode.Der = newNode;                  
              return currentNode;
         } else {
             currentNode.Der = InsertNode(currentNode.Der, newNode);
@@ -81,6 +87,12 @@ private Node InsertNode(Node currentNode, Node newNode){
       }
      if (newNode.llave.compareTo(currentNode.llave) < 0) {
         if (currentNode.Izq == null) {
+              var datos = currentNode.datos; 
+                 var Array_datos = datos.split(Pattern.quote("|"));           
+                 var nuevo_dato = Array_datos[3] + "|"
+                         + Array_datos[4] + "|" + Array_datos[5] + "|" + Array_datos[6] + "|"
+                         + Array_datos[7] + "|" + Array_datos[8] + "|";
+            currentNode.datos = nuevo_dato;        
             currentNode.Izq = newNode;
             return currentNode;
         } else {
@@ -99,12 +111,12 @@ private Node InsertNode(Node currentNode, Node newNode){
             if (root.Izq == null) {
                 izqNo = "-1";
             }else{
-                izqNo =   Integer.toString(root.Der.No_registro);  
+                izqNo =   Integer.toString(root.Izq.No_registro);  
             }
-            if (root.Izq == null) {
+            if (root.Der == null) {
                 derNo = "-1";
             }else{
-                derNo =  Integer.toString(root.Izq.No_registro); 
+                derNo =  Integer.toString(root.Der.No_registro); 
             }
             var raizNo =  Integer.toString(root.No_registro);   
             var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;
@@ -113,6 +125,19 @@ private Node InsertNode(Node currentNode, Node newNode){
             inOrder(root.Der);    
         }
     }
+ 
+ public void posOrden(Node root){
+     if (root.Izq != null) 
+     {
+         posOrden(root);
+   
+     }
+ 
+ }
+ public void PreOrden(){
+ 
+ 
+ }
 
 public void WriteTree(String pathFileTree) throws IOException{
     listDataTree = new ArrayList(); 
