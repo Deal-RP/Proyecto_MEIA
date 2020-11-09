@@ -342,10 +342,12 @@ public class ManejoArchivo {
             File pathFileUserDesc = new File("C:/MEIA/desc_" + nombre + ".txt");
             File pathFileBita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
             File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_" + nombre + ".txt");
+            File pathFileTree = new File("C:/MEIA/tree.txt");
             pathFileUser.createNewFile();
             pathFileUserDesc.createNewFile();
             pathFileBita.createNewFile();
             pathFileBitaDesc.createNewFile();
+            pathFileTree.createNewFile();
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileUserDesc);
@@ -395,13 +397,14 @@ public class ManejoArchivo {
         File pathFileListaUsuarioDesc = new File("C:/MEIA/desc_Lista_usuario0.txt");
         File pathFileListaUsuarioInd = new File("C:/MEIA/ind_Lista_usuario.txt");
         File pathFileListaUsuarioIndDesc = new File("C:/MEIA/desc_ind_Lista_usuario.txt");
+        File pathFileTree = new File("C:/MEIA/tree.txt");
         
         if (pathFolder.exists()){
             if(!pathFileUser.exists() || !pathFileUserDesc.exists() || !pathFileBita.exists() || !pathFileBitaDesc.exists()
                     || !pathFileContact.exists() || !pathFileContactDesc.exists() || !pathFileLista.exists() 
                     || !pathFileListaDesc.exists() || !pathFileContactBita.exists() || !pathFileContactBitaDesc.exists()
                     || !pathFileListaBita.exists() || !pathFileListaBitaDesc.exists()  
-                    || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioIndDesc.exists()){
+                    || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioIndDesc.exists() || !pathFileTree.exists()){
                 pathFileUser.delete();
                 pathFileUserDesc.delete();
                 pathFileBita.delete();
@@ -418,6 +421,7 @@ public class ManejoArchivo {
                 pathFileListaUsuarioDesc.delete();
                 pathFileListaUsuarioInd.delete();
                 pathFileListaUsuarioIndDesc.delete();
+                pathFileTree.delete();
             }
             else{
                 return false;
