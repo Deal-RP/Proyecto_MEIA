@@ -92,7 +92,6 @@ private Node InsertNode(Node currentNode, Node newNode){
 public void WriteTree(String pathFileTree) throws IOException{
     listDataTree = new ArrayList(); 
     inOrder(raiz);
-    int valor = 5;
     try {
     FileWriter fwriter = new FileWriter(pathFileTree, true);
     BufferedWriter bw = new BufferedWriter(fwriter);
@@ -113,7 +112,17 @@ public void WriteTree(String pathFileTree) throws IOException{
           
         }
 }
+ private void Buscar(String usuario){
  
+ 
+ 
+ }
+ 
+ public void Eliminar(){
+ 
+ 
+ 
+ }
 
 // public ABB buscar(String dato){
 //        ABB arbolito = null;
