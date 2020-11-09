@@ -5,7 +5,10 @@
  */
 package Management;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,7 +30,29 @@ public class ABB {
     
    private List listDataTree;
 
- 
+public void Cargar() throws FileNotFoundException, IOException
+{
+    try
+    {
+   String Archivo  = "C:/MEIA/tree.txt";
+   FileReader fReader = new FileReader(Archivo);
+    BufferedReader br = new BufferedReader(fReader);
+     var Linea = br.readLine();
+                while(Linea != null)
+                {
+                    if(!"".equals(Linea))
+                    {
+                        var datos = Linea.split("|");
+                        String llave = datos[3] + datos[4] + datos[5];
+                        String data = Linea;
+                         Insertar(llave,data);       
+                    }
+                    Linea = br.readLine();
+                }
+                br.close();
+                fReader.close();
+    } catch (IOException ex) {}           
+} 
 public void Insertar(String llave, String data){  
     
     var newNode = new Node(counter, llave, data);
