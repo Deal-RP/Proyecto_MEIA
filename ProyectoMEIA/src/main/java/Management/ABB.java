@@ -76,7 +76,7 @@ private Node InsertNode(Node currentNode, Node newNode){
                  var Array_datos = datos.split(Pattern.quote("|"));
                  var nuevo_dato = Array_datos[3] + "|"
                          + Array_datos[4] + "|" + Array_datos[5] + "|" + Array_datos[6] + "|"
-                         + Array_datos[7] + "|" + Array_datos[8] + "|";
+                         + Array_datos[7] + "|" + Array_datos[8];
                  currentNode.datos = nuevo_dato;
                  currentNode.Der = newNode;                  
              return currentNode;
@@ -91,7 +91,7 @@ private Node InsertNode(Node currentNode, Node newNode){
                  var Array_datos = datos.split(Pattern.quote("|"));           
                  var nuevo_dato = Array_datos[3] + "|"
                          + Array_datos[4] + "|" + Array_datos[5] + "|" + Array_datos[6] + "|"
-                         + Array_datos[7] + "|" + Array_datos[8] + "|";
+                         + Array_datos[7] + "|" + Array_datos[8];
             currentNode.datos = nuevo_dato;        
             currentNode.Izq = newNode;
             return currentNode;
