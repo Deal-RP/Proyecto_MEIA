@@ -260,7 +260,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
             }
         }
         else if(RB_Usuario.isSelected()){          
-            try {
+            
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 //Insertar en arbol de correo
@@ -268,7 +268,8 @@ public class EnvioCorreo extends javax.swing.JFrame {
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
             
-                ABB.Insertar(LLave, todosLosRegistros);
+                ABB.Insertar(LLave, todosLosRegistros);               
+                 try {
                 ABB.WriteTree("C:/MEIA/tree.txt");
             } catch (IOException ex) {
                 //Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);

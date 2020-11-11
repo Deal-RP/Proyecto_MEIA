@@ -71,13 +71,7 @@ public void Insertar(String llave, String data){
 private Node InsertNode(Node currentNode, Node newNode){
 
     if (newNode.llave.compareTo(currentNode.llave) > 0) {
-             if (currentNode.Der == null) {
-                 var datos = currentNode.datos; 
-                 var Array_datos = datos.split(Pattern.quote("|"));
-                 var nuevo_dato = Array_datos[3] + "|"
-                         + Array_datos[4] + "|" + Array_datos[5] + "|" + Array_datos[6] + "|"
-                         + Array_datos[7] + "|" + Array_datos[8];
-                 currentNode.datos = nuevo_dato;
+             if (currentNode.Der == null) {             
                  currentNode.Der = newNode;                  
              return currentNode;
         } else {
@@ -86,13 +80,7 @@ private Node InsertNode(Node currentNode, Node newNode){
         }
       }
      if (newNode.llave.compareTo(currentNode.llave) < 0) {
-        if (currentNode.Izq == null) {
-              var datos = currentNode.datos; 
-                 var Array_datos = datos.split(Pattern.quote("|"));           
-                 var nuevo_dato = Array_datos[3] + "|"
-                         + Array_datos[4] + "|" + Array_datos[5] + "|" + Array_datos[6] + "|"
-                         + Array_datos[7] + "|" + Array_datos[8];
-            currentNode.datos = nuevo_dato;        
+        if (currentNode.Izq == null) {                    
             currentNode.Izq = newNode;
             return currentNode;
         } else {
@@ -127,11 +115,27 @@ private Node InsertNode(Node currentNode, Node newNode){
     }
  
  public void posOrden(Node root){
-     if (root.Izq != null) 
-     {
-         posOrden(root);
-   
-     }
+    if (root != null) {
+          posOrden(root.Der);
+            var izqNo = "";
+            var derNo = "";
+          if (root.Der == null) {
+                derNo = "-1";
+            }else{
+                derNo =  Integer.toString(root.Der.No_registro); 
+            }
+            if (root.Izq == null) 
+            {
+               izqNo = "-1";
+            }else{
+               izqNo =  Integer.toString(root.Izq.No_registro);  
+            }
+          
+            var raizNo =  Integer.toString(root.No_registro);   
+            var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;          
+            listDataTree.add(register);
+           posOrden(root.Der);     
+        }
  
  }
  public void PreOrden(){
@@ -162,18 +166,34 @@ public void WriteTree(String pathFileTree) throws IOException{
           
         }
 }
- private void Buscar(String usuario){
- 
- 
- 
- }
- 
- public void Eliminar(){
- 
- 
- 
- }
+public String Buscar(String dato)
+{
+  return Buscar_(dato, raiz);
+}
 
+ private String Buscar_(String usuario, Node root){
+     String dato_busqueda = "";
+     if (root != null) 
+     {
+         var arreglo_llave = root.llave.split(Pattern.quote("|"));
+         var llave_ = arreglo_llave[0]+"|"+arreglo_llave[1];
+        if ( usuario.compareTo(llave_) == 0) {
+             // devolver string con la informacion del dato
+             return root.datos;
+            }
+        else {
+                if (usuario.compareTo(llave_) < 0) {
+                   dato_busqueda = Buscar_(usuario,root.Izq);
+            
+                }
+                else {
+                   dato_busqueda = Buscar_(usuario,root.Der);
+                }
+           }
+     }
+      return dato_busqueda;
+ }
+ 
 // public ABB buscar(String dato){
 //        ABB arbolito = null;
 //        if (!esVacio()) {
