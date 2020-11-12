@@ -8,6 +8,7 @@ package GUI;
 import Management.Data;
 import Management.ManejoArchivo;
 import Management.ABB;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -27,12 +29,17 @@ import javax.swing.JOptionPane;
 public class EnvioCorreo extends javax.swing.JFrame {
     ABB ABB = new ABB();
     int Contador = 0;
-
+    
     /**
      * Creates new form EnvioCorreo
      */
     public EnvioCorreo() {
         initComponents();
+         try{
+                ABB.Cargar();
+                }catch(IOException ex) 
+                {
+                }
     }
 
     /**
@@ -122,6 +129,11 @@ public class EnvioCorreo extends javax.swing.JFrame {
         });
 
         BExit.setText("Salida");
+        BExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,11 +239,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
 
     private void BT_EnviarActionPerformed(java.awt.event.ActionEvent evt){// GEN-FIRST:event_BT_EnviarActionPerformed
         Contador++;                
-          try{
-                ABB.Cargar();
-                }catch(IOException ex) 
-                {
-                }
+         
         var dataUser = Data.getData();
         var user = dataUser.getUser();
         var strError = "";
@@ -249,12 +257,12 @@ public class EnvioCorreo extends javax.swing.JFrame {
                 //Insertar en arbol de correo                 
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
                         + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
-                String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
+                String LLave  = user + listaEnviar.get(i) + dateFormat.format(date);
               
                 ABB.Insertar(LLave, todosLosRegistros);
             }
             try {
-                ABB.WriteTree("C:/MEIA/tree.txt");
+                    ABB.WriteTree("C:/MEIA/tree.txt");
             } catch (IOException ex) {
                 //Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -342,6 +350,37 @@ public class EnvioCorreo extends javax.swing.JFrame {
             CB_Envios.removeAllItems();
         }
     }//GEN-LAST:event_RB_ListaActionPerformed
+
+    private void BExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BExitActionPerformed
+        // TODO add your handling code here:
+         File Archivo = new File("C:/MEIA/usuario.txt");
+        var objManejoArchivo = new ManejoArchivo();
+        var strError = "";
+        var dataUser = Data.getData();
+        var user = dataUser.getUser();
+        var ArchivoUser = objManejoArchivo.BuscarLinea(Archivo, user, strError, 0, 9);
+        var split = ArchivoUser.split(Pattern.quote("|"));
+        var sistema = new AplicacionMenu();
+        sistema.L_Bienvenida.setText("BIENVENIDO:" + split[0]);
+        sistema.Dato.setText(split[0]);
+        sistema.Dato.setVisible(false);
+        if(split[4].equals("1")){
+            sistema.L_Rol.setText("Rol: Administrador");
+        }else{
+            sistema.L_Rol.setText("Rol: Usuario");
+        }
+
+        try
+        {
+            Image img = new ImageIcon(split[8]).getImage();
+            Image newImg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
+            sistema.L_Image.setIcon(new ImageIcon(newImg));
+        } catch(Exception ex){
+            strError = ex.getMessage();
+        }
+        sistema.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BExitActionPerformed
 
     /**
      * @param args the command line arguments

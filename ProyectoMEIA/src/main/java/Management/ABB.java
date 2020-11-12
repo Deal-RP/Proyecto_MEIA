@@ -92,10 +92,10 @@ private Node InsertNode(Node currentNode, Node newNode){
 }
 
  private void inOrder(Node root) {
-        if (root != null) {
+    var izqNo = "";
+    var derNo = "";   
+     if (root != null) {
             inOrder(root.Izq);
-            var izqNo = "";
-            var derNo = "";
             if (root.Izq == null) {
                 izqNo = "-1";
             }else{
@@ -115,10 +115,10 @@ private Node InsertNode(Node currentNode, Node newNode){
     }
  
  public void posOrden(Node root){
-    if (root != null) {
+       var izqNo = "";
+       var derNo = "";
+     if (root != null) {
           posOrden(root.Der);
-            var izqNo = "";
-            var derNo = "";
           if (root.Der == null) {
                 derNo = "-1";
             }else{
@@ -129,23 +129,41 @@ private Node InsertNode(Node currentNode, Node newNode){
                izqNo = "-1";
             }else{
                izqNo =  Integer.toString(root.Izq.No_registro);  
-            }
-          
+            }          
             var raizNo =  Integer.toString(root.No_registro);   
             var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;          
             listDataTree.add(register);
-           posOrden(root.Der);     
+           posOrden(root.Izq);     
         }
  
  }
- public void PreOrden(){
- 
- 
+ public void PreOrden(Node root){
+     var izqNo = "";
+       var derNo = "";
+     if (root != null) {
+         if (root.Der == null) {
+              derNo = "-1";
+         }
+         else{
+             derNo = Integer.toString(root.Der.No_registro); 
+         }
+           if (root.Izq == null) 
+            {
+               izqNo = "-1";
+            }else{
+               izqNo =  Integer.toString(root.Izq.No_registro);  
+            }          
+          var raizNo =  Integer.toString(root.No_registro);   
+           var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;          
+            listDataTree.add(register);
+         PreOrden(root.Izq);   
+         PreOrden(root.Der);          
+        }
  }
 
 public void WriteTree(String pathFileTree) throws IOException{
     listDataTree = new ArrayList(); 
-    inOrder(raiz);
+    PreOrden(raiz);
     try {
     FileWriter fwriter = new FileWriter(pathFileTree, true);
     BufferedWriter bw = new BufferedWriter(fwriter);
@@ -192,64 +210,5 @@ public String Buscar(String dato)
            }
      }
       return dato_busqueda;
- }
- 
-// public ABB buscar(String dato){
-//        ABB arbolito = null;
-//        if (!esVacio()) {
-//            if (dato.compareTo(raiz.llave) == 0) {
-//            return this;
-//            }
-//            else {
-//                if (dato.compareTo(raiz.llave) < 0) {
-//                    arbolito = raiz.Izq.buscar(dato);
-//                }
-//                else {
-//                    arbolito = raiz.Der.buscar(dato);
-//                }
-//            }
-//        }
-//        return arbolito;
-//    }
-   
-// public boolean esHoja() {
-//        boolean hoja = false;
-//        if( raiz.Izq.IsLeaf() && raiz.Der) {
-//            hoja = true;
-//        }
-//        return hoja;
-//    }
-// 
-// public String buscarMin() {
-//        ABB arbolActual = this;
-//        while( !arbolActual.raiz.Izq.esVacio() ) {
-//            arbolActual = arbolActual.raiz.Izq;
-//        }
-//        String devuelvo= arbolActual.raiz.llave;
-//        arbolActual.raiz=null;
-//        return devuelvo;
-//    }
- 
-//   public void eliminar(String dato) {
-//        ABB paraEliminar = buscar(dato);
-//        if (!paraEliminar.esVacio()) {
-//            if (paraEliminar.esHoja()) {
-//                paraEliminar.raiz = null;
-//            }
-//            else {
-//                if (!paraEliminar.raiz.Izq.esVacio() && !paraEliminar.raiz.Der.esVacio()) {
-//                    paraEliminar.raiz.llave = paraEliminar.raiz.Der.buscarMin();
-//                }
-//                else {
-//                    if (paraEliminar.raiz.Izq.esVacio()) {
-//                        paraEliminar.raiz = paraEliminar.raiz.Der.raiz;
-//                    }else{
-//                        paraEliminar.raiz = paraEliminar.raiz.Izq.raiz;
-//                    }
-//                }
-//            }
-//        }
-//    }
-   
-     
+ }    
 }
