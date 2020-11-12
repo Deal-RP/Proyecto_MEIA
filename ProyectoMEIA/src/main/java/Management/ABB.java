@@ -29,6 +29,8 @@ public class ABB {
    public Node raiz = null;
     
    private List listDataTree;
+   
+   private List listissuer;
 
 public void Cargar() throws FileNotFoundException, IOException
 {
@@ -184,31 +186,78 @@ public void WriteTree(String pathFileTree) throws IOException{
           
         }
 }
-public String Buscar(String dato)
-{
-  return Buscar_(dato, raiz);
-}
 
- private String Buscar_(String usuario, Node root){
+
+ private String Buscar_(String usuario, Node root, String llave_){
      String dato_busqueda = "";
      if (root != null) 
      {
-         var arreglo_llave = root.llave.split(Pattern.quote("|"));
-         var llave_ = arreglo_llave[0]+"|"+arreglo_llave[1];
         if ( usuario.compareTo(llave_) == 0) {
              // devolver string con la informacion del dato
              return root.datos;
             }
         else {
                 if (usuario.compareTo(llave_) < 0) {
-                   dato_busqueda = Buscar_(usuario,root.Izq);
+                   dato_busqueda = Buscar_(usuario,root.Izq, llave_);
             
                 }
                 else {
-                   dato_busqueda = Buscar_(usuario,root.Der);
+                   dato_busqueda = Buscar_(usuario,root.Der,llave_);
                 }
            }
      }
       return dato_busqueda;
  }    
+ public String Buscar_Emisor()
+ {
+   return null;
+ }
+ //Buscar todos los mensajes recibidos
+ public String Buscar_Receptor()
+ {
+     return null;    
+ }
+ // Buscar todos los mensajes enviados por el emisor
+ private void search_issuer(String issuer, Node root)
+ {
+    var arreglo_llave = root.llave.split(Pattern.quote("|"));
+    var llave_ = arreglo_llave[0];
+    var dato = "";
+   if (root != null) {
+            inOrder(root.Izq);
+            if (root.Izq != null) {
+               dato = Buscar_(issuer, root.Izq, llave_);
+              listissuer.add(dato);                
+            }
+            if (root.Der != null) {
+               dato = Buscar_(issuer, root.Der, llave_);
+              listissuer.add(dato);            
+            }
+              listissuer.add(dato);
+            inOrder(root.Der);    
+        }
 }
+ 
+ private void search_receiver(String issuer, Node root)
+ {
+    var arreglo_llave = root.llave.split(Pattern.quote("|"));
+    var llave_ = arreglo_llave[1];
+    var dato = "";
+   if (root != null) {
+            inOrder(root.Izq);
+            if (root.Izq != null) {
+               dato = Buscar_(issuer, root.Izq, llave_);
+              listissuer.add(dato);                
+            }
+            if (root.Der != null) {
+               dato = Buscar_(issuer, root.Der, llave_);
+              listissuer.add(dato);            
+            }
+              listissuer.add(dato);
+            inOrder(root.Der);    
+        }
+}
+ 
+ 
+}
+    
