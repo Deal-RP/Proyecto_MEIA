@@ -239,7 +239,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
 
     private void BT_EnviarActionPerformed(java.awt.event.ActionEvent evt){// GEN-FIRST:event_BT_EnviarActionPerformed
         Contador++;                
-         
+         var manejoarchivo = new ManejoArchivo();
         var dataUser = Data.getData();
         var user = dataUser.getUser();
         var strError = "";
@@ -254,31 +254,42 @@ public class EnvioCorreo extends javax.swing.JFrame {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             for (int i = 0; i < listaEnviar.getSize(); i++) {
-                //Insertar en arbol de correo                 
+                //Insertar en arbol de correo       
+                var temp_Adjunto = "null";
+               if (!TF_Archivo.getText().equals("")) {
+                   temp_Adjunto = TF_Archivo.getText();
+               }
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
-                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText()  + "1";
+                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + temp_Adjunto  +"|"+ "1";
                 String LLave  = user + listaEnviar.get(i) + dateFormat.format(date);
               
                 ABB.Insertar(LLave, todosLosRegistros);
-            }
-            try {
+                 try {
                     ABB.WriteTree("C:/MEIA/tree.txt");
+                    manejoarchivo.ModifyFilesDescUser("tree",9, user, false, strError);
             } catch (IOException ex) {
                 //Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);
             }
+            }
+           
         }
         else if(RB_Usuario.isSelected()){          
             
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 //Insertar en arbol de correo
+                var temp_Adjunto = "null";
+               if (!TF_Archivo.getText().equals("")) {
+                   temp_Adjunto = TF_Archivo.getText();
+               }
                 var todosLosRegistros = user + "|" + CB_Envios.getSelectedItem().toString() + "|" + dateFormat.format(date) + "|"
-                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "|" + "1";
+                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + temp_Adjunto + "|" + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
             
-                ABB.Insertar(LLave, todosLosRegistros);               
+                ABB.Insertar(LLave, todosLosRegistros);   
                  try {
                 ABB.WriteTree("C:/MEIA/tree.txt");
+                 manejoarchivo.ModifyFilesDescUser("tree",9, user, false, strError);
             } catch (IOException ex) {
                 //Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);
             }

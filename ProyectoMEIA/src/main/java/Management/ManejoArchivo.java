@@ -376,6 +376,39 @@ public class ManejoArchivo {
              strError = ex.getMessage();
         }
     }
+    public void CreationFileTree(String nombre)
+    { try {
+            File pathFileUser = new File("C:/MEIA/" + nombre + ".txt");
+            File pathFileUserDesc = new File("C:/MEIA/desc_" + nombre + ".txt");
+  
+            pathFileUser.createNewFile();
+            pathFileUserDesc.createNewFile();         
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            var writer = new FileWriter(pathFileUserDesc);
+            writer.write("nombre simbolico:" + nombre + "\n");
+            writer.write("fecha creacion:"+dateFormat.format(date)+"\n");
+            writer.write("usuario creacion:root\n");
+            writer.write("fecha modificacion:"+dateFormat.format(date)+"\n");
+            writer.write("usuario modificacion:root\n");
+            writer.write("# registros:0\n");
+            writer.write("registros activos:0\n");
+            writer.write("registros incactivos:0\n");
+            writer.close();
+            writer.write("fecha creacion:"+dateFormat.format(date)+"\n");
+            writer.write("usuario creacion:root\n");
+            writer.write("fecha modificacion:"+dateFormat.format(date)+"\n");
+            writer.write("usuario modificacion:root\n");
+            writer.write("# registros:0\n");
+            writer.write("registros activos:0\n");
+            writer.write("registros incactivos:0\n");
+            writer.write("max_reorganizacion:3\n");
+            writer.close();
+        } catch (IOException ex) {
+            //TODO: handle exception
+        }
+
+    }
     //method to validate if exists the folder and files of the users and if is not exist create them 
     // return true if the file users do not exist and false if they exists
     public boolean ValidationUserFiles(){
@@ -393,7 +426,7 @@ public class ManejoArchivo {
         File pathFileListaDesc =  new File("C:/MEIA/desc_lista.txt");
         File pathFileListaBita = new File("C:/MEIA/bitacora_lista.txt");
         File pathFileListaBitaDesc =  new File("C:/MEIA/desc_bitacora_lista.txt");
-        File pathFileTreeDesc = new File("C:/MEIA/desc_bitacora_tree.txt");
+        File pathFileTreeDesc = new File("C:/MEIA/desc_tree.txt");
         File pathFileListaUsuario = new File("C:/MEIA/Lista_usuario0.txt");
         File pathFileListaUsuarioDesc = new File("C:/MEIA/desc_Lista_usuario0.txt");
         File pathFileListaUsuarioInd = new File("C:/MEIA/ind_Lista_usuario.txt");
@@ -405,7 +438,8 @@ public class ManejoArchivo {
                     || !pathFileContact.exists() || !pathFileContactDesc.exists() || !pathFileLista.exists() 
                     || !pathFileListaDesc.exists() || !pathFileContactBita.exists() || !pathFileContactBitaDesc.exists()
                     || !pathFileListaBita.exists() || !pathFileListaBitaDesc.exists()  
-                    || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioIndDesc.exists() || !pathFileTree.exists()){
+                    || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioIndDesc.exists() || !pathFileTree.exists()
+                    || !pathFileTreeDesc.exists()){
                 pathFileUser.delete();
                 pathFileUserDesc.delete();
                 pathFileBita.delete();
@@ -423,6 +457,7 @@ public class ManejoArchivo {
                 pathFileListaUsuarioInd.delete();
                 pathFileListaUsuarioIndDesc.delete();
                 pathFileTree.delete();
+                pathFileTreeDesc.delete();
             }
             else{
                 return false;
