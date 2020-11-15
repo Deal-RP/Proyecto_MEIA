@@ -212,6 +212,8 @@ public void WriteTree(String pathFileTree) throws IOException{
       return dato_busqueda;
  }    
  // Este metodo es el que llaman para llenar la tabla 
+ //parametro: user -> usuario que esta logiado en este momento
+ //parametro: posicion -> es la posicion de la persona que se desea buscar, posicion 3 emisor y posicion 4 emisor
  public List display_msg_(String user,int position)
  {
    List_msg = new ArrayList();
@@ -231,8 +233,12 @@ public void WriteTree(String pathFileTree) throws IOException{
    if (root != null) {
     var arreglo_llave = root.datos.split(Pattern.quote("|"));
     var llave_ = arreglo_llave[position];                   
-             var dato = Buscar_(user, root, llave_);     
-             List_msg.add(dato); 
+             var dato = Buscar_(user, root, llave_); 
+             if (!dato.equals("")) {
+                  List_msg.add(dato); 
+                
+             }
+       
              display_msg(user,root.Izq,position);  
              display_msg(user,root.Der,position); 
         }

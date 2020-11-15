@@ -8,6 +8,10 @@ package GUI;
 import Management.Data;
 import java.io.IOException;
 import Management.ABB;
+import java.util.List;
+import java.util.Vector;
+import java.util.regex.Pattern;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,10 +25,13 @@ public class Inbox extends javax.swing.JFrame {
     public Inbox() {
         initComponents();
          try{
-                ABB.Cargar();
-                }catch(IOException ex) 
-                {
-                }
+            var dataUser = Data.getData();
+            var user = dataUser.getUser();
+            ABB.Cargar();
+            var tempList = ABB.display_msg_(user, 1);
+            ShowEmails( tempList);
+            }catch(IOException ex){
+            }
     }
 
     /**
@@ -37,31 +44,19 @@ public class Inbox extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_Inbox = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField_busqueda = new javax.swing.JTextField();
         jButton_buscar = new javax.swing.JButton();
         jButton_recargar = new javax.swing.JButton();
         jButton_salir = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable_Inbox = new javax.swing.JTable();
 
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jTable_Inbox.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Emisor", "Asunto", "Mensaje", "Fecha"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable_Inbox);
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel1.setText("Bandeja de Entrada");
@@ -89,30 +84,40 @@ public class Inbox extends javax.swing.JFrame {
             }
         });
 
+        jTable_Inbox.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Emisor", "Asunto", "Mensaje", "Fecha"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable_Inbox);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(58, 58, 58)
-                                .addComponent(jTextField_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton_recargar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel2)
+                        .addGap(58, 58, 58)
+                        .addComponent(jTextField_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(233, 233, 233)
+                .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jButton_recargar)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -127,8 +132,8 @@ public class Inbox extends javax.swing.JFrame {
                     .addComponent(jButton_buscar)
                     .addComponent(jButton_recargar)
                     .addComponent(jButton_salir))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -141,7 +146,8 @@ public class Inbox extends javax.swing.JFrame {
         var user = dataUser.getUser();
         var strError = "";
         
-       var List_msg = ABB.display_msg_(user, 3);
+       var List_msg = ABB.display_msg_(user, 1);
+       ShowEmails(List_msg);
         
     }//GEN-LAST:event_jButton_recargarActionPerformed
 
@@ -156,9 +162,37 @@ public class Inbox extends javax.swing.JFrame {
         var user = dataUser.getUser();
         var strError = "";
         var Name =    jTextField_busqueda.getText();
-        var List_use = ABB.search_user_(user, Name,4,3);
+        var List_use = ABB.search_user_(user, Name,0,1);
+        ShowEmails(List_use);
     }//GEN-LAST:event_jButton_buscarActionPerformed
 
+    //method to show te emails in the data grid view
+    //parameter: dataList -> de data of the tree that have the emails
+    public void ShowEmails(List<String> dataList){
+    
+        // the list return a register in this order: emisor,receptor,fecha,asunto,mensaje,estado,adjunto
+        DefaultTableModel model = (DefaultTableModel) jTable_Inbox.getModel();
+        model.setRowCount(0);
+
+        
+        for (int i = 0; i < dataList.size(); i++) {
+            
+            var tempString = (String) dataList.get(i);
+            var split = tempString.split(Pattern.quote("|"));
+            
+            var arrayTemp = new Vector();
+            arrayTemp.add(split[0]);
+            arrayTemp.add(split[3]);
+            arrayTemp.add(split[4]);
+            arrayTemp.add(split[2]);
+            
+            DefaultTableModel dt = (DefaultTableModel) jTable_Inbox.getModel();
+            dt.addRow(arrayTemp);
+        }
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -193,6 +227,8 @@ public class Inbox extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -202,6 +238,7 @@ public class Inbox extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable_Inbox;
     private javax.swing.JTextField jTextField_busqueda;
     // End of variables declaration//GEN-END:variables
