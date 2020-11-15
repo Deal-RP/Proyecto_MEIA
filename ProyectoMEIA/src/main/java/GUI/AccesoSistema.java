@@ -8,6 +8,7 @@ import GUI.AplicacionMenu;
 import Management.ABB;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -105,6 +106,11 @@ public class AccesoSistema extends javax.swing.JFrame {
         TF_Password.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Clean(evt);
+            }
+        });
+        TF_Password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Clean2(evt);
             }
         });
 
@@ -315,6 +321,13 @@ public class AccesoSistema extends javax.swing.JFrame {
         TF_Password.setText(null);
     }//GEN-LAST:event_Clean
 
+    private void Clean2(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Clean2
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == KeyEvent.VK_TAB) {
+             TF_Password.setText(null);
+        }
+    }//GEN-LAST:event_Clean2
+
     /**
      * @param args the command line arguments
      */
@@ -366,4 +379,7 @@ public class AccesoSistema extends javax.swing.JFrame {
     private String Pattern(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+   
+
 }

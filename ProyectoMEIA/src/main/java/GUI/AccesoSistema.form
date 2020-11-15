@@ -138,6 +138,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Clean"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Clean2"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="L_Visible">
