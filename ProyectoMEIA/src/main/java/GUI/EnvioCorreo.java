@@ -256,7 +256,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
             for (int i = 0; i < listaEnviar.getSize(); i++) {
                 //Insertar en arbol de correo                 
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
-                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
+                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText()  + "1";
                 String LLave  = user + listaEnviar.get(i) + dateFormat.format(date);
               
                 ABB.Insertar(LLave, todosLosRegistros);
@@ -273,7 +273,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
                 Date date = new Date();
                 //Insertar en arbol de correo
                 var todosLosRegistros = user + "|" + CB_Envios.getSelectedItem().toString() + "|" + dateFormat.format(date) + "|"
-                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "1";
+                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + TF_Archivo.getText() + "|" + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
             
                 ABB.Insertar(LLave, todosLosRegistros);               

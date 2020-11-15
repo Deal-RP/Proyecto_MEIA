@@ -5,17 +5,26 @@
  */
 package GUI;
 
+import Management.Data;
+import java.io.IOException;
+import Management.ABB;
+
 /**
  *
  * @author pablo
  */
 public class Inbox extends javax.swing.JFrame {
-
+       ABB ABB = new ABB();
     /**
      * Creates new form Inbox
      */
     public Inbox() {
         initComponents();
+         try{
+                ABB.Cargar();
+                }catch(IOException ex) 
+                {
+                }
     }
 
     /**
@@ -60,6 +69,11 @@ public class Inbox extends javax.swing.JFrame {
         jLabel2.setText("Buscar Correo ");
 
         jButton_buscar.setText("Buscar");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_buscarActionPerformed(evt);
+            }
+        });
 
         jButton_recargar.setText("Recargar");
         jButton_recargar.addActionListener(new java.awt.event.ActionListener() {
@@ -123,12 +137,27 @@ public class Inbox extends javax.swing.JFrame {
 
     private void jButton_recargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_recargarActionPerformed
         // TODO add your handling code here:
+        var dataUser = Data.getData();
+        var user = dataUser.getUser();
+        var strError = "";
+        
+       var List_msg = ABB.display_msg_(user, 3);
+        
     }//GEN-LAST:event_jButton_recargarActionPerformed
 
     private void jButton_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salirActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton_salirActionPerformed
+
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        var dataUser = Data.getData();
+        var user = dataUser.getUser();
+        var strError = "";
+        var Name =    jTextField_busqueda.getText();
+        var List_use = ABB.search_user_(user, Name,4,3);
+    }//GEN-LAST:event_jButton_buscarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -30,8 +30,9 @@ public class ABB {
     
    private List listDataTree;
    
-   private List listissuer;
-
+   private List List_msg;
+   
+   private List List_Search;
 public void Cargar() throws FileNotFoundException, IOException
 {
     try
@@ -46,8 +47,10 @@ public void Cargar() throws FileNotFoundException, IOException
                     {
                         var datos = Linea.split(Pattern.quote("|"));
                         String llave = datos[3] + datos[4] + datos[5];
+                        var Linea_datos = datos[3] +"|" + datos[4] + "|" + datos[5] + "|" + datos[6] + "|" 
+                                + datos[7] + "|" + datos[8];
                         String data = Linea;
-                         Insertar(llave,data);       
+                         Insertar(llave,Linea_datos);       
                     }
                     Linea = br.readLine();
                 }
@@ -156,7 +159,7 @@ private Node InsertNode(Node currentNode, Node newNode){
                izqNo =  Integer.toString(root.Izq.No_registro);  
             }          
           var raizNo =  Integer.toString(root.No_registro);   
-           var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;          
+          var register =  raizNo + "|" + derNo + "|" + izqNo  + "|" + root.datos;         
             listDataTree.add(register);
          PreOrden(root.Izq);   
          PreOrden(root.Der);          
@@ -208,56 +211,68 @@ public void WriteTree(String pathFileTree) throws IOException{
      }
       return dato_busqueda;
  }    
- public String Buscar_Emisor()
+ // Este metodo es el que llaman para llenar la tabla 
+ public List display_msg_(String user,int position)
  {
-   return null;
+   List_msg = new ArrayList();
+   display_msg(user ,raiz,position);
+   return List_msg;
  }
- //Buscar todos los mensajes recibidos
- public String Buscar_Receptor()
+ public List search_user_(String Referrer, String Name,int position1, int position2 )
  {
-     return null;    
+  List_Search = new ArrayList();
+  search_user(Referrer, Name,raiz,position1, position2);
+  return List_Search;
  }
- // Buscar todos los mensajes enviados por el emisor
- private void search_issuer(String issuer, Node root)
+
+ //Mostrar mensajes del usuario dependiendo de E/S
+ private void display_msg(String user, Node root, int position)
  {
-    var arreglo_llave = root.llave.split(Pattern.quote("|"));
-    var llave_ = arreglo_llave[0];
-    var dato = "";
    if (root != null) {
-            inOrder(root.Izq);
-            if (root.Izq != null) {
-               dato = Buscar_(issuer, root.Izq, llave_);
-              listissuer.add(dato);                
-            }
-            if (root.Der != null) {
-               dato = Buscar_(issuer, root.Der, llave_);
-              listissuer.add(dato);            
-            }
-              listissuer.add(dato);
-            inOrder(root.Der);    
+    var arreglo_llave = root.datos.split(Pattern.quote("|"));
+    var llave_ = arreglo_llave[position];                   
+             var dato = Buscar_(user, root, llave_);     
+             List_msg.add(dato); 
+             display_msg(user,root.Izq,position);  
+             display_msg(user,root.Der,position); 
         }
-}
- 
- private void search_receiver(String issuer, Node root)
+ }
+ //Buscar mensaje del usuario unicamente Salida
+ private void search_user(String Referrer, String Name,Node root ,int position1, int position2 )
  {
-    var arreglo_llave = root.llave.split(Pattern.quote("|"));
-    var llave_ = arreglo_llave[1];
-    var dato = "";
-   if (root != null) {
-            inOrder(root.Izq);
-            if (root.Izq != null) {
-               dato = Buscar_(issuer, root.Izq, llave_);
-              listissuer.add(dato);                
-            }
-            if (root.Der != null) {
-               dato = Buscar_(issuer, root.Der, llave_);
-              listissuer.add(dato);            
-            }
-              listissuer.add(dato);
-            inOrder(root.Der);    
+  if (root != null) {
+    var arreglo_llave = root.datos.split(Pattern.quote("|"));
+    var llave_ = arreglo_llave[position1];   
+    var llave_R = arreglo_llave[position2];
+             var dato = Buscar_referencia(Referrer,Name, root, llave_, llave_R );  
+             if (dato != "") {
+              List_Search.add(dato); 
+              }             
+             search_user(Referrer, Name,root.Izq,position1, position2);  
+             search_user(Referrer, Name,root.Der,position1, position2); 
         }
-}
- 
- 
+     
+ }
+ private String Buscar_referencia(String Referrer, String Name,Node root, String llave_, String llave_R)
+ {
+  String dato_busqueda = "";
+     if (root != null) 
+     {
+        if ( Name.compareTo(llave_) == 0 && Referrer.compareTo(llave_R) == 0) {
+             // devolver string con la informacion del dato
+             return root.datos;
+            }
+        else {
+                if (Name.compareTo(llave_) < 0 ) {
+                   dato_busqueda = Buscar_referencia(Referrer,Name,root.Izq, llave_,llave_R);
+            
+                }
+                else {
+                   dato_busqueda = Buscar_referencia(Referrer, Name,root.Der,llave_,llave_R);
+                }
+           }
+     }
+      return dato_busqueda;
+ }
 }
     

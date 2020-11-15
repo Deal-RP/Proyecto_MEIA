@@ -393,6 +393,7 @@ public class ManejoArchivo {
         File pathFileListaDesc =  new File("C:/MEIA/desc_lista.txt");
         File pathFileListaBita = new File("C:/MEIA/bitacora_lista.txt");
         File pathFileListaBitaDesc =  new File("C:/MEIA/desc_bitacora_lista.txt");
+        File pathFileTreeDesc = new File("C:/MEIA/desc_bitacora_tree.txt");
         File pathFileListaUsuario = new File("C:/MEIA/Lista_usuario0.txt");
         File pathFileListaUsuarioDesc = new File("C:/MEIA/desc_Lista_usuario0.txt");
         File pathFileListaUsuarioInd = new File("C:/MEIA/ind_Lista_usuario.txt");
