@@ -271,6 +271,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
                 //Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);
             }
             }
+            clear();
            
         }
         else if(RB_Usuario.isSelected()){          
@@ -290,6 +291,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
                  try {
                 ABB.WriteTree("C:/MEIA/tree.txt");
                  manejoarchivo.ModifyFilesDescUser("tree",9, user, false, strError);
+                 clear();
             } catch (IOException ex) {
                 //Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -299,6 +301,12 @@ public class EnvioCorreo extends javax.swing.JFrame {
         }
     }                                         
 
+    private void clear(){
+        JOptionPane.showMessageDialog(null, "Enviado Correctamente", "Mensaje", 1);
+        TF_Asunto.setText("");
+        TA_Mensaje.setText("");
+        TF_Archivo.setText("");
+    }
     private void RB_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RB_UsuarioActionPerformed
         if(RB_Usuario.isSelected()){
             RB_Lista.setSelected(false);

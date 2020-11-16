@@ -89,7 +89,7 @@ public class Inbox extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Emisor", "Asunto", "Mensaje", "Fecha"
+                "Emisor", "Asunto", "Mensaje", "Adjunto", "Fecha"
             }
         ));
         jScrollPane1.setViewportView(jTable_Inbox);
@@ -179,11 +179,17 @@ public class Inbox extends javax.swing.JFrame {
             
             var tempString = (String) dataList.get(i);
             var split = tempString.split(Pattern.quote("|"));
+           
+             var tempAdjuntos = "No se adjunto nada";
+            if (!split[5].equals("null")) {
+                tempAdjuntos = split[5];
+            }
             
             var arrayTemp = new Vector();
             arrayTemp.add(split[0]);
             arrayTemp.add(split[3]);
             arrayTemp.add(split[4]);
+            arrayTemp.add(tempAdjuntos);
             arrayTemp.add(split[2]);
             
             DefaultTableModel dt = (DefaultTableModel) jTable_Inbox.getModel();

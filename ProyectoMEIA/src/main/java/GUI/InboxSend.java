@@ -89,12 +89,10 @@ public class InboxSend extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Receptor", "Asunto", "Mensaje", "Fecha"
+                "Receptor", "Asunto", "Mensaje", "Adjunto", "Fecha"
             }
         ));
         jScrollPane1.setViewportView(jTable_Inbox);
-
-        jScrollPane2.setViewportView(jScrollPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,7 +114,9 @@ public class InboxSend extends javax.swing.JFrame {
                 .addComponent(jButton_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -133,7 +133,11 @@ public class InboxSend extends javax.swing.JFrame {
                     .addComponent(jButton_recargar)
                     .addComponent(jButton_salir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -215,10 +219,16 @@ public class InboxSend extends javax.swing.JFrame {
             var tempString = (String) dataList.get(i);
             var split = tempString.split(Pattern.quote("|"));
             
+            var tempAdjuntos = "No se adjunto nada";
+            if (!split[5].equals("null")) {
+                tempAdjuntos = split[5];
+            }
+            
             var arrayTemp = new Vector();
             arrayTemp.add(split[1]);
             arrayTemp.add(split[3]);
             arrayTemp.add(split[4]);
+            arrayTemp.add(tempAdjuntos);
             arrayTemp.add(split[2]);
             
             DefaultTableModel dt = (DefaultTableModel) jTable_Inbox.getModel();
