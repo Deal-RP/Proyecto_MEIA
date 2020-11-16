@@ -89,9 +89,10 @@ public class ManejoArchivo {
                             fReader.close();
                             return Linea;
                         }
+                        cont++;
                     }
                     Linea = br.readLine();
-                    cont++;
+                    
                 }
                 br.close();
                 fReader.close();
@@ -438,7 +439,7 @@ public class ManejoArchivo {
                     || !pathFileContact.exists() || !pathFileContactDesc.exists() || !pathFileLista.exists() 
                     || !pathFileListaDesc.exists() || !pathFileContactBita.exists() || !pathFileContactBitaDesc.exists()
                     || !pathFileListaBita.exists() || !pathFileListaBitaDesc.exists()  
-                    || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioIndDesc.exists() || !pathFileTree.exists()
+                    || !pathFileListaUsuarioInd.exists() || !pathFileListaUsuarioIndDesc.exists() 
                     || !pathFileTreeDesc.exists()){
                 pathFileUser.delete();
                 pathFileUserDesc.delete();
@@ -455,8 +456,7 @@ public class ManejoArchivo {
                 pathFileListaUsuario.delete();
                 pathFileListaUsuarioDesc.delete();
                 pathFileListaUsuarioInd.delete();
-                pathFileListaUsuarioIndDesc.delete();
-                pathFileTree.delete();
+                pathFileListaUsuarioIndDesc.delete();               
                 pathFileTreeDesc.delete();
             }
             else{

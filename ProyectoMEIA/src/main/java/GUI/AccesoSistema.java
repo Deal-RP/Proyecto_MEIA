@@ -50,7 +50,6 @@ public class AccesoSistema extends javax.swing.JFrame {
             objManejo.CreationFilesUsers("contactos", strError);
             objManejo.CreationFilesUsers("lista", strError);
             objManejo.creationDescListContact("Lista_usuario");
-            objManejo.CreationFileTree("tree");
         }
     }
 

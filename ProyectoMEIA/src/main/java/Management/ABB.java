@@ -173,14 +173,14 @@ public void WriteTree(String pathFileTree) throws IOException{
     listDataTree = new ArrayList(); 
     PreOrden(raiz);
     var manejoArchivos = new ManejoArchivo();
-    var strError = "";
+    var strError = "";   
     for (int i = 0; i < listDataTree.size(); i++) {
         var Actual_linea = (String) listDataTree.get(i);
         var Actual = Actual_linea.split(Pattern.quote("|"));
-        var Archivo_txt = manejoArchivos.LecturaLinea(new File(pathFileTree), strError, Integer.parseInt(Actual[0]));
+        var Archivo_txt = manejoArchivos.LecturaLinea(new File(pathFileTree), strError, Integer.parseInt(Actual[0]) -1);
         var Array_Archivo_txt = Archivo_txt.split(Pattern.quote("|"));
          if (Archivo_txt.equals("")) {
-            manejoArchivos.Escritura(new File(pathFileTree), Actual_linea, strError, false);
+            manejoArchivos.Escritura(new File(pathFileTree), Actual_linea, strError, true);
         }
          else
          {
