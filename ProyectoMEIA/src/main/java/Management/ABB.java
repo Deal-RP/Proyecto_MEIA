@@ -180,7 +180,7 @@ public void WriteTree(String pathFileTree) throws IOException{
         var Archivo_txt = manejoArchivos.LecturaLinea(new File(pathFileTree), strError, Integer.parseInt(Actual[0]));
         var Array_Archivo_txt = Archivo_txt.split(Pattern.quote("|"));
          if (Archivo_txt.equals("")) {
-            manejoArchivos.Escritura(new File(pathFileTree), Actual_linea, strError, true);
+            manejoArchivos.Escritura(new File(pathFileTree), Actual_linea, strError, false);
         }
          else
          {
