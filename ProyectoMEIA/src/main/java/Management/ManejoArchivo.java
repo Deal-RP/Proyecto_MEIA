@@ -344,11 +344,13 @@ public class ManejoArchivo {
             File pathFileBita = new File("C:/MEIA/bitacora_" + nombre + ".txt");
             File pathFileBitaDesc = new File("C:/MEIA/desc_bitacora_" + nombre + ".txt");
             File pathFileTree = new File("C:/MEIA/tree.txt");
+            File pathFileDescTree = new File("C:/MEIA/desc_tree.txt");
             pathFileUser.createNewFile();
             pathFileUserDesc.createNewFile();
             pathFileBita.createNewFile();
             pathFileBitaDesc.createNewFile();
             pathFileTree.createNewFile();
+            pathFileDescTree.createNewFile();
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             var writer = new FileWriter(pathFileUserDesc);
