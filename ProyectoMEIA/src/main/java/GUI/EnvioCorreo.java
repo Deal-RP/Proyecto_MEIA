@@ -244,6 +244,7 @@ public class EnvioCorreo extends javax.swing.JFrame {
         var user = dataUser.getUser();
         var strError = "";
         var listaEnviar = new DefaultListModel();
+        
         if(RB_Lista.isSelected()){
             var objManejo = new ManejoArchivo();
             var lista = objManejo.lecturaCompleta("Lista_usuario", CB_Envios.getSelectedItem().toString(), user);
@@ -259,8 +260,16 @@ public class EnvioCorreo extends javax.swing.JFrame {
                if (!TF_Archivo.getText().equals("")) {
                    temp_Adjunto = TF_Archivo.getText();
                }
+               var tempAsunt="Vacio";
+                if (!TF_Asunto.getText().equals("")) {
+                    tempAsunt=TF_Asunto.getText();
+                }
+                var tempMensaje = "Vacio";
+                if (!TA_Mensaje.getText().equals("")) {
+                    tempMensaje = TA_Mensaje.getText();
+                }
                 var todosLosRegistros = user + "|" + listaEnviar.get(i) + "|" + dateFormat.format(date) + "|" 
-                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + temp_Adjunto  +"|"+ "1";
+                        + tempAsunt + "|" + tempMensaje + "|" + temp_Adjunto  +"|"+ "1";
                 String LLave  = user + listaEnviar.get(i) + dateFormat.format(date);
               
                 ABB.Insertar(LLave, todosLosRegistros);
@@ -283,8 +292,16 @@ public class EnvioCorreo extends javax.swing.JFrame {
                if (!TF_Archivo.getText().equals("")) {
                    temp_Adjunto = TF_Archivo.getText();
                }
+                 var tempAsunt="Vacio";
+                if (!TF_Asunto.getText().equals("")) {
+                    tempAsunt=TF_Asunto.getText();
+                }
+                var tempMensaje = "Vacio";
+                if (!TA_Mensaje.getText().equals("")) {
+                    tempMensaje = TA_Mensaje.getText();
+                }
                 var todosLosRegistros = user + "|" + CB_Envios.getSelectedItem().toString() + "|" + dateFormat.format(date) + "|"
-                        + TF_Asunto.getText() + "|" + TA_Mensaje.getText() + "|" + temp_Adjunto + "|" + "1";
+                        + tempAsunt + "|" + tempMensaje + "|" + temp_Adjunto + "|" + "1";
                 String LLave  = user + CB_Envios.getSelectedItem().toString()+ dateFormat.format(date);
             
                 ABB.Insertar(LLave, todosLosRegistros);   
